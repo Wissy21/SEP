@@ -1,6 +1,6 @@
-﻿# SEP/MP 2020
+# SEP/MP 2020
 
-:eyeglasses: __ERST LESEN__: Später können Sie diese Datei gerne Ihren Gruppenbedürftnissen anpassen.
+:eyeglasses: __ERST LESEN__: Später können Sie diese Datei gerne Ihren Gruppenbedürfnissen anpassen.
 
 ## Git
 
