@@ -1,0 +1,236 @@
+\chapter{Systemtestfälle}
+
+Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie später Systemtests ausführen und die erwarteten Ergebnisse darstellen.
+
+\newcounter{tf}\setcounter{tf}{10}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:anmelden}
+	\item [Name:] Spieler anmelden.
+	\item [Motivation:] Testet, ob die Anmeldung im System korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Zugriffsdaten sind vorhanden und richtig} \\ $\implies$ Spieler wird in die Lobby bewegt.
+			\item \textit{Benutzername ist registriert, Passwort ist falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Benutzername ist nicht registriert} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:registrieren}
+	\item [Name:] Spieler registrieren.
+	\item [Motivation:] Testet, ob die Registrierung in dem System korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Benutzername sind vorhanden und richtig} \\ $\implies$ Ein Account mit den eingetragenen Daten wird erzeugt und der Spieler wird in die Lobby bewegt.
+			\item \textit{Benutzername ist schon genutzt} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Email ist schon genutzt} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:account bearbeiten}
+	\item [Name:] Account bearbeiten.
+	\item [Motivation:] Testet, ob das Bearbeiten des Accounts in dem System korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Neuer Benutzername nicht vorhanden} \\ $\implies$ Benutzername wird erfolgreich geändert.
+			\item \textit{Neuer Benutzername  bereits vorhanden} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Neues Passwort bearbeiten, altes richtig} \\ $\implies$ Passwort wird erfolgreich geändert.
+			\item \textit{Neues Passwort bearbeiten, altes falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Profil Bild bearbeiten} \\ $\implies$ Profil Bild wird erfolgreich geändert.
+			\item \textit{Profil Bild bearbeiten funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:account löschen}
+	\item [Name:] Account löschen.
+	\item [Motivation:] Testet, ob das Löschen des Accounts in dem System korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Passwort richtig} \\ $\implies$ Spieler wird in den Anmeldebildschirm bewegt, Account wird gelöscht.
+			\item \textit{Passwort falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
+	
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:Spielraum}
+	\item [Name:] Spielraum erstellen,bearbeiten oder löschen.
+	\item [Motivation:] Testet, ob das Erstellen,das Bearbeiten oder das Löschen eines Spielraums im System korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spielraum erstellt} \\ $\implies$ Spieler wird im erstellte Spielraum bewegt.
+			\item \textit{Spielraum erstellt funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt und kein Spielraum wird erstellt.
+			\item \textit{Spielraum bearbeiten} \\ $\implies$ Spielraum Eigenschaften werden geändert.
+			\item \textit{Spielraum bearbeiten funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Spielraum löschen} \\ $\implies$ Spieler soll das Löschen bestätigen.
+							         \\ $\implies$ Spieler wird im Spiel Menü bewegt.
+\\ $\implies$ Spielraum wird gelöscht.
+			\item \textit{Spielraum löschen funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
+\\ $\implies$ Spielraum wird nicht gelöst.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:Bots }
+	\item [Name:] Bots.
+	\item [Motivation:] Testet, ob das Hinzufügen bzw. das Entfernen der Bots korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Bots hinzufügen, Platz vorhanden} \\ $\implies$ Bots werden im Spielraum bewegt.
+			\item \textit{Bots hinzufügen, kein Platz vorhanden} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Bots entfernen, Bot im Raum} \\ $\implies$ Bots werden entfernt.
+			\item \textit{Bots entfernen, kein Bot im Raum} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:Spiel}
+	\item [Name:] Spiel.
+	\item [Motivation:] Testet, ob das Starten bzw. das Ende des Spiels korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spiel starten, genug Spieler} \\ $\implies$ Spiel starten.
+														\\ $\implies$ Spieler werden im Spielraum bewegt.
+			\item \textit{Spiel starten, nicht genug Spieler} \\ $\implies$ Fehlermeldung wird angezeigt.
+			\item \textit{Spiel beenden funktioniert} \\ $\implies$ Spiel wird  beendet.
+													  \\ $\implies$ Spieler werden  in Lobby bewegt.
+			\item \textit{Spiel beenden funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:Bestenliste}
+	\item [Name:] Bestenliste.
+	\item [Motivation:] Testet, ob das Anzeigen der Bestenliste  korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Bestenliste anzeigen, mindestens ein Spiel abgeschlossen} \\ $\implies$ Bestenliste anzeigen.
+			\item \textit{Bestenliste anzeigen, bisher niemand gespielt} \\ $\implies$ Fehlermeldung wird angezeigt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests: Chatroom}
+	\item [Name:] Chatroom.
+	\item [Motivation:] Testet, ob das Empfangen bzw. das Senden von Nachrichten korrekt funktioniert.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Nachricht schicken, mit Inhalt} \\ $\implies$ Nachricht wird verschickt und erscheint im Chatfenster aller Spieler.
+			\item \textit{Nachricht schicken, kein Inhalt} \\ $\implies$ Fehlermeldung wird angezeigt.
+										\\ $\implies$Keine Nachricht wird verschickt.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:Spieler einladen}
+	\item [Name:] :Spieler einladen.
+	\item [Motivation:] Testet, ob man Spieler einladen kann.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spieler wird zum Spiel eingeladen, Spieler existiert} \\ $\implies$ Spiel starten mit Freunden.
+			\item \textit{Spieler wird zum Spiel eingeladen, Spieler existiert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
+
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests: Spieler Punkte }
+	\item [Name:] Spieler Punkte.
+	\item [Motivation:] Testet, ob die Spielers Punkte übertragen werden.
+	\item [Sczenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Das Spiel ist fertig. Kein Spielabbruch.} \\ $\implies$ Verdiente Punkte werden zu den vorherigen Punkte addiert.
+			\item \textit{Das Spiel ist fertig. Spielabbruch.} \\ $\implies$ Keine Punkte werden zu den vorherigen Punkte addiert.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
+	\item [Relevante Use Cases:] \ref{uc:anmeld}
+\end{lhp}
+
+\end{description}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
