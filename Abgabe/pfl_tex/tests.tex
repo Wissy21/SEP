@@ -33,7 +33,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Email ist schon genutzt} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
 	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Use Cases:] \ref{uc:registieren}
 \end{lhp}
 
 \end{description}
@@ -52,15 +52,15 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Profil Bild bearbeiten} \\ $\implies$ Profil Bild wird erfolgreich geändert.
 			\item \textit{Profil Bild bearbeiten funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:accountverw}
+	\item [Relevante Use Cases:] \ref{uc:namechange}, \ref{uc:pwchange}, \ref{uc:loeschen}
 \end{lhp}
 
 \end{description}
 
 \begin{description}[leftmargin=5em, style=sameline]
 
-\begin{lhp}{tf}{TF}{tests:account löschen}
+\begin{lhp}{tf}{TF}{tests:accountlöschen}
 	\item [Name:] Account löschen.
 	\item [Motivation:] Testet, ob das Löschen des Accounts in dem System korrekt funktioniert.
 	\item [Sczenarien:] \hfill
@@ -70,7 +70,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 	
 		\end{enumerate}
 	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Use Cases:] \ref{uc:loeschen}
 \end{lhp}
 
 \end{description}
@@ -92,8 +92,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Spielraum löschen funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
 \\ $\implies$ Spielraum wird nicht gelöst.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielraum}
+	\item [Relevante Use Cases:] \ref{uc:spielen}
 \end{lhp}
 
 \end{description}
@@ -110,8 +110,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Bots entfernen, Bot im Raum} \\ $\implies$ Bots werden entfernt.
 			\item \textit{Bots entfernen, kein Bot im Raum} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:bots}
+	\item [Relevante Use Cases:] \ref{uc:intelligentbots}
 \end{lhp}
 
 \end{description}
@@ -130,8 +130,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 													  \\ $\implies$ Spieler werden  in Lobby bewegt.
 			\item \textit{Spiel beenden funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:spielen}
 \end{lhp}
 
 \end{description}
@@ -147,8 +147,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Bestenliste anzeigen, mindestens ein Spiel abgeschlossen} \\ $\implies$ Bestenliste anzeigen.
 			\item \textit{Bestenliste anzeigen, bisher niemand gespielt} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:bestenliste}
+	\item [Relevante Use Cases:] \ref{uc:bestenlistesehen}
 \end{lhp}
 
 \end{description}
@@ -156,7 +156,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 
 \begin{description}[leftmargin=5em, style=sameline]
 
-\begin{lhp}{tf}{TF}{tests: Chatroom}
+\begin{lhp}{tf}{TF}{tests:chat}
 	\item [Name:] Chatroom.
 	\item [Motivation:] Testet, ob das Empfangen bzw. das Senden von Nachrichten korrekt funktioniert.
 	\item [Sczenarien:] \hfill
@@ -165,8 +165,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Nachricht schicken, kein Inhalt} \\ $\implies$ Fehlermeldung wird angezeigt.
 										\\ $\implies$Keine Nachricht wird verschickt.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:chat}
+	\item [Relevante Use Cases:] \ref{uc:chat}
 \end{lhp}
 
 \end{description}
@@ -183,8 +183,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Spieler wird zum Spiel eingeladen, Spieler existiert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
 
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:chat}
+	\item [Relevante Use Cases:] \ref{uc:chat}
 \end{lhp}
 
 \end{description}
@@ -199,8 +199,8 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 			\item \textit{Das Spiel ist fertig. Kein Spielabbruch.} \\ $\implies$ Verdiente Punkte werden zu den vorherigen Punkte addiert.
 			\item \textit{Das Spiel ist fertig. Spielabbruch.} \\ $\implies$ Keine Punkte werden zu den vorherigen Punkte addiert.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:anmeld}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:spielen}
 \end{lhp}
 
 \end{description}
