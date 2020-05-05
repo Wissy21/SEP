@@ -66,6 +66,42 @@ Die Systemgrenze wird in der Abbildung~\ref{fig:sys} dargestellt.
 		\item [Systemfunktionen:] \ref{funk:zugriff}.
 	\end{lhp}
 	
+	\begin{lhp}{uc}{UC}{uc:namechange}
+		\item [Name:] Benutzername ändern.
+		\item [Ziel:] Spieler ändert seinen Benutzername.
+		\item [Akteure:] Spieler.
+		\item [Vorbedingungen] Spieler ist erfolgreich angemeldet.
+		\item [Eingabedaten:] Zugriffsdaten~\ref{daten:benutzername}~\ref{daten:passwort}.
+		\item [Beschreibung:] \hfill\\ \hfill\\
+			1. Spieler sendet das Formular ab.\\
+			2. Das System prüft die Gültigkeit von Zugangsdaten.\\				
+		\item [Ausnahmen:]\hfill 
+	    	\begin{itemize} 
+			    \item[] \textit{Passwort ist falsch:} Das System zeigt eine Fehlermeldung an.					
+			
+		    \end{itemize}
+		\item [Ergebnisse und Outputdaten:] Benutzername erfolgreich geändert.	
+		\item [Systemfunktionen:] \ref{funk:acountverw}.
+	\end{lhp}	
+	
+	\begin{lhp}{uc}{UC}{uc:pwchange}
+		\item [Name:] Passwort ändern.
+		\item [Ziel:] Spieler ändert sein Passwort.
+		\item [Akteure:] Spieler.
+		\item [Vorbedingungen] Spieler ist erfolgreich angemeldet.
+		\item [Eingabedaten:] Passwort~\ref{daten:passwort}.
+		\item [Beschreibung:] \hfill\\ \hfill\\
+			1. Spieler sendet das Formular ab.\\
+			2. Das System prüft die Gültigkeit des Passworts.\\				
+		\item [Ausnahmen:]\hfill 
+	    	\begin{itemize} 
+			    \item[] \textit{Passwort ist falsch:} Das System zeigt eine Fehlermeldung an.					
+			
+		    \end{itemize}
+		\item [Ergebnisse und Outputdaten:] Passwort erfolgreich geändert.	
+		\item [Systemfunktionen:] \ref{funk:acountverw}.
+	\end{lhp}	
+	
 	\begin{lhp}{uc}{UC}{uc:loeschen}
 		\item [Name:] Spieler löschen.
 		\item [Ziel:] Spieler entfernt seine Daten aus dem System.
