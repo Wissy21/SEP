@@ -59,7 +59,7 @@
 \subsection{Anforderungen an physische Umgebung}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel1}
+	\begin{lhp}{nf}{NF}{nfunk:umgebung}
 		\item [Name:] Lauffähigkeit an SCI-Rechnern
 		\item [Beschreibung:] Das Produkt muss auf einem eigenem Gerät lauffähig sein, welches zur Präsentation am Ende des SEPs genutzt werden muss. Falls keine eigenen Rechner vorhanden sind, stehen auch die SCI-Terminals zur verfügung.
 		\item [Motivation:] Optimierung von Betreuung und Abnahme des SEP/MP
@@ -67,38 +67,25 @@
 	\end{lhp}
 \end{description}
 
-
-%\subsection{Anforderungen an benachbarte Systeme}
-%(sehe Systemkontext)
-%
-%\begin{description}[leftmargin=5em, style=sameline]	
-%	\begin{lhp}{nf}{NF}{nfunk:beispiel2}
-%		\item [Name:] Beispiel
-%		\item [Beschreibung:] 
-%		\item [Motivation:] 
-%		\item [Erfüllungskriterium:] 
-%	\end{lhp}
-%\end{description}
-
 \subsection{Absatz- sowie Installationsbezogene Anforderungen}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel3}
+	\begin{lhp}{nf}{NF}{nfunk:install}
 		\item [Name:] Installationsanleitung	
-		\item [Beschreibung:] Falls die Installation nicht lediglich das Öffnen einer Datei voraussetz, muss der genaue Installations- und Startvorgang schriftlich für Benutzer zur Verfügung gestellt werden.
+		\item [Beschreibung:] Falls die Installation nicht lediglich das Öffnen einer Datei voraussetzt, muss der genaue Installations- und Startvorgang schriftlich für Benutzer zur Verfügung gestellt werden.
 		\item [Motivation:] Spezifikation
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] siehe Beschreibung
 	\end{lhp}
 \end{description}
 
 \subsection{Anforderungen an Versionierung}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel4}
+	\begin{lhp}{nf}{NF}{nfunk:versionierung}
 		\item [Name:] Keine weitere Versionen
 		\item [Beschreibung:] Nach Version 1.0 ist keine weitere Entwicklung vorgesehen.
 		\item [Motivation:] Das ist nur das SEP/MP, kein Geschäftsprojekt, siehe \ref{fa:fortentwicklung}
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] siehe Beschreibung
 	\end{lhp}
 \end{description}
 
@@ -127,7 +114,7 @@
 \subsection{Anforderungen an technische und fachliche Unterstützung}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel5}
+	\begin{lhp}{nf}{NF}{nfunk:unterstü}
 		\item [Name:] Unterstützung
 		\item [Beschreibung:] Es ist keine technische und fachliche Unterstützung des Systems geplant.
 		\item [Motivation:] Siehe \ref{fa:fortentwicklung}.
@@ -138,11 +125,11 @@
 \subsection{Anforderungen an technische Kompatibilität}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel6}
+	\begin{lhp}{nf}{NF}{nfunk:kompa}
 		\item [Name:] Kompatibilität
 		\item [Beschreibung:] Siehe \ref{nfunk:sarch2}
-		\item [Motivation:]
-		\item [Erfüllungskriterium:] 
+		\item [Motivation:] Möglichst breites Spektrum an Nutzern abdecken.
+		\item [Erfüllungskriterium:] Siehe \ref{nfunk:sarch2}
 	\end{lhp}
 \end{description}
 
@@ -151,33 +138,33 @@
 \subsection{Zugang}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel7}
+	\begin{lhp}{nf}{NF}{nfunk:zugang}
 		\item [Name:] Spielerzugriff
 		\item [Beschreibung:] Spieler haben nur Zugriff auf das Konto auf dem sie angemeldet sind und können nur an diesem Änderungen vornehmen.
 		\item [Motivation:] Schutz vor Diebstahl von Konten.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Siehe Beschreibung
 	\end{lhp}
 \end{description}
 
 \subsection{Integrität}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel8}
+	\begin{lhp}{nf}{NF}{nfunk:integrität}
 		\item [Name:] Regelwerk
 		\item [Beschreibung:] Die Spielregeln dürfen von keinem Spieler umgangen werden.
 		\item [Motivation:] Verhindern von unfairen Vorteilen.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Einhalten der Regeln
 	\end{lhp}
 \end{description}
 
 \subsection{Datenschutz/Privatsphäre}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel9}
+	\begin{lhp}{nf}{NF}{nfunk:datenschutz}
 		\item [Name:] Passwörter
 		\item [Beschreibung:] Nur der Server und kein Spieler hat Zugriff auf Passwörter.
 		\item [Motivation:] Schutz vor Diebstahl von Daten.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Sieher Beschreibung
 	\end{lhp}
 \end{description}
 
@@ -185,11 +172,11 @@
 \subsection{Virenschutz}
 
 \begin{description}[leftmargin=5em, style=sameline]	
-	\begin{lhp}{nf}{NF}{nfunk:beispiel10}
-		\item [Name:] Beispiel
-		\item [Beschreibung:] 
-		\item [Motivation:] 
-		\item [Erfüllungskriterium:] 
+	\begin{lhp}{nf}{NF}{nfunk:virenschutz}
+		\item [Name:] Virenschutz
+		\item [Beschreibung:] Es sind keine Viren in der Software enthalten.
+		\item [Motivation:] Keine illegalen Aktivitäten geduldet.
+		\item [Erfüllungskriterium:] Virenfreie Software
 	\end{lhp}
 \end{description}
 
@@ -215,7 +202,7 @@ Anforderungen, die sich auf die Prüfung/Audit vom System von SEP/MP-Tutoren ode
 		\item [Name:] Systemsprache
 		\item [Beschreibung:] Die Interfacesprache ist Deutsch.
 		\item [Motivation:] Synchronisation des Verständnisses von Teammitgliedern mit unterschiedlichen kulturellen Hintergründen.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Jeder der Deutsch sprechen kann kann das Spiel spielen.
 	\end{lhp}
 \end{description}
 

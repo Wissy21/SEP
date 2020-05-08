@@ -9,7 +9,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:anmelden}
 	\item [Name:] Spieler anmelden.
 	\item [Motivation:] Testet, ob die Anmeldung im System korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Zugriffsdaten sind vorhanden und richtig} \\ $\implies$ Spieler wird in die Lobby bewegt.
 			\item \textit{Benutzername ist registriert, Passwort ist falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
@@ -26,14 +26,14 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:registrieren}
 	\item [Name:] Spieler registrieren.
 	\item [Motivation:] Testet, ob die Registrierung in dem System korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Benutzername sind vorhanden und richtig} \\ $\implies$ Ein Account mit den eingetragenen Daten wird erzeugt und der Spieler wird in die Lobby bewegt.
 			\item \textit{Benutzername ist schon genutzt} \\ $\implies$ Fehlermeldung wird angezeigt.
 			\item \textit{Email ist schon genutzt} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
 	\item [Relevante Systemfunktionen:] \ref{funk:zugriff}
-	\item [Relevante Use Cases:] \ref{uc:registieren}
+	\item [Relevante Use Cases:] \ref{uc:registrieren}
 \end{lhp}
 
 \end{description}
@@ -43,14 +43,12 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:account bearbeiten}
 	\item [Name:] Account bearbeiten.
 	\item [Motivation:] Testet, ob das Bearbeiten des Accounts in dem System korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Neuer Benutzername nicht vorhanden} \\ $\implies$ Benutzername wird erfolgreich geändert.
 			\item \textit{Neuer Benutzername  bereits vorhanden} \\ $\implies$ Fehlermeldung wird angezeigt.
 			\item \textit{Neues Passwort bearbeiten, altes richtig} \\ $\implies$ Passwort wird erfolgreich geändert.
 			\item \textit{Neues Passwort bearbeiten, altes falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
-			\item \textit{Profil Bild bearbeiten} \\ $\implies$ Profil Bild wird erfolgreich geändert.
-			\item \textit{Profil Bild bearbeiten funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
 		\end{enumerate}
 	\item [Relevante Systemfunktionen:] \ref{funk:accountverw}
 	\item [Relevante Use Cases:] \ref{uc:namechange}, \ref{uc:pwchange}, \ref{uc:loeschen}
@@ -63,7 +61,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:accountlöschen}
 	\item [Name:] Account löschen.
 	\item [Motivation:] Testet, ob das Löschen des Accounts in dem System korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Passwort richtig} \\ $\implies$ Spieler wird in den Anmeldebildschirm bewegt, Account wird gelöscht.
 			\item \textit{Passwort falsch} \\ $\implies$ Fehlermeldung wird angezeigt.
@@ -80,7 +78,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:Spielraum}
 	\item [Name:] Spielraum erstellen,bearbeiten oder löschen.
 	\item [Motivation:] Testet, ob das Erstellen,das Bearbeiten oder das Löschen eines Spielraums im System korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Spielraum erstellt} \\ $\implies$ Spieler wird im erstellte Spielraum bewegt.
 			\item \textit{Spielraum erstellt funktioniert nicht} \\ $\implies$ Fehlermeldung wird angezeigt und kein Spielraum wird erstellt.
@@ -103,7 +101,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:Bots }
 	\item [Name:] Bots.
 	\item [Motivation:] Testet, ob das Hinzufügen bzw. das Entfernen der Bots korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Bots hinzufügen, Platz vorhanden} \\ $\implies$ Bots werden im Spielraum bewegt.
 			\item \textit{Bots hinzufügen, kein Platz vorhanden} \\ $\implies$ Fehlermeldung wird angezeigt.
@@ -121,7 +119,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:Spiel}
 	\item [Name:] Spiel.
 	\item [Motivation:] Testet, ob das Starten bzw. das Ende des Spiels korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Spiel starten, genug Spieler} \\ $\implies$ Spiel starten.
 														\\ $\implies$ Spieler werden im Spielraum bewegt.
@@ -142,7 +140,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:Bestenliste}
 	\item [Name:] Bestenliste.
 	\item [Motivation:] Testet, ob das Anzeigen der Bestenliste  korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Bestenliste anzeigen, mindestens ein Spiel abgeschlossen} \\ $\implies$ Bestenliste anzeigen.
 			\item \textit{Bestenliste anzeigen, bisher niemand gespielt} \\ $\implies$ Fehlermeldung wird angezeigt.
@@ -159,7 +157,7 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 \begin{lhp}{tf}{TF}{tests:chat}
 	\item [Name:] Chatroom.
 	\item [Motivation:] Testet, ob das Empfangen bzw. das Senden von Nachrichten korrekt funktioniert.
-	\item [Sczenarien:] \hfill
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
 			\item \textit{Nachricht schicken, mit Inhalt} \\ $\implies$ Nachricht wird verschickt und erscheint im Chatfenster aller Spieler.
 			\item \textit{Nachricht schicken, kein Inhalt} \\ $\implies$ Fehlermeldung wird angezeigt.
@@ -174,42 +172,101 @@ Hier sollen verschiedene Szenarien beschrieben werden, mithilfe deren Sie späte
 
 \begin{description}[leftmargin=5em, style=sameline]
 
-\begin{lhp}{tf}{TF}{tests:Spieler einladen}
-	\item [Name:] :Spieler einladen.
-	\item [Motivation:] Testet, ob man Spieler einladen kann.
-	\item [Sczenarien:] \hfill
+\begin{lhp}{tf}{TF}{tests: Spieler Punkte}
+	\item [Name:] Spieler Punkte.
+	\item [Motivation:] Testet, ob die Spieler Punkte übertragen werden.
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
-			\item \textit{Spieler wird zum Spiel eingeladen, Spieler existiert} \\ $\implies$ Spiel starten mit Freunden.
-			\item \textit{Spieler wird zum Spiel eingeladen, Spieler existiert nicht} \\ $\implies$ Fehlermeldung wird angezeigt.
-
+			\item \textit{Das Spiel ist fertig. Kein Spielabbruch.} \\ $\implies$ Verdiente Punkte werden zu den vorherigen Punkte addiert.
+			\item \textit{Das Spiel ist fertig. Spielabbruch.} \\ $\implies$ Keine Punkte werden zu den vorherigen Punkte addiert.
 		\end{enumerate}
-	\item [Relevante Systemfunktionen:] \ref{funk:chat}
-	\item [Relevante Use Cases:] \ref{uc:chat}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:ausscheiden}
 \end{lhp}
 
 \end{description}
 
 \begin{description}[leftmargin=5em, style=sameline]
 
-\begin{lhp}{tf}{TF}{tests: Spieler Punkte }
-	\item [Name:] Spieler Punkte.
-	\item [Motivation:] Testet, ob die Spielers Punkte übertragen werden.
-	\item [Sczenarien:] \hfill
+\begin{lhp}{tf}{TF}{tests:spielstart}
+	\item [Name:] Spielstart
+	\item [Motivation:] Testet, ob der Spielstart regulär funktioniert
+	\item [Szenarien:] \hfill
 		\begin{enumerate}
-			\item \textit{Das Spiel ist fertig. Kein Spielabbruch.} \\ $\implies$ Verdiente Punkte werden zu den vorherigen Punkte addiert.
-			\item \textit{Das Spiel ist fertig. Spielabbruch.} \\ $\implies$ Keine Punkte werden zu den vorherigen Punkte addiert.
+			\item \textit{Spiel wird erfolgreich gestartet.} \\ $\implies$ Jeder Spieler hat eine Entschärfung auf der Hand.
+															 \\ $\implies$ Jeder Spieler hat insgesamt 8 Handkarten.
+															 \\ $\implies$ Kein Spieler hat ein Exploding Kitten auf der Hand.
+			\item \textit{Spiel wird nicht gestartet.} \\ $\implies$ Der Spieler erhält eine Fehlermeldung.
 		\end{enumerate}
 	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
-	\item [Relevante Use Cases:] \ref{uc:spielen}
+	\item [Relevante Use Cases:] \ref{uc:spielstart}
 \end{lhp}
 
 \end{description}
 
+\begin{description}[leftmargin=5em, style=sameline]
 
+\begin{lhp}{tf}{TF}{tests:Kartelegen}
+	\item [Name:] Karten legen.
+	\item [Motivation:] Testet, ob eine Karte gelegt werden kann
+	\item [Szenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spieler ist am Zug und legt eine regelkonforme Karte.} \\ $\implies$ Karteneffekt wird ausgeführt und Karte wird auch den Ablagestapel gelegt.
+			\item \textit{Spieler ist am Zug und legt eine nicht regelkonforme Karte.} \\ $\implies$ Es wird keine Karte abgelegt und der Spieler erhält eine Fehlermeldung.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:kartelegen}
+\end{lhp}
 
+\end{description}
 
+\begin{description}[leftmargin=5em, style=sameline]
 
+\begin{lhp}{tf}{TF}{tests:zugbeenden}
+	\item [Name:] Zug beenden.
+	\item [Motivation:] Testet, ob der Zug beendet werden kann
+	\item [Szenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spieler ist am Zug.} \\ $\implies$ Karteneffekt wird ausgeführt und Karte wird auch den Ablagestapel gelegt.
+			\item \textit{Spieler ist nicht am Zug.} \\ $\implies$ Der Spieler erhält eine Fehlermeldung.
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:zugbeenden}
+\end{lhp}
 
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:entschärfen}
+	\item [Name:] Entschärfen
+	\item [Motivation:] Testet, ob die Entschärfung funktioniert
+	\item [Szenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Spieler hat ein Exploding Kitten und eine Entschärfung auf der Hand.} \\ $\implies$  Legt Entschärfung auf den Ablagestapel und Exploding Kitten in den Spielstapel. Spieler bleibt im Spiel.
+			\item \textit{Spieler hat ein Exploding Kitten aber keine Entschärfung auf der Hand.} \\ $\implies$  Legt alle Karten des Spielers auf den Ablagestapel. Spieler scheidet aus dem Spiel aus.		
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:entschärfen}, \ref{uc:ausscheiden}
+\end{lhp}
+
+\end{description}
+
+\begin{description}[leftmargin=5em, style=sameline]
+
+\begin{lhp}{tf}{TF}{tests:gewinnen}
+	\item [Name:] Gewinnen
+	\item [Motivation:] Testet, ob man am Ende gewinnt
+	\item [Szenarien:] \hfill
+		\begin{enumerate}
+			\item \textit{Nach dem ausscheiden eines Spielers sind noch mehr als ein Spieler übrig.} \\ $\implies$  Das Spiel geht weiter.
+			\item \textit{Nach dem ausscheiden eines Spielers ist nur noch ein Spieler übrig.} \\ $\implies$  Der letzte	verbleibende Spieler hat gewonnen und bekommt Punkte für die Bestenliste. Alle Spieler kehren zurück in die Lobby.	
+		\end{enumerate}
+	\item [Relevante Systemfunktionen:] \ref{funk:spielverw}
+	\item [Relevante Use Cases:] \ref{uc:ausscheiden}, \ref{uc:spielende}
+\end{lhp}
+
+\end{description}
 
 
 
