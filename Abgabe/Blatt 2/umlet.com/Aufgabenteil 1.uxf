@@ -1,0 +1,177 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>350</x><y>438</y><w>210</w><h>90</h></coordinates><panel_attributes>/Karte/
+--
++name
++effekt
+--
+/~effekt_ausfuehren/
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>778</y><w>210</w><h>80</h></coordinates><panel_attributes>Nö!
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>778</y><w>210</w><h>80</h></coordinates><panel_attributes>Entschärfung
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>460</x><y>778</y><w>210</w><h>80</h></coordinates><panel_attributes>Exploding Kitten
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>668</y><w>210</w><h>80</h></coordinates><panel_attributes>Angriff
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>778</y><w>210</w><h>80</h></coordinates><panel_attributes>Hops!
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>668</y><w>210</w><h>80</h></coordinates><panel_attributes>Mischen
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>680</x><y>568</y><w>210</w><h>80</h></coordinates><panel_attributes>Wunsch
+--
++name
+-+ffekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>668</y><w>210</w><h>80</h></coordinates><panel_attributes>Katzen Karte
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>460</x><y>668</y><w>210</w><h>80</h></coordinates><panel_attributes>Blick in die Zukunft
+--
++name
++effekt
+--
+~effekt_ausfuehren()
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>518</y><w>150</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;130;140;130;150</additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>518</y><w>370</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>350;10;350;140;10;140;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>518</y><w>370</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;250;350;250;350;260</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>518</y><w>150</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;250;10;250;10;260</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>518</y><w>150</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;140;10;140;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>518</y><w>370</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;30;350;30;350;50</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>518</y><w>360</w><h>170</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;340;140;340;150</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>518</y><w>150</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;250;130;250;130;260</additional_attributes></element><element><id>Relation</id><coordinates><x>100</x><y>518</y><w>370</w><h>280</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>350;10;350;250;10;250;10;260</additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>358</y><w>210</w><h>110</h></coordinates><panel_attributes>Spieler
+--
++name
+-handkarten
+--
+-karte_legen
+-entschaerfen
+-zug_beenden
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>120</x><y>228</y><w>210</w><h>100</h></coordinates><panel_attributes>Spielstapel
+--
++anzahl
+-kartenliste
+--
++anzahl_erfragen
++mischen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>228</y><w>210</w><h>100</h></coordinates><panel_attributes>Ablagestapel
+--
++anzahl
++kartenliste
+--
++anzahl_erfragen
++liste_anschauen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>318</y><w>90</w><h>140</h></coordinates><panel_attributes>lt=&lt;-
+m2=0..
+besteht aus</panel_attributes><additional_attributes>60;10;60;70;20;70;20;120</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>318</y><w>250</w><h>140</h></coordinates><panel_attributes>lt=&lt;-
+m2=0..
+besteht aus</panel_attributes><additional_attributes>10;10;10;70;220;70;220;120</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>318</y><w>410</w><h>200</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..*
+besitzt</panel_attributes><additional_attributes>10;170;190;170;190;10;390;10;390;40</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>168</y><w>820</w><h>210</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=2..5
+&lt; zieht Karte</panel_attributes><additional_attributes>10;60;10;20;780;20;780;190</additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>188</y><w>480</w><h>190</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=2..5
+&lt; legt Karte</panel_attributes><additional_attributes>10;40;10;20;440;20;440;170</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1460</x><y>498</y><w>210</w><h>130</h></coordinates><panel_attributes>Spielraum
+--
++name
++anzahl_spieler
++liste_spieler
+--
+~bots_hinzufuegen
+~spiel_starten
+~spielraum_schliessen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1460</x><y>298</y><w>210</w><h>100</h></coordinates><panel_attributes>Lobby
+--
++anzahl_spielraeume
++liste_spielraeume
+--
+~spielraum_beitreten
+~spielraum_erstellen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1550</x><y>388</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1820</x><y>298</y><w>210</w><h>110</h></coordinates><panel_attributes>Benutzer
+--
++name
+--
+~registrieren
+~anmelden
+~daten_aendern
+~benutzer_loeschen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1660</x><y>338</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..
+verweilt</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1130</x><y>378</y><w>210</w><h>70</h></coordinates><panel_attributes>Spiel-Chat
+--
++nachrichten
+--
+~nachricht_schreiben
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1920</x><y>208</y><w>60</w><h>110</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..
+chattet</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1820</x><y>148</y><w>210</w><h>70</h></coordinates><panel_attributes>Lobby-Chat
+--
++nachrichten
+--
+~nachricht_schreiben
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>398</y><w>120</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..
+chattet</panel_attributes><additional_attributes>100;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2150</x><y>328</y><w>210</w><h>70</h></coordinates><panel_attributes>Bestenliste
+--
++bestenliste
+--
+~bestenliste_ansehen
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2020</x><y>348</y><w>150</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2=0..
+anschauen</panel_attributes><additional_attributes>130;20;10;20</additional_attributes></element><element><id>UMLNote</id><coordinates><x>1960</x><y>440</y><w>150</w><h>80</h></coordinates><panel_attributes>Der Benutzer muss sich 
+erst registrieren bzw. 
+anmelden, bevor er die 
+anderen Methoden 
+ausführen kann.
+bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>1290</x><y>510</y><w>150</w><h>80</h></coordinates><panel_attributes>Durch das Spiel starten 
+des Spielraums gelagen 
+die Spieler in dem 
+Spielraum in das andere 
+Modell.
+bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1660</x><y>398</y><w>300</w><h>200</h></coordinates><panel_attributes>lt=&lt;-&gt;
+m1=1
+m2=1..5
+verweilt</panel_attributes><additional_attributes>10;170;260;170;260;10</additional_attributes></element></diagram>
