@@ -17,7 +17,7 @@
 		\item [Name:] Anwendungsbereich
 		\item [Beschreibung:] Das System ist ausschließlich für den privaten Bereich ausgelegt.
 		\item [Motivation:] Firmen oder kommerzielle Anwender haben wenig Verwendung für ein digitales Kartenspiel. 
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Auslegung auf privaten Bereich
 	\end{lhp}
 	
 		
@@ -25,21 +25,21 @@
 		\item [Name:] Implementierungssprache
 		\item [Beschreibung:] Für die Implementierung ist ausschließlich Java 8 oder höher zu verwenden.
 		\item [Motivation:] Das optimiert die Betreuung von SEP/MP und koordiniert die Mitarbeit.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Quellcode in Java
 	\end{lhp}
 	
 	\begin{lhp}{lb}{LB}{beschr:gui}
 		\item [Name:] GUI-Framework
 		\item [Beschreibung:] Die GUI ist mit JavaFX zu realisieren.
 		\item [Motivation:] Das optimiert die Betreuung von SEP/MP und koordiniert die Mitarbeit.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Verwendung von JavaFX
 	\end{lhp}
 	
 	\begin{lhp}{lb}{LB}{beschr:gitlab}
 		\item [Name:] Gitlab
 		\item [Beschreibung:] Für die Entwicklung ist das vorgegebene GitLab-Repository zu verwenden.
 		\item [Motivation:] Das optimiert die Betreuung von SEP/MP und koordiniert die Mitarbeit.
-		\item [Erfüllungskriterium:] 
+		\item [Erfüllungskriterium:] Benutzen des GitLab-Repository
 	\end{lhp}
 	
 	
@@ -48,34 +48,34 @@
 \section{Glossar}
 
 \begin{center}
-		\rowcolors{2}{Gray!15}{White}
-		\begin{longtable}{p{0.25\textwidth} p{0.25\textwidth} p{0.4\textwidth}}
-			\textbf{Deutsch} & \textbf{Englisch} & \textbf{Bedeutung} \\
-			\hline \hline \endhead
-			Beispiele & Examples & Beispiele aus dem SEP letzter Jahren, welche angepasst werden müssen.\\
-			Explosion & explosion & Teilnehmer, die explodieren verlieren. \\    
-			Karte & card & Spielkarte, die in einem Zug gespielt werden kann\\
-			Entschärfung & disable & Mit dieser Karte kann sich ein Spieler vor einer Explosion retten\\
-			Exploding Kitten & Exploding Kitten & Wer diese Karte zieht explodiert\\
-			Nö! & no! & Andere Karte außer Kraft setzen\\
-			Angriff & attack & Zug beenden ohne eine Karte zu ziehen, nächster Spieler muss zwei Karten ziehen\\
-			Hops! & Jump! & Zug beenden ohne Karte zu ziehen\\
-			Wunsch & wish & Mitspieler zwingen eine Karte rauszugeben\\
-			Mischen & mix & Spielstapel neu mischen\\
-			Blick in die Zukunft & View to the future & Oberste drei Karten des Spielstapels geheim ansehen\\
-			Katzen-Karten & Ktten Cards & Als Pärchen gespielt eine zufällige Karte vom Mitspieler stehlen, als Drilling Wunschkarte stehlen, als Fünfling beliebige Karte vom Ablagestapel nehmen\\
-			
-			Passen & pass & Keine Karten ausspielen\\
-			Spielzug & move & Eine oder mehrere Karten offen auf den Stapel legen und Anweisungen befolgen. \\
-			                
-			Bot & bot & Spieler, dessen Spielaktionen vom Computer entschieden und durchgeführt werden\\
-			Kekse & Cookies & Offiziell keine gültige Maßnahme zur Bestechung der HiWis\\          
- 			Lobby & lobby & Virtueller Raum zum Betreten eines Spielraums\\	
-			Spiel (Regelwerk) & game & Exploding Kittens \\
-			Spieler & player & Teilnehmer am Spielgeschehen\\
-			Spielraum & game room & Virtueller Raum, in dem ein Spiel stattfindet\\
-			Zug & turn & Zustand in dem ein Spieler eine Spielaktion ausführen muss\\
-		\end{longtable}
+	\rowcolors{2}{Gray!15}{White}
+	\begin{longtable}{p{0.25\textwidth} p{0.25\textwidth} p{0.4\textwidth}}
+		\textbf{Deutsch} & \textbf{Englisch} & \textbf{Bedeutung} \\
+		\hline \hline \endhead
+		Beispiele & Examples & Beispiele aus dem SEP letzter Jahren, welche angepasst werden müssen.\\
+		Explosion & explosion & Teilnehmer, die explodieren verlieren. \\    
+		Karte & card & Spielkarte, die in einem Zug gespielt werden kann\\
+		Entschärfung & defuse & Mit dieser Karte kann sich ein Spieler vor einer Explosion retten\\
+		Exploding Kitten & Exploding Kitten & Wer diese Karte zieht explodiert\\
+		Nö! & nope! & Andere Karte außer Kraft setzen\\
+		Angriff & attack & Zug beenden ohne eine Karte zu ziehen, nächster Spieler muss zwei Karten ziehen\\
+		Hops! & skip & Zug beenden ohne Karte zu ziehen\\
+		Wunsch & favor & Mitspieler zwingen eine Karte rauszugeben\\
+		Mischen & shuffle & Spielstapel neu mischen\\
+		Blick in die Zukunft & See to the future & Oberste drei Karten des Spielstapels geheim ansehen\\
+		Katzen-Karten & cat Cards & Als Pärchen gespielt eine zufällige Karte vom Mitspieler stehlen, als Drilling Wunschkarte stehlen, als Fünfling beliebige Karte vom Ablagestapel nehmen\\
+		
+		Passen & skip & Keine Karten ausspielen\\
+		Spielzug & move & Eine oder mehrere Karten offen auf den Stapel legen und Anweisungen befolgen. \\
+		
+		Bot & bot & Spieler, dessen Spielaktionen vom Computer entschieden und durchgeführt werden\\
+		Kekse & Cookies & Offiziell keine gültige Maßnahme zur Bestechung der HiWis\\          
+		Lobby & lobby & Virtueller Raum zum Betreten eines Spielraums\\	
+		Spiel (Regelwerk) & game & Exploding Kittens \\
+		Spieler & player & Teilnehmer am Spielgeschehen\\
+		Spielraum & game room & Virtueller Raum, in dem ein Spiel stattfindet\\
+		Zug & turn & Zustand in dem ein Spieler eine Spielaktion ausführen muss\\
+	\end{longtable}
 \end{center}
 
 \section{Relevante Fakten und Annahmen}
