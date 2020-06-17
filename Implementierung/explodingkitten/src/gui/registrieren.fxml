@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RegistrierenController">
+    <children>
+        <HBox layoutX="8.0" alignment="CENTER">
+            <VBox prefHeight="328.0" prefWidth="419.0" spacing="10" style="-fx-alignment: left">
+                <Label prefHeight="45.0" prefWidth="273.0" style="-fx-alignment: left; -fx-font-size: 30"
+                       text="Exploding Kittens" textFill="#ee0808" underline="true"/>
+                <HBox style="-fx-alignment: left">
+                    <Label text="Benutzername: "/>
+                    <TextField fx:id="benutzername" promptText="Benutzername"/>
+                </HBox>
+                <HBox style="-fx-alignment: left">
+                    <Label prefHeight="17.0" prefWidth="82.0" text="Nickname: "/>
+                    <TextField fx:id="nickname" prefHeight="25.0" prefWidth="148.0" promptText="Nickname"/>
+                </HBox>
+                <HBox style="-fx-alignment: left">
+                    <Label prefHeight="17.0" prefWidth="83.0" text="Email: "/>
+                    <TextField fx:id="email" prefHeight="25.0" prefWidth="147.0" promptText="email"/>
+                </HBox>
+                <HBox style="-fx-alignment: left">
+                    <Label prefHeight="19.0" prefWidth="82.0" text="Passwort:"/>
+                    <PasswordField fx:id="passwort" prefHeight="25.0" prefWidth="148.0" text="12345"/>
+                </HBox>
+                <Button alignment="CENTER_RIGHT" onAction="#registrieren" prefHeight="25.0" prefWidth="84.0"
+                        text="Registrieren">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Button>
+                <Hyperlink text="Haben Sie schon ein Account? Anmelden"/>
+                <padding>
+                    <Insets left="30.0" top="20.0"/>
+                </padding>
+            </VBox>
+        </HBox>
+    </children>
+   <padding>
+      <Insets left="30.0" top="20.0" />
+   </padding>
+
+</AnchorPane>
