@@ -3,17 +3,16 @@ package ExplodingKittens.Login;
 import ExplodingKittens.Exceptions.UserNotExistException;
 import ExplodingKittens.Exceptions.UsernameTakenException;
 import ExplodingKittens.Exceptions.WrongPasswordException;
-import ExplodingKittens.User.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Interface für den Login Server
+ * Interface das die Methoden für den Login-/Registrier-Teil des Servers bereitstellt
  */
 public interface LoginServer extends Remote {
     /**
-     * Methode die den Spieler in seinen Account einloggt, nacdem er seine Daten eingegeben hat
+     * Methode die den Spieler in seinen Account einloggt, nachdem er seine Daten eingegeben hat
      *
      * @param name                      Benutzername der zum einloggen verwendet wird
      * @param password                  Zum Namen gehöriges Passwort

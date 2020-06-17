@@ -1,7 +1,12 @@
 package ExplodingKittens.User;
 
-public class User {
-    private String name,password;
+import java.io.Serializable;
+
+/**
+ * Klasse die einen Benutzer darstellt
+ */
+public class User implements Serializable {
+    private String name;
 
     /**
      * Konsatruktor für einen neuen Benutzer

@@ -1,11 +1,16 @@
-package ExplodingKittens.Login;
+package ExplodingKittens.Client;
 
 import ExplodingKittens.Exceptions.UserNotExistException;
 import ExplodingKittens.Exceptions.UsernameTakenException;
 import ExplodingKittens.Exceptions.WrongPasswordException;
+import ExplodingKittens.Lobby.LobbyClient;
+import ExplodingKittens.Login.LoginClient;
+import ExplodingKittens.Server.Server;
+import ExplodingKittens.User.User;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -19,12 +24,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Klasse die den Client zur Anmeldung/Registrierung implementiert
+ * Klasse die den Client implementiert
  */
-public class Client extends Application {
-    LoginServer server;
+public class Client extends Application implements LoginClient, LobbyClient {
+    Server server;
+    User user;
 
     /**
      * Konstruktor der Client und Server miteinander verbindet
@@ -34,13 +42,13 @@ public class Client extends Application {
      */
     public Client() throws RemoteException, NotBoundException {
         Registry reg = LocateRegistry.getRegistry();
-        server = (LoginServer) reg.lookup("login-server");
+        server = (Server) reg.lookup("login-server");
     }
 
     /**
      * Methode die den Client startet
      *
-     * @param args
+     * @param args Ungenutzte Eingabeparameter
      */
     public static void main(String[] args) {
             launch(args);
@@ -49,25 +57,21 @@ public class Client extends Application {
     /**
      * Methode die das grafische Interface startet
      *
-     * @param stage
+     * @param stage Hier werden die verscheidenen Grafiken angezeigt
      */
     @Override
     public void start(Stage stage) {
-        BorderPane root = selection();
-        Scene scene = new Scene(root,500,300);
-        stage.setTitle("Anmelden");
-        stage.setScene(scene);
-        stage.show();
+        selection(stage);
     }
 
     /**
-     * Erster Audswahlbildschirm bei dem man sich entscheiden kann,
-     * ob man sich registrieren oder anmelden will
-     *
-     * @return  Die fertiggestellte Ansicht wird dem grafischen Interface übergeben, das es dann anzeigt
+     * Siehe LoginClient
      */
-    public BorderPane selection() {
+    @Override
+    public void selection(Stage stage) {
         BorderPane root = new BorderPane();
+        Scene scene = new Scene(root,500,300);
+        stage.setTitle("Anmelden");
         /** Knöpfe die zum anmelden oder registrieren weiterleiten */
         HBox box = new HBox();
         box.setPadding(new Insets(50,0,0,150));
@@ -78,7 +82,7 @@ public class Client extends Application {
         log.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                loginGUI(root.getScene());
+                loginGUI(stage);
             }
         });
         Button reg = new Button("Registrieren");
@@ -86,7 +90,7 @@ public class Client extends Application {
         reg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                registerGUI(root.getScene());
+                registerGUI(stage);
             }
         });
         box.getChildren().addAll(log,reg);
@@ -98,18 +102,21 @@ public class Client extends Application {
         t.setPadding(new Insets(50,0,0,0));
         root.setTop(t);
         root.setAlignment(t,Pos.CENTER);
-
-        return root;
+        /** Anzeigen der erstellten Grafik */
+        scene.setRoot(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
-     * Methode zum Anzeigen des Anmeldefensters
-     * Die Benutzerdaten können eingegeben werden und bei richtigen Daten gelangt man in die Lobby
+     * Siehe LoginClient
      *
-     * @param scene Szene wird mit übergeben, um die Ansichen zu ändern.
+     * Die Benutzerdaten können eingegeben werden und bei richtigen Daten gelangt man in die Lobby
      */
-    public void loginGUI(Scene scene) {
+    @Override
+    public void loginGUI(Stage stage) {
 
+        Scene scene = stage.getScene();
         Parent previous = scene.getRoot();
         BorderPane loginPane = new BorderPane();
         Label l = new Label("Bitte geben Sie ihren Namen und das Passwort ein.");
@@ -117,22 +124,19 @@ public class Client extends Application {
         l.setPadding(new Insets(50,0,50,0));
         loginPane.setTop(l);
         loginPane.setAlignment(l,Pos.CENTER);
-
+        /** Erstellen der Eingabeflächen */
         TextField username = new TextField();
         username.setPromptText("Benutzername");
         PasswordField password = new PasswordField();
         password.setPromptText("Passwort");
-
         GridPane grid = new GridPane();
-
         grid.add(new Label("Benutzername:"), 0, 0);
         grid.add(username, 1, 0);
         grid.add(new Label("Passwort:"), 0, 1);
         grid.add(password, 1, 1);
         grid.setHgap(50);
-
         loginPane.setCenter(grid);
-
+        /** Erstellen der Knöpfe */
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(0,20,20,150));
         buttons.setSpacing(50);
@@ -146,12 +150,14 @@ public class Client extends Application {
             public void handle(ActionEvent actionEvent) {
                 try {
                     server.login(username.getCharacters().toString(),password.getCharacters().toString());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+                    user = new User(username.getCharacters().toString());
+                    displayLobby(stage);
                 } catch (WrongPasswordException e) {
                     popup("Das eingegebene Passwort ist falsch!");
                 } catch (UserNotExistException e) {
                     popup("Die eingegebenen Nutzerdaten sind nicht korrekt!");
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -165,19 +171,19 @@ public class Client extends Application {
         });
         buttons.getChildren().addAll(login,back);
         loginPane.setBottom(buttons);
-
+        /** Anzeigen der Grafik */
         scene.setRoot(loginPane);
-
     }
 
     /**
-     * Methode zum Anzeigen des Registrierungsfensters
-     * Die Benutzerdaten können eingegeben werden und bei richtigen Daten gelangt man in die Lobby
+     * siehe LoginClient
      *
-     * @param scene Szene wird mit übergeben, um die Ansichen zu ändern.
+     * Die Benutzerdaten können eingegeben werden und bei richtigen Daten gelangt man in die Lobby
      */
-    public void registerGUI(Scene scene) {
+    @Override
+    public void registerGUI(Stage stage) {
 
+        Scene scene = stage.getScene();
         Parent previous = scene.getRoot();
         BorderPane registerPane = new BorderPane();
         Label l = new Label("Bitte geben Sie ihren gewünschten Namen und das Passwort ein.");
@@ -185,22 +191,19 @@ public class Client extends Application {
         l.setPadding(new Insets(50,0,50,0));
         registerPane.setTop(l);
         registerPane.setAlignment(l,Pos.CENTER);
-
+        /** Erstellen der Eingabeflächen */
         TextField username = new TextField();
         username.setPromptText("Benutzername");
         PasswordField password = new PasswordField();
         password.setPromptText("Passwort");
-
         GridPane grid = new GridPane();
-
         grid.add(new Label("Benutzername:"), 0, 0);
         grid.add(username, 1, 0);
         grid.add(new Label("Passwort:"), 0, 1);
         grid.add(password, 1, 1);
         grid.setHgap(50);
-
         registerPane.setCenter(grid);
-
+        /** Erstellen der Knöpfe */
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(0,20,20,150));
         buttons.setSpacing(50);
@@ -217,12 +220,15 @@ public class Client extends Application {
                         popup("Der Nutzername ist zu kurz!(Mindestens 4 Zeichen)");
                     } else if (password.getCharacters().length()<4) {
                         popup("Das Passwort ist zu kurz!(Mindestens 4 Zeichen)");
+                    } else {
+                        server.register(username.getCharacters().toString(),password.getCharacters().toString());
+                        user = new User(username.getCharacters().toString());
+                        displayLobby(stage);
                     }
-                    server.register(username.getCharacters().toString(),password.getCharacters().toString());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
                 } catch (UsernameTakenException e) {
                     popup("Die eingegebenen Benutzername ist bereits vergeben!");
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -236,7 +242,7 @@ public class Client extends Application {
         });
         buttons.getChildren().addAll(register,back);
         registerPane.setBottom(buttons);
-
+    /** Anzeigen der Grafik */
         scene.setRoot(registerPane);
     }
 
@@ -252,4 +258,120 @@ public class Client extends Application {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    /**
+     * siehe LobbyClient
+     *
+     * Es gibt die Möglichkeit: sich abzumelden,
+     *                          die Bestenliste anzusehen,
+     * TODO:                    zu chatten und
+     *                          einen Spielraum zu erstellen/beizutreten
+     */
+    @Override
+    public void displayLobby(Stage stage) {
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root,1000,1000);
+        /** Erstellen der Knöpfe */
+        HBox buttons = new HBox();
+        buttons.setPadding(new Insets(0,20,20,150));
+        buttons.setSpacing(50);
+
+        Button logoff = new Button("Abmelden");
+        logoff.setOnAction(new EventHandler<ActionEvent>() {
+            /** Beim drücken des "Abmelden" Knopfes wird man aus der Lobby zum Anmeldebildschirm gebracht */
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    server.removeUser(user);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                user = null;
+                selection(stage);
+            }
+        });
+
+        Button bliste = new Button("Bestenliste");
+        /** Beim drücken des "Bestenliste" Knopfes wird die Methode showBestenlsite ausgeführt */
+        bliste.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    showBestenliste();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        logoff.setAlignment(Pos.BOTTOM_RIGHT);
+        buttons.getChildren().addAll(logoff, bliste);
+        root.setBottom(buttons);
+        /** Nachdem alles erstellt ist wird die Lobby angezeigt */
+        stage.setTitle("Lobby");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * siehe LobbyClient
+     *
+     * Die Bestenliste wird als Tabelle angezeigt.
+     * Dafür wird ein neues Fenster geöffnet.
+     */
+    @Override
+    public void showBestenliste() throws RemoteException {
+        BorderPane root = new BorderPane();
+        GridPane grid = new GridPane();
+        HashMap<String,Integer> liste = server.getBestenliste();
+        /** Erstellen der Tabelle */
+        Label sp = new Label("Spieler");
+        grid.add(sp, 0, 0);
+        GridPane.setHalignment(sp,HPos.CENTER);
+        GridPane.setHgrow(sp,Priority.ALWAYS);
+        Label si = new Label("Siege");
+        grid.add(si, 1, 0);
+        GridPane.setHalignment(si,HPos.CENTER);
+        GridPane.setHgrow(si,Priority.ALWAYS);
+        grid.setGridLinesVisible(true);
+        int i = 1;
+        /**
+         * Auslesen von jedem Eintrag in der Bestenliste und einfügen in die Tabelle
+         */
+        for (Map.Entry<String,Integer> e : liste.entrySet()) {
+            Label n = new Label(e.getKey());
+            Label a =new Label(e.getValue().toString());
+            grid.add(n, 0, i);
+            GridPane.setHgrow(n,Priority.ALWAYS);
+            GridPane.setVgrow(n,Priority.ALWAYS);
+            GridPane.setHalignment(n,HPos.CENTER);
+
+            grid.add(a, 1, i);
+            GridPane.setHgrow(a,Priority.ALWAYS);
+            GridPane.setVgrow(a,Priority.ALWAYS);
+            GridPane.setHalignment(a,HPos.CENTER);
+
+
+            i++;
+        }
+        grid.setAlignment(Pos.TOP_CENTER);
+        root.setCenter(grid);
+        /**
+         * Neues Fenster erstellen in dem die Bestenliste angezeigt wird
+         */
+        Stage bStage = new Stage();
+        bStage.setTitle("Bestenliste");
+        Scene bScene = new Scene(root,500,500);
+        bStage.setScene(bScene);
+        bStage.show();
+    }
+
+    /**
+     * TODO
+     * @param stage
+     */
+    @Override
+    public void leaveLobbyToRoom(Stage stage) {
+
+    }
+
 }
