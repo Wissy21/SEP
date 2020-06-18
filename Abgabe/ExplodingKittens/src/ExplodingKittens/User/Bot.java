@@ -14,4 +14,9 @@ public class Bot extends User{
     public Bot(String name) {
         super(name);
     }
+
+    @Override
+    public boolean isBot() {
+        return true;
+    }
 }

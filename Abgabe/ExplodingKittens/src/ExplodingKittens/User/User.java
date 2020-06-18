@@ -1,5 +1,7 @@
 package ExplodingKittens.User;
 
+import ExplodingKittens.Spielraum.Spielraum;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,8 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
     private String name;
+    private boolean isInGame;
+    private Spielraum room;
 
     /**
      * Konsatruktor für einen neuen Benutzer
@@ -15,6 +19,7 @@ public class User implements Serializable {
      */
     public User(String name) {
         this.name = name;
+        isInGame = false;
     }
 
     /**
@@ -33,5 +38,35 @@ public class User implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     *  Set Methode für den Benutzername
+     *
+     * @param inGame    Status wird übergeben
+     */
+    public void setInGame(boolean inGame) {
+        isInGame = inGame;
+    }
+
+    /**
+     * Get Methode ob Nutzer in einem Spiel ist
+     *
+     * @return  Status
+     */
+    public boolean isInGame() {
+        return isInGame;
+    }
+
+    public void setRoom(Spielraum room) {
+        this.room = room;
+    }
+
+    public Spielraum getRoom() {
+        return room;
+    }
+
+    public boolean isBot() {
+        return false;
     }
 }

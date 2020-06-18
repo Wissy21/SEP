@@ -1,11 +1,14 @@
 package ExplodingKittens.Lobby;
 
+import ExplodingKittens.Exceptions.NoInputException;
 import ExplodingKittens.Exceptions.RoomIsFullException;
+import ExplodingKittens.Exceptions.RoomNameTakenException;
 import ExplodingKittens.Login.LoginServer;
 import ExplodingKittens.Spielraum.Spielraum;
 import ExplodingKittens.User.User;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 
 /**
  * Inteface das Methoden der Lobby bereitstellt
@@ -23,7 +26,7 @@ public interface LobbyServer extends LoginServer {
      * @param user Benutzer der hinzugefügt werden soll
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public void addUserLobby(User user) throws RemoteException;
+    void addUserLobby(User user) throws RemoteException;
 
     /**
      * Methode die einen Benutzer aus der Liste der Spieler entfernt, die gerade in der Lobby sind
@@ -31,7 +34,7 @@ public interface LobbyServer extends LoginServer {
      * @param user              Benutzer der entfernt werden soll
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public void removeUser(User user) throws RemoteException;
+    void removeUser(User user) throws RemoteException;
 
     /**
      * Methode die einen neuen Spielraum erstellt
@@ -41,7 +44,7 @@ public interface LobbyServer extends LoginServer {
      * @throws RemoteException      Fehler bei Datenübertragung
      * @throws RoomIsFullException  Fehler wenn Raum bereits voll ist
      */
-    public void createRoom(User user, String name) throws RemoteException, RoomIsFullException;
+    Spielraum createRoom(User user, String name) throws RemoteException, RoomIsFullException, RoomNameTakenException, NoInputException;
 
     /**
      * Methode um einem Raum beizutreten
@@ -51,5 +54,7 @@ public interface LobbyServer extends LoginServer {
      * @throws RemoteException      Fehler bei Datenübertragung
      * @throws RoomIsFullException  Fehler wenn Raum voll ist
      */
-    public void enterRoom(User user, Spielraum room) throws RemoteException, RoomIsFullException;
+    void enterRoom(User user, Spielraum room) throws RemoteException, RoomIsFullException;
+
+    HashMap<String,Spielraum> getRooms() throws RemoteException;
 }
