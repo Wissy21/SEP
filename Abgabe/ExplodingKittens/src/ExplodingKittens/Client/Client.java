@@ -69,7 +69,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
     @Override
     public void start(Stage stage) {
         selection(stage);
-        /** Falls man angemeldet ist und das Fenster schliessen will wird man aufgefordert sich zuerst abzumelden. */
+        /* Falls man angemeldet ist und das Fenster schliessen will wird man aufgefordert sich zuerst abzumelden. */
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -89,13 +89,13 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root,500,300);
         stage.setTitle("Exploding Kittens - Anmelden");
-        /** Knöpfe die zum anmelden oder registrieren weiterleiten */
+        /* Knöpfe die zum anmelden oder registrieren weiterleiten */
         HBox box = new HBox();
         box.setPadding(new Insets(50,0,0,0));
         box.setSpacing(50);
         Button log = new Button();
         log.setText("Anmelden");
-        /** Beim drücken des "Anmelden" Knopfes gelangt man ins Anmeldefenster */
+        /* Beim drücken des "Anmelden" Knopfes gelangt man ins Anmeldefenster */
         log.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -103,7 +103,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
             }
         });
         Button reg = new Button("Registrieren");
-        /** Beim drücken des "Registrieren" Knopfes gelangt man ins Regestrierungsfenster */
+        /* Beim drücken des "Registrieren" Knopfes gelangt man ins Regestrierungsfenster */
         reg.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -118,9 +118,9 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         l.setFont(new Font(15));
         l.setPadding(new Insets(50,0,50,0));
         root.setTop(l);
-        root.setAlignment(l,Pos.CENTER);
+        BorderPane.setAlignment(l,Pos.CENTER);
 
-        /** Anzeigen der erstellten Grafik */
+        /* Anzeigen der erstellten Grafik */
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
@@ -141,8 +141,8 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         l.setFont(new Font(15));
         l.setPadding(new Insets(50,0,50,0));
         loginPane.setTop(l);
-        loginPane.setAlignment(l,Pos.CENTER);
-        /** Erstellen der Eingabeflächen */
+        BorderPane.setAlignment(l,Pos.CENTER);
+        /* Erstellen der Eingabeflächen */
         TextField username = new TextField();
         username.setPromptText("Benutzername");
         PasswordField password = new PasswordField();
@@ -155,12 +155,12 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         grid.setHgap(50);
         grid.setAlignment(Pos.CENTER_LEFT);
         loginPane.setCenter(grid);
-        /** Erstellen der Knöpfe */
+        /* Erstellen der Knöpfe */
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(10,0,20,0));
         buttons.setSpacing(50);
         Button login = new Button("Anmelden");
-        /**
+        /*
          * Beim drücken des "Anmelden" Knopfes werden die Eingaben überprüft.
          * Bei Falschen Eingaben bekommt man eine Fehlermeldung.
          */
@@ -181,7 +181,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
             }
         });
         Button back = new Button("Zurück");
-        /** Beim drücken des "Zurück" Knopfes gelangt man wieder zum Auswahlfenster */
+        /* Beim drücken des "Zurück" Knopfes gelangt man wieder zum Auswahlfenster */
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -191,7 +191,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(login,back);
         loginPane.setBottom(buttons);
-        /** Anzeigen der Grafik */
+        /* Anzeigen der Grafik */
         scene.setRoot(loginPane);
     }
 
@@ -210,8 +210,8 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         l.setFont(new Font(15));
         l.setPadding(new Insets(50,0,50,0));
         registerPane.setTop(l);
-        registerPane.setAlignment(l,Pos.CENTER);
-        /** Erstellen der Eingabeflächen */
+        BorderPane.setAlignment(l,Pos.CENTER);
+        /* Erstellen der Eingabeflächen */
         TextField username = new TextField();
         username.setPromptText("Benutzername");
         PasswordField password = new PasswordField();
@@ -224,12 +224,12 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         grid.setHgap(50);
         grid.setAlignment(Pos.CENTER_LEFT);
         registerPane.setCenter(grid);
-        /** Erstellen der Knöpfe */
+        /* Erstellen der Knöpfe */
         HBox buttons = new HBox();
         buttons.setPadding(new Insets(10,0,20,0));
         buttons.setSpacing(50);
         Button register = new Button("Registrieren");
-        /**
+        /*
          * Beim drücken des "Registrieren" Knopfes werden die Eingaben überprüft.
          * Bei zu kurzen Eingaben oder bei einem berites vorhandenen Namen bekommt man eine Fehlermeldung.
          */
@@ -254,7 +254,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
             }
         });
         Button back = new Button("Zurück");
-        /** Beim drücken des "Zurück" Knopfes gelangt man wieder zum Auswahlfenster */
+        /* Beim drücken des "Zurück" Knopfes gelangt man wieder zum Auswahlfenster */
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -264,7 +264,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(register,back);
         registerPane.setBottom(buttons);
-    /** Anzeigen der Grafik */
+    /* Anzeigen der Grafik */
         scene.setRoot(registerPane);
     }
 
@@ -281,7 +281,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root,1000,1000);
 
-        /** Einfügen des Chats */
+        /* Einfügen des Chats */
         VBox combined = new VBox();
         ScrollPane chat = new ScrollPane();
         VBox messages = new VBox(5);
@@ -292,18 +292,14 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         TextField nachricht = new TextField();
         nachricht.setPromptText("Nachricht");
         Button senden = new Button("Senden");
-        /** Beim drücken des "Senden" Knopfes wird die eingetippte Nachricht gesendet, wenn einen Text enthält */
+        /* Beim drücken des "Senden" Knopfes wird die eingetippte Nachricht gesendet, wenn einen Text enthält */
         senden.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String message = nachricht.getCharacters().toString();
                 nachricht.clear();
-                if(message != null && message.length()>1) {
-                    try {
-                        messages.getChildren().add(displayMessage(user,message));
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                if(message.length()>1) {
+                    messages.getChildren().add(displayMessage(user,message));
                 }
             }
         });
@@ -313,10 +309,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         combined.setAlignment(Pos.BOTTOM_RIGHT);
         combined.getChildren().addAll(chat,messageboard);
 
-
-
-
-        /** Erstellen der Spielraum-Anzeige */
+        /* Erstellen der Spielraum-Anzeige */
         ScrollPane roomPane = new ScrollPane();
         VBox rboxes = new VBox(30);
 
@@ -327,22 +320,21 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         rboxes.setPadding(new Insets(0,0,0,40));
         roomPane.setContent(rboxes);
 
-
-        /** Zusammenfügen von Chat und Raumauswahl zur Mittelkonsole */
+        /* Zusammenfügen von Chat und Raumauswahl zur Mittelkonsole */
         HBox console = new HBox();
         HBox.setHgrow(roomPane,Priority.ALWAYS);
         HBox.setHgrow(combined,Priority.ALWAYS);
         console.getChildren().addAll(roomPane, combined);
         root.setCenter(console);
 
-        /** Erstellen der Knöpfe */
+        /* Erstellen der Knöpfe */
         HBox buttons = new HBox(100);
         buttons.setPadding(new Insets(50,20,20,20));
         buttons.setAlignment(Pos.CENTER);
 
         Button logoff = new Button("Abmelden");
         logoff.setOnAction(new EventHandler<ActionEvent>() {
-            /** Beim drücken des "Abmelden" Knopfes wird man aus der Lobby zum Anmeldebildschirm gebracht */
+            /* Beim drücken des "Abmelden" Knopfes wird man aus der Lobby zum Anmeldebildschirm gebracht */
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
@@ -356,7 +348,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         });
 
         Button bliste = new Button("Bestenliste");
-        /** Beim drücken des "Bestenliste" Knopfes wird die Methode showBestenlsite ausgeführt */
+        /* Beim drücken des "Bestenliste" Knopfes wird die Bestenliste in einem neuen Fenster angezeigt */
         bliste.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -369,7 +361,10 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         });
 
         Button newroom = new Button("Raum erstellen");
-        /** Beim drücken des "Raum erstellen" Knopfes wird die Methode createRoom ausgeführt */
+        /*
+        Beim drücken des "Raum erstellen" Knopfes wird ein neuer Raum mit eingegebenen Namen erstellt
+        Aber nur wenn der Name nicht schon vergeben ist
+         */
         newroom.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -381,7 +376,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (RoomIsFullException e) {
-                    e.printStackTrace();
+                    popup("Der Raum ist bereits voll.");
                 } catch (RoomNameTakenException e) {
                     popup("Der Raumname ist bereits vergeben.");
                 } catch (NoInputException e) {
@@ -389,12 +384,15 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                 }
             }
         });
+        /*
+        Einfügen der Knöpfe in die Lobby Grafik
+         */
         buttons.getChildren().addAll(newroom,bliste,logoff);
         root.setBottom(buttons);
 
 
 
-        /** Erstellen der Navigation */
+        /* Erstellen der Navigation */
         HBox identifier = new HBox();
         identifier.setPadding(new Insets(30,30,50,30));
         Label nav1 = new Label("Spielräume");
@@ -412,7 +410,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         root.setTop(identifier);
 
 
-        /** Nachdem alles erstellt ist wird die Lobby angezeigt */
+        /* Nachdem alles erstellt ist wird die Lobby angezeigt */
         stage.setTitle("Exploding Kittens - Lobby");
         stage.setScene(scene);
         stage.show();
@@ -423,13 +421,15 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
      *
      * Die Bestenliste wird als Tabelle angezeigt.
      * Dafür wird ein neues Fenster geöffnet.
+     *
+     * TODO:    Bestenliste nach Anzahl der Siege ordnen
      */
     @Override
     public void showBestenliste() throws RemoteException {
         BorderPane root = new BorderPane();
         GridPane grid = new GridPane();
         HashMap<String,Integer> liste = server.getBestenliste();
-        /** Erstellen der Tabelle */
+        /* Erstellen der Tabelle */
         grid.setPadding(new Insets(10,100,20,100));
         Label sp = new Label("Spieler");
         grid.add(sp, 0, 0);
@@ -441,9 +441,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         GridPane.setHgrow(si,Priority.ALWAYS);
         grid.setGridLinesVisible(true);
         int i = 1;
-        /**
-         * Auslesen von jedem Eintrag in der Bestenliste und einfügen in die Tabelle
-         */
+        /* Auslesen von jedem Eintrag in der Bestenliste und einfügen in die Tabelle */
         for (Map.Entry<String,Integer> e : liste.entrySet()) {
             Label n = new Label(e.getKey());
             Label a =new Label(e.getValue().toString());
@@ -462,9 +460,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         }
         grid.setAlignment(Pos.TOP_CENTER);
         root.setCenter(grid);
-        /**
-         * Neues Fenster erstellen in dem die Bestenliste angezeigt wird
-         */
+        /* Neues Fenster erstellen in dem die Bestenliste angezeigt wird */
         Stage bStage = new Stage();
         bStage.setTitle("Exploding Kittens - Bestenliste");
         Scene bScene = new Scene(root,500,500);
@@ -486,13 +482,17 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         alert.showAndWait();
     }
 
-
+    /**
+     * Methode mit deren Hilfe der Name eines Spielraumes eigegeben wird
+     *
+     * @return  Der eingegebene Name wird zurück gegeben, wenn er länger als 3 Zeichen ist
+     */
     public String popupText() {
         TextInputDialog dialog = new TextInputDialog("Raumname");
         dialog.setTitle("Raumbenennung");
         dialog.setHeaderText(null);
         dialog.setContentText("Benennen Sie ihren Raum:");
-
+        /* Prüft ob Eingabe korrekt ist*/
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent() && result.get().length()>3){
                 return result.get();
@@ -500,10 +500,21 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
             return null;
     }
 
+    /**
+     * Methode um einen Raum in die Anzeige der Lobby aufzunehmen
+     *
+     * @param room      Raum der angezeigt werden soll
+     * @param rboxes    Box in der sich alle Räume befinden, die angezeigt werden
+     * @param stage     Stage wird mit übergeben um nächsten Räume anzuzeigen
+     */
     public void addCreatedRoom(Spielraum room, VBox rboxes,Stage stage) {
         VBox rbox = new VBox(new Label(room.getName()));
         rbox.setPadding(new Insets(20));
         rbox.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,null,null)));
+        /*
+        Wenn man in der Lobby auf einen Raum klickt wird man in diesen verschoben und wechselt die Ansicht
+        Aber nur wenn in dem Raum noch Platz ist
+         */
         rbox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -511,7 +522,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     server.enterRoom(user,room);
                     displaySpielraum(stage);
                 } catch (RemoteException e) {
-                    e.printStackTrace();
+                    popup("Dieser Raum existiert nicht mehr");
                 } catch (RoomIsFullException e) {
                     popup("Dieser Raum ist leider voll.");
                }
@@ -520,6 +531,12 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         rboxes.getChildren().add(rbox);
     }
 
+    /**
+     * Methode um den Spielraum anzuzeigen
+     *
+     * @param stage             Stage auf der der Spielraum zu sehen ist
+     * @throws RemoteException  Fehler bei Datenübertragung
+     */
     @Override
     public void displaySpielraum(Stage stage) throws RemoteException {
 
@@ -528,14 +545,17 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
 
 
 
-        /** Erstellen der Knöpfe */
+        /* Erstellen der Knöpfe */
         HBox buttons = new HBox(100);
         buttons.setPadding(new Insets(50,20,20,20));
         buttons.setAlignment(Pos.CENTER);
 
         Button leave = new Button("Verlassen");
+        /*
+        Beim drücken des "Verlassen" Knopfes wird man aus dem Spielraum in die Lobby gebracht
+        Falls der Raum danach leer ist oder nur noch Bots enthält wird er geschlossen
+         */
         leave.setOnAction(new EventHandler<ActionEvent>() {
-            /** Beim drücken des "Verlassen" Knopfes wird man aus dem Spielraum in die Lobby gebracht */
             @Override
             public void handle(ActionEvent actionEvent) {
                 String temp = room.getName();
@@ -556,18 +576,17 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         });
 
         Button startgame = new Button("Spiel starten");
-        /** Beim drücken des "Spiel starten" Knopfes werden die Spieler in ein Spiel gebracht, wenn es genug Spieler im Raum gibt */
+        /* Beim drücken des "Spiel starten" Knopfes werden die Spieler in ein Spiel gebracht, wenn es genug Spieler im Raum gibt */
         startgame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 //TODO
-                //room.startGame(user);
                 popup("TODO");
             }
         });
 
         Button botadd = new Button("Bot hinzufügen");
-        /** Beim drücken des "Bot hinzufügen" Knopfes wird ein Bot in den Raum hinzugefügt */
+        /* Beim drücken des "Bot hinzufügen" Knopfes wird ein Bot in den Raum hinzugefügt, wenn genugt Platz ist und man der Besitzer des Raums ist */
         botadd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -576,7 +595,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     room.addBot(user);
                     server.updateRoom(temp,room);
                 } catch (RoomIsFullException e) {
-                    e.printStackTrace();
+                    popup("Der Raum ist bereits voll.");
                 } catch (NoPermissionException e) {
                     popup("Dazu sind Sie nicht berechtigt.");
                 } catch (RemoteException e) {
@@ -586,7 +605,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         });
 
         Button namechange = new Button("Name ändern");
-        /** Beim drücken des "Name ändern" Knopfes wird der Name des Raums geändert */
+        /* Beim drücken des "Name ändern" Knopfes wird der Name des Raums geändert, wenn man der Besitzer des Raums ist */
         namechange.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -604,17 +623,25 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                 }
             }
         });
+        /* Hinzufügen der Knöpfe in die Ansicht */
         buttons.getChildren().addAll(startgame,botadd,namechange,leave);
         root.setBottom(buttons);
-
+        /* Anzeigen der Ansicht */
         stage.setTitle("Exploding Kittens - Spielraum");
         stage.setScene(scene);
         stage.show();
     }
 
-
+    /**
+     * Methode die eine geschriebene Nachricht im Chat sichtbar macht
+     *
+     * @param user                  Benutzer der die Nachricht geschrieben hat
+     * @param message               Nachricht die im Chat angezeigt werden soll
+     * @return                      Label in dem die Nachricht steht
+     * @throws RemoteException
+     */
     @Override
-    public Label displayMessage(User user, String message) throws RemoteException {
+    public Label displayMessage(User user, String message) {
         return new Label(user.getName()+":\t" + message);
     }
 }

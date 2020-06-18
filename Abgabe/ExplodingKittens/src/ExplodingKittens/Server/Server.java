@@ -5,6 +5,4 @@ import ExplodingKittens.Spielraum.SpielraumServer;
 /**
  * Inteface das alle Server-Interfaces zusammenfügt
  */
-public interface Server extends SpielraumServer {
-
-}
+public interface Server extends SpielraumServer {}

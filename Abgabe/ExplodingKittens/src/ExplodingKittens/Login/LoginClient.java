@@ -13,19 +13,19 @@ public interface LoginClient {
      *
      * @param stage Stage wird zum Anzeigen der erstellten Grafik übergeben
      */
-    public void selection(Stage stage);
+    void selection(Stage stage);
 
     /**
      * Methode die das Loginfenster erstellt und anzeigt
      *
      * @param stage Stage wird zum Anzeigen der erstellten Grafik übergeben
      */
-    public void loginGUI(Stage stage);
+    void loginGUI(Stage stage);
 
     /**
      * Methode die das Registrierungsfenster erstellt und anzeigt
      *
      * @param stage Stage wird zum Anzeigen der erstellten Grafik übergeben
      */
-    public void registerGUI(Stage stage);
+    void registerGUI(Stage stage);
 }

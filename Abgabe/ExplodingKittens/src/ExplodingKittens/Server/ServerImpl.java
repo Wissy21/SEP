@@ -18,7 +18,7 @@ import java.util.Map;
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
     /**
-     * accounts         Hier sind Benutzername und Passwort gespeichert
+     * accounts         Hier sind Benutzername und Passwort von jedem Benutzer gespeichert
      * online           Hier sind alle Nutzer die in der Lobby sind aufgelistet
      * rooms            Hier sind alle Spielraüme aufgelistet
      * bestenlsiste     Hier sind Benutzername und Anzahl der Siege gespeichert
@@ -27,6 +27,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     private ArrayList<User> online = new ArrayList<>();
     private HashMap<String,Spielraum> rooms = new HashMap<>();
     private HashMap<String, Integer> bestenliste = new HashMap<>();
+
     /**
      * Konstruktor für den Server
      *
@@ -105,15 +106,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         online.remove(user);
     }
 
+
     /**
      * Siehe LobbyServer
      *
      * Neuer Raum wird erstellt und der Liste der Räume hinzugefügt
      * dann wird der erstellende Spieler inm den Raum bewegt und sein Status geupdatet
      *
-     * @param user                  Benutzer der den Raum erstellen will
-     * @param name                  Name für den Raum
-     * @throws RoomIsFullException  Fehler wenn Raum bereits voll ist
+     * @param user                      Benutzer der den Raum erstellen will
+     * @param name                      Name für den Raum
+     * @return                          Raum der Erstellt wurde
+     * @throws RoomIsFullException      Fehler wenn Raum bereits voll ist
+     * @throws RoomNameTakenException   Fehler wenn der Name bereits benutzt wird
+     * @throws NoInputException         Fehler bei der Namenseingabe
      */
     @Override
     public Spielraum createRoom(User user, String name) throws RoomIsFullException, RoomNameTakenException, NoInputException {
@@ -175,11 +180,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
     }
 
-    /**
-     * Siehe Lobby Server
-     *
-     * @return  aktuelle Bestenliste wird zurückgegeben
-     */
     @Override
     public HashMap<String,Integer> getBestenliste() {
         return bestenliste;
@@ -190,10 +190,21 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         return rooms;
     }
 
+    /**
+     * Methode die einen Raum entfernt, der leer ist
+     *
+     * @param room  Raum der zu entfernen ist
+     */
     public void deleteRoom(Spielraum room) {
         rooms.remove(room.getName());
     }
 
+    /**
+     * Methode die die Raum Datenbank updatet, wenn sich an einem Raum etwas ändert
+     *
+     * @param oldroom   Name des alten Raums
+     * @param newroom   Neuer Raum
+     */
     @Override
     public void updateRoom(String oldroom, Spielraum newroom) {
         rooms.remove(oldroom);

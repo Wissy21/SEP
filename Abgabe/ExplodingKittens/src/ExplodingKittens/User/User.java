@@ -22,38 +22,19 @@ public class User implements Serializable {
         isInGame = false;
     }
 
-    /**
-     *  Set Methode für den Benutzername
-     *
-     * @param name  Neuer Name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Get Methode für den Benutzername
-     *
-     * @return  Name wird ausgegeben
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     *  Set Methode für den Benutzername
-     *
-     * @param inGame    Status wird übergeben
-     */
     public void setInGame(boolean inGame) {
         isInGame = inGame;
     }
 
-    /**
-     * Get Methode ob Nutzer in einem Spiel ist
-     *
-     * @return  Status
-     */
     public boolean isInGame() {
         return isInGame;
     }

@@ -20,7 +20,7 @@ public interface LoginServer extends Remote {
      * @throws WrongPasswordException   Fehler bei Passworteingabe
      * @throws UserNotExistException    Fehler bei Dateneingabe
      */
-    public void login(String name, String password) throws RemoteException, WrongPasswordException, UserNotExistException;
+    void login(String name, String password) throws RemoteException, WrongPasswordException, UserNotExistException;
 
     /**
      * Methode die einen neuen Account für einen Spieler erstellt
@@ -30,5 +30,5 @@ public interface LoginServer extends Remote {
      * @throws RemoteException          Fehler bei Datenübertragung
      * @throws UsernameTakenException   Fehler bei Auswahl des Namens
      */
-    public void register(String name, String password) throws RemoteException, UsernameTakenException;
+    void register(String name, String password) throws RemoteException, UsernameTakenException;
 }

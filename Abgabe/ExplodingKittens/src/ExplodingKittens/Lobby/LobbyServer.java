@@ -23,7 +23,7 @@ public interface LobbyServer extends LoginServer {
     /**
      * Methode die einen Benutzer in die Liste der Spieler hinzufügt, die gerade in der Lobby sind
      *
-     * @param user Benutzer der hinzugefügt werden soll
+     * @param user              Benutzer der hinzugefügt werden soll
      * @throws RemoteException  Fehler bei Datenübertragung
      */
     void addUserLobby(User user) throws RemoteException;
@@ -39,10 +39,13 @@ public interface LobbyServer extends LoginServer {
     /**
      * Methode die einen neuen Spielraum erstellt
      *
-     * @param user                  Benutzer der den Raum erstellen will
-     * @param name                  Name für den Raum
-     * @throws RemoteException      Fehler bei Datenübertragung
-     * @throws RoomIsFullException  Fehler wenn Raum bereits voll ist
+     * @param user                      Benutzer der den Raum erstellen will
+     * @param name                      Name für den Raum
+     * @return                          Spielraum der erstellt wurde wird zur Weiterverabeitung zurückgegeben
+     * @throws RemoteException          Fehler bei Datenübertragung
+     * @throws RoomIsFullException      Fehler wenn Raum bereits voll ist
+     * @throws RoomNameTakenException   Fehler bei der Raumbenennung
+     * @throws NoInputException         Fehler bei der Raumbenennung
      */
     Spielraum createRoom(User user, String name) throws RemoteException, RoomIsFullException, RoomNameTakenException, NoInputException;
 
@@ -56,5 +59,11 @@ public interface LobbyServer extends LoginServer {
      */
     void enterRoom(User user, Spielraum room) throws RemoteException, RoomIsFullException;
 
+    /**
+     * Methode um alle betretbaren Räume auszugeben
+     *
+     * @return                  Alle Räume die von der Lobby ais betretbar sind
+     * @throws RemoteException  Fehler bei Datenübertragung
+     */
     HashMap<String,Spielraum> getRooms() throws RemoteException;
 }
