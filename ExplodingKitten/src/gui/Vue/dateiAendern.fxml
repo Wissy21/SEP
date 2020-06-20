@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.dateiAendernController">
+    <children>
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" spacing="10" style="-fx-background-color: #E78921;">
+            <padding>
+                <Insets left="30.0" />
+            </padding>
+        </VBox>
+      <HBox layoutX="179.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="300.0">
+         <children>
+            <Label text="Benutzername :  ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="benutzername" prefHeight="30.0" prefWidth="154.0" promptText="Benutzername" />
+         </children>
+      </HBox>
+      <HBox layoutX="186.0" layoutY="444.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="300.0">
+         <children>
+            <Label text="Neu Passwort : ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwort1" prefHeight="30.0" prefWidth="154.0" promptText="passwort" />
+         </children>
+      </HBox>
+      <HBox layoutX="146.0" layoutY="506.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="300.0">
+         <children>
+            <Label text="Passwort bestätigen : ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwort1" prefHeight="30.0" prefWidth="154.0" promptText="Passwort bestätigen " />
+         </children>
+      </HBox>
+      <Button alignment="CENTER" layoutX="105.0" layoutY="570.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#zurück" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="271.0" fitWidth="311.0" layoutX="146.0" layoutY="36.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/explodingK.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="#363434ba" layoutX="145.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ihre Daten bearbeiten" />
+      <Button alignment="CENTER" layoutX="392.0" layoutY="569.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#datenÄndern" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="Daten ändern" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
