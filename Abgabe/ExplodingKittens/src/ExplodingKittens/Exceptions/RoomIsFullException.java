@@ -3,7 +3,7 @@ package ExplodingKittens.Exceptions;
 public class RoomIsFullException extends Exception{
     /**
      * Exception die geworfen wird,
-     * wenn der Spielraum voll ist wenn man beitreten will.
+     * wenn der Spielraum voll wenn man dem Spielraum beitreten will oder einen Bot hinzufügen will.
      */
     public RoomIsFullException(){}
 }

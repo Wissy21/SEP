@@ -1,9 +1,6 @@
 package ExplodingKittens.Server;
 
-import ExplodingKittens.Exceptions.RoomIsFullException;
-import ExplodingKittens.Exceptions.UserNotExistException;
-import ExplodingKittens.Exceptions.UsernameTakenException;
-import ExplodingKittens.Exceptions.WrongPasswordException;
+import ExplodingKittens.Exceptions.*;
 import ExplodingKittens.Spielraum.Spielraum;
 import ExplodingKittens.User.User;
 
@@ -21,15 +18,16 @@ import java.util.Map;
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
     /**
-     * accounts         Hier sind Benutzername und Passwort gespeichert
+     * accounts         Hier sind Benutzername und Passwort von jedem Benutzer gespeichert
      * online           Hier sind alle Nutzer die in der Lobby sind aufgelistet
      * rooms            Hier sind alle Spielraüme aufgelistet
      * bestenlsiste     Hier sind Benutzername und Anzahl der Siege gespeichert
      */
     private HashMap<String,String> accounts = new HashMap<>();
     private ArrayList<User> online = new ArrayList<>();
-    private ArrayList<Spielraum> rooms = new ArrayList<>();
+    private HashMap<String,Spielraum> rooms = new HashMap<>();
     private HashMap<String, Integer> bestenliste = new HashMap<>();
+
     /**
      * Konstruktor für den Server
      *
@@ -108,28 +106,42 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         online.remove(user);
     }
 
+
     /**
      * Siehe LobbyServer
      *
      * Neuer Raum wird erstellt und der Liste der Räume hinzugefügt
-     * dann wird der erstellende Spieler inm den Raum bewegt und aus der Lobby entfernt
+     * dann wird der erstellende Spieler inm den Raum bewegt und sein Status geupdatet
      *
-     * @param user                  Benutzer der den Raum erstellen will
-     * @param name                  Name für den Raum
-     * @throws RoomIsFullException  Fehler wenn Raum bereits voll ist
+     * @param user                      Benutzer der den Raum erstellen will
+     * @param name                      Name für den Raum
+     * @return                          Raum der Erstellt wurde
+     * @throws RoomIsFullException      Fehler wenn Raum bereits voll ist
+     * @throws RoomNameTakenException   Fehler wenn der Name bereits benutzt wird
+     * @throws NoInputException         Fehler bei der Namenseingabe
      */
     @Override
-    public void createRoom(User user, String name) throws RoomIsFullException {
+    public Spielraum createRoom(User user, String name) throws RoomIsFullException, RoomNameTakenException, NoInputException {
         Spielraum room = new Spielraum(user,name);
-        rooms.add(room);
+        if(name == null) {
+            throw new NoInputException();
+        }
+        for (String s: rooms.keySet()) {
+            if(s.equals(name)) {
+                throw new RoomNameTakenException();
+            }
+        }
+        rooms.put(name,room);
         room.addPlayer(user);
-        removeUser(user);
+        user.setInGame(true);
+        user.setRoom(room);
+        return room;
     }
 
     /**
      * Siehe LobbyServer
      *
-     * Spieler wird dem Raum hinzugefügt und aus der Lobby entfernt
+     * Spieler wird dem Raum hinzugefügt und sein Status geupdatet
      *
      * @param user                  Benutzer der dem Raum beitreten will
      * @param room                  Raum den beigetreten werden soll
@@ -138,7 +150,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     @Override
     public void enterRoom(User user, Spielraum room) throws RoomIsFullException {
         room.addPlayer(user);
-        removeUser(user);
+        user.setInGame(true);
+        user.setRoom(room);
     }
 
     /**
@@ -167,15 +180,35 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
     }
 
-    /**
-     * Siehe Lobby Server
-     *
-     * @return  aktuelle Bestenliste wird zurückgegeben
-     */
     @Override
-    public HashMap getBestenliste() {
+    public HashMap<String,Integer> getBestenliste() {
         return bestenliste;
     }
 
+    @Override
+    public HashMap<String,Spielraum> getRooms() {
+        return rooms;
+    }
+
+    /**
+     * Methode die einen Raum entfernt, der leer ist
+     *
+     * @param room  Raum der zu entfernen ist
+     */
+    public void deleteRoom(Spielraum room) {
+        rooms.remove(room.getName());
+    }
+
+    /**
+     * Methode die die Raum Datenbank updatet, wenn sich an einem Raum etwas ändert
+     *
+     * @param oldroom   Name des alten Raums
+     * @param newroom   Neuer Raum
+     */
+    @Override
+    public void updateRoom(String oldroom, Spielraum newroom) {
+        rooms.remove(oldroom);
+        rooms.put(newroom.getName(),newroom);
+    }
 
 }

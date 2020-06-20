@@ -18,7 +18,7 @@ public interface BestenlisteServer extends LobbyServer {
      * @param user              Benutzer der das Spiel gewonnen hat
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public void addVictory(User user) throws RemoteException;
+    void addVictory(User user) throws RemoteException;
 
     /**
      * Methode die die aktuelle Bestenliste liefert, um sich diese anzusehen
@@ -26,7 +26,7 @@ public interface BestenlisteServer extends LobbyServer {
      * @return                  Bestenliste wird zurückgegeben
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public HashMap getBestenliste() throws RemoteException;
+    HashMap<String,Integer> getBestenliste() throws RemoteException;
 
     /**
      * Methode die einen neuen Spieler in die Bestenlsite hinzufügt
@@ -34,5 +34,5 @@ public interface BestenlisteServer extends LobbyServer {
      * @param user              Spieler der hinzugefügt werden soll
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public void addUserListe(User user) throws RemoteException;
+    void addUserListe(User user) throws RemoteException;
 }

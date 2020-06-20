@@ -1,0 +1,38 @@
+package main.server.karten;
+
+public class Katzen extends Karte {
+    String name;
+    String effekt;
+
+    public Katzen(String name, String effekt) {
+        super(name, effekt);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getEffekt() {
+        return effekt;
+    }
+
+    @Override
+    public void setEffekt(String effekt) {
+        this.effekt = effekt;
+    }
+
+<<<<<<< HEAD
+    private boolean effekt_ausfuehren() {
+=======
+    private boolean effektAusfuehren() {
+>>>>>>> maxime
+        return false;
+    }
+}

@@ -14,19 +14,12 @@ public interface LobbyClient{
      *
      * @param stage Stage wird übergeben um die erzeugte Grafik sichtbar zu machen
      */
-    public void displayLobby(Stage stage);
+    void displayLobby(Stage stage) throws RemoteException;
 
     /**
      * Methode um die Bestenliste zu zeigen
      *
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    public void showBestenliste() throws RemoteException;
-
-    /**
-     * TODO
-     *
-     * @param stage
-     */
-    public void leaveLobbyToRoom(Stage stage);
+    void showBestenliste() throws RemoteException;
 }
