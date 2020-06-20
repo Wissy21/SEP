@@ -13,7 +13,6 @@ public class Lobby extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("lobby.fxml"));
         primaryStage.setTitle("Lobby");
-        ScrollPane sp = new ScrollPane();
         primaryStage.setScene(new Scene(root, 600, 380));
         primaryStage.show();
     }

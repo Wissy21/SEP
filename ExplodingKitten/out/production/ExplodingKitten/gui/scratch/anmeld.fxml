@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="534.0" prefWidth="628.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.anmeldenController">
+   <children>
+      <BorderPane layoutX="83.0" layoutY="68.0" prefHeight="360.0" prefWidth="417.0">
+         <center>
+            <VBox prefHeight="235.0" prefWidth="293.0" spacing="10" BorderPane.alignment="CENTER">
+               <Label contentDisplay="CENTER" prefHeight="45.0" prefWidth="233.0" style=" -fx-font-size: 30" text="Exploding Kittens" textFill="#ee0808" underline="true" />
+               <HBox prefHeight="25.0" prefWidth="237.0">
+                  <Label contentDisplay="CENTER" text="Benutzername: " />
+                  <TextField fx:id="benutzername" promptText="Benutzername" />
+               </HBox>
+               <HBox>
+                  <Label prefHeight="19.0" prefWidth="83.0" text="Passwort:" />
+                  <PasswordField fx:id="passwort" text="12345" />
+               </HBox>
+               <HBox alignment="CENTER">
+                  <Button alignment="CENTER" contentDisplay="CENTER" onAction="#anmelden" prefHeight="25.0" prefWidth="73.0" text="Anmelden" textAlignment="CENTER">
+                  </Button>
+               </HBox>
+               <Hyperlink alignment="CENTER" text="Neu bei Exploding Kittens? Jetzt registrieren" />
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
