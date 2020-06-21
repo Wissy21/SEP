@@ -9,15 +9,7 @@ import javafx.scene.input.MouseEvent;
 public class lobbyController {
     @FXML
     public TextField messageField;
-
-    public void Spielraum1(MouseEvent mouseEvent) {
-    }
-
-    public void Spileraum3(MouseEvent mouseEvent) {
-    }
-
-    public void Spielraum2(MouseEvent mouseEvent) {
-    }
+    
 
     public void message(InputMethodEvent inputMethodEvent) {
 
@@ -28,9 +20,25 @@ public class lobbyController {
 
     }
 
+
+    public void onInput(ActionEvent actionEvent) {
+    }
+
+    public void onInputText(InputMethodEvent inputMethodEvent) {
+    }
+
     public void sendmessage(MouseEvent mouseEvent) {
     }
 
-    public void sendButton(ActionEvent actionEvent) {
+    public void zurückLobby(ActionEvent actionEvent) {
+    }
+
+    public void raum1Beitreten(ActionEvent actionEvent) {
+    }
+
+    public void raum2Beitreten(ActionEvent actionEvent) {
+    }
+
+    public void raum3Beitreten(ActionEvent actionEvent) {
     }
 }

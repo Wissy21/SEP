@@ -1,34 +1,19 @@
 package gui.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
 public class spielraumController {
-    public void goToMenu(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenü(actionEvent);
-    }
-
-    public void onClickSpieler3(MouseEvent mouseEvent) throws IOException {
-        VueManager.karteNehmen(mouseEvent);
-    }
-
-    public void onClickSpieler2(MouseEvent mouseEvent) throws IOException {
-        VueManager.karteNehmen(mouseEvent);
-    }
+    public ImageView send;
 
     public void textMessage(ActionEvent actionEvent) throws IOException {
         VueManager.goToMenü(actionEvent);
     }
 
-    public void sendMessage(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenü(actionEvent);
-    }
-
-    public void onClickSpieler1(MouseEvent mouseEvent) throws IOException {
-        VueManager.karteNehmen(mouseEvent);
-    }
 
     public void karteNehmen(MouseEvent mouseEvent) {
         VueManager.karteNehmen(mouseEvent);
@@ -39,4 +24,26 @@ public class spielraumController {
     }
 
 
+    public void onInput(ActionEvent actionEvent) {
+    }
+
+
+    public void onInputText(InputMethodEvent inputMethodEvent) {
+    }
+
+    public void sendmessage(MouseEvent mouseEvent) {
+    }
+
+    public void leereStappel(MouseEvent mouseEvent) {
+    }
+
+    public void zurückSpielraum(ActionEvent actionEvent) throws IOException {
+        VueManager.goToMenü(actionEvent);
+    }
+
+    public void stappel(MouseEvent mouseEvent) {
+    }
+
+    public void bot(MouseEvent mouseEvent) {
+    }
 }

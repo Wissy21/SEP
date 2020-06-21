@@ -1,118 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.lobbyController">
-    <top>
-        <VBox BorderPane.alignment="CENTER">
-            <children>
-                <TitledPane animated="false" text="Lobby">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="598.0" />
-                    </content>
-                </TitledPane>
-            </children>
-        </VBox>
-    </top>
-    <bottom>
-        <HBox prefHeight="21.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <children>
-            <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#zurück" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="15.0" />
-               </HBox.margin>
-            </Button>
-            </children>
-        </HBox>
-    </bottom>
-    <center>
-        <SplitPane dividerPositions="0.29797979797979796" prefHeight="284.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.lobbyController">
+    <children>
+        <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0">
             <items>
-                <AnchorPane>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="200.0">
                     <children>
-                        <BorderPane layoutX="7.0" prefHeight="347.0" prefWidth="162.0" styleClass="anchor" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
-                            <stylesheets>
-                                <URL value="@../Style/style.css" />
-                            </stylesheets>
-                            <center>
-                                <VBox alignment="CENTER" prefHeight="322.0" prefWidth="161.0">
-                                    <children>
-                                        <Text fill="WHITE" onMouseClicked="#Spielraum1" strokeType="OUTSIDE" strokeWidth="0.0" text="Raum 1" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font></Text>
-                                        <VBox prefHeight="200.0" prefWidth="144.0" VBox.vgrow="ALWAYS" />
-                                        <Text fill="WHITE" fontSmoothingType="LCD" layoutX="10.0" layoutY="23.0" onMouseClicked="#Spielraum2" strokeType="OUTSIDE" strokeWidth="0.0" text="Raum 2" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font></Text>
-                                        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                                        <Text fill="WHITE" layoutX="10.0" layoutY="40.0" onMouseClicked="#Spileraum3" strokeType="OUTSIDE" strokeWidth="0.0" text="Raum 3" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font></Text>
-                                        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                                    </children>
-                                </VBox>
-                            </center>
-                        </BorderPane>
-                    </children>
-                </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="172.0" prefWidth="192.0">
-                    <children>
-                        <TitledPane animated="false" prefHeight="351.0" prefWidth="408.0" text="Chat" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="200.0" text="Lobby">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="373.0">
+                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="200.0" style="-fx-background-color: brown;">
                                     <children>
-                                        <ScrollPane layoutX="18.6" layoutY="19.6" prefHeight="281.0" prefWidth="371.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
-                                            <content>
-                                                <VBox prefHeight="285.0" prefWidth="404.0" />
-                                            </content>
-                                        </ScrollPane>
-                                        <HBox prefHeight="7.0" prefWidth="200.0" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                        <VBox fx:id="eintragRaum1" layoutX="13.0" layoutY="39.0" prefHeight="160.0" prefWidth="173.0">
                                             <children>
-                                                <TextField fx:id="messageField" onInputMethodTextChanged="#message" prefHeight="38.0" prefWidth="362.0" promptText="type in  a message" HBox.hgrow="ALWAYS" />
-                                                <Button mnemonicParsing="false" onAction="#sendButton" prefHeight="27.0" prefWidth="40.0" style="-fx-background-color: lightorange;">
-                                                    <graphic>
-                                                        <ImageView fitHeight="29.0" fitWidth="37.0" onMouseClicked="#sendmessage" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../Images/sendred.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </graphic>
-                                                </Button>
+                                                <Pane prefHeight="200.0" prefWidth="200.0" />
                                             </children>
-                                        </HBox>
-                                    </children>
-                                </AnchorPane>
+                                        </VBox>
+                                        <Label fx:id="label1" layoutX="24.0" layoutY="14.0" text="Raum1" textFill="#fffefe" underline="true">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <VBox fx:id="eintragRaum11" layoutX="14.0" layoutY="235.0" prefHeight="160.0" prefWidth="173.0">
+                                            <children>
+                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox fx:id="eintragRaum111" layoutX="14.0" layoutY="434.0" prefHeight="160.0" prefWidth="173.0">
+                                            <children>
+                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                            </children>
+                                        </VBox>
+                                        <Label fx:id="label2" layoutX="24.0" layoutY="218.0" text="Raum2" textFill="#fffefe" underline="true">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="label3" layoutX="24.0" layoutY="408.0" text="Raum3" textFill="#fffefe" underline="true">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                              <Button layoutX="79.0" layoutY="10.0" mnemonicParsing="false" onAction="#raum1Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="79.0" layoutY="215.0" mnemonicParsing="false" onAction="#raum2Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="79.0" layoutY="406.0" mnemonicParsing="false" onAction="#raum3Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                                    </children></AnchorPane>
                             </content>
                         </TitledPane>
                     </children>
                 </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <TitledPane animated="false" text="Chat">
+                            <content>
+                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="390.0" style="-fx-background-color: white;" />
+                            </content>
+                        </TitledPane>
+                        <Pane layoutY="591.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="392.0" style="-fx-background-color: white;">
+                            <children>
+                                <TextField layoutX="14.0" layoutY="10.0" onAction="#onInput" onInputMethodTextChanged="#onInputText" prefHeight="36.0" prefWidth="307.0" promptText="type in a text" />
+                                <ImageView fx:id="send" fitHeight="42.0" fitWidth="56.0" layoutX="327.0" layoutY="7.0" onMouseClicked="#sendmessage" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../Images/sendicon2.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                    </children>
+                </AnchorPane>
             </items>
         </SplitPane>
-    </center>
-    <left>
-        <HBox prefHeight="179.0" prefWidth="7.0" BorderPane.alignment="CENTER" />
-    </left>
-    <right>
-        <HBox prefHeight="179.0" prefWidth="6.0" BorderPane.alignment="CENTER" />
-    </right>
-</BorderPane>
+        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="512.0" layoutY="660.0" mnemonicParsing="false" onAction="#zurückLobby" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Button>
+        <Text layoutX="5.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ExplodingKittens" />
+    </children>
+</AnchorPane>
