@@ -1,4 +1,4 @@
-package ExplodingKittens.Exceptions;
+package Exceptions;
 
 public class UserNotExistException extends Exception {
     /**

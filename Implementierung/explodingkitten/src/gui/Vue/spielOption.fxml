@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,14 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.spielOptionController">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #E78921;">
           <children>
             <ImageView fitHeight="300.0" fitWidth="600.0" layoutY="13.0" opacity="0.74" pickOnBounds="true">
                <image>
-                  <Image url="@../images/explodingkitten.png" />
+                  <Image url="@../Images/explodingkitten.png" />
                </image>
                <effect>
                   <Glow />
@@ -33,15 +33,18 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <RadioButton layoutX="218.0" layoutY="427.0" mnemonicParsing="false" text="Computer" textFill="#000000dd">
+            <RadioButton fx:id="computer" layoutX="218.0" layoutY="427.0" mnemonicParsing="false" text="Computer" textFill="#000000dd">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="217.0" layoutY="496.0" mnemonicParsing="false" text="Mensch" textFill="#030101d7">
+            <RadioButton fx:id="mensch" layoutX="217.0" layoutY="496.0" mnemonicParsing="false" text="Mensch" textFill="#030101d7">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="spielOption" />
+               </toggleGroup>
             </RadioButton>
             <Button alignment="CENTER" layoutX="99.0" layoutY="603.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#zurückspielOption" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
                <font>

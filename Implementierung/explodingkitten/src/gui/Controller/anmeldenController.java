@@ -1,9 +1,9 @@
 package gui.Controller;
 
-import gui.GuiHelper;
+import Exceptions.NameFalschException;
+import Exceptions.PasswortFalschException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,12 +19,13 @@ public class anmeldenController {
     @FXML
     public PasswordField passwort;
 
-    public void anmelden(ActionEvent actionEvent) {
+
+    public void anmelden(ActionEvent actionEvent) throws  IOException , NameFalschException, PasswortFalschException {
         if (benutzername.getText().isEmpty() && passwort.getText().isEmpty()) {
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Textfields are empty","Eingabefehler","Achten Sie darauf, dass Sie die Zahlen richtig eingeben. Z.B. 100.7");
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Textfields are empty","Eingabefehler"," Bitte,Geben Sie Ihre Anmeldedaten ein");
         }
         System.out.println(benutzername.getText() + " " + passwort.getText());
-        clearFields();
+        VueManager.goToMenü(actionEvent);
     }
 
     private void clearFields() {
@@ -33,6 +34,10 @@ public class anmeldenController {
     }
 
     public void gotoRegister(ActionEvent actionEvent) throws IOException {
-        VueManager.goToRegistern(actionEvent);
+        VueManager.goToRegister(actionEvent);
     }
+
+    /*public void gotoMenü(ActionEvent actionEvent) throws IOException {
+        VueManager.goToMenü(actionEvent);
+    }*/
 }

@@ -11,12 +11,12 @@
    <children>
       <ImageView fitHeight="700.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@../images/background2.jpg" />
+            <Image url="@../Images/background2.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="293.0" fitWidth="435.0" layoutX="90.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/logo1.png" />
+            <Image url="@../Images/logo1.png" />
          </image>
       </ImageView>
       <Button alignment="CENTER" layoutX="121.0" layoutY="520.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToAnmelden" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: orangered;" text="Anmelden" textFill="WHITE">
