@@ -8,7 +8,9 @@ import ExplodingKittens.Server.Server;
 import ExplodingKittens.Spielraum.Spielraum;
 import ExplodingKittens.Spielraum.SpielraumClient;
 import ExplodingKittens.User.User;
+import com.sun.javafx.application.PlatformImpl;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -24,6 +26,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -175,7 +182,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     popup("Das eingegebene Passwort ist falsch!");
                 } catch (UserNotExistException e) {
                     popup("Die eingegebenen Nutzerdaten sind nicht korrekt!");
-                } catch (RemoteException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -250,6 +257,8 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     popup("Die eingegebenen Benutzername ist bereits vergeben!");
                 } catch (RemoteException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -268,6 +277,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         scene.setRoot(registerPane);
     }
 
+
     /**
      * siehe LobbyClient
      *
@@ -277,9 +287,19 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
      *                          einen Spielraum zu erstellen/beizutreten
      */
     @Override
-    public void displayLobby(Stage stage) throws RemoteException {
+    public void displayLobby(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root,1000,1000);
+        /*Chat Socket */
+        Socket socket;
+        PrintWriter pWriter;
+        BufferedReader bReader;
+
+        socket = new Socket("127.0.0.1",8889);
+
+        pWriter = new PrintWriter(socket.getOutputStream());
+
+        bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         /* Einfügen des Chats */
         VBox combined = new VBox();
@@ -292,17 +312,46 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
         TextField nachricht = new TextField();
         nachricht.setPromptText("Nachricht");
         Button senden = new Button("Senden");
+
         /* Beim drücken des "Senden" Knopfes wird die eingetippte Nachricht gesendet, wenn einen Text enthält */
         senden.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String message = nachricht.getCharacters().toString();
+                String messageFromClient = user.getName()+":\t" + nachricht.getCharacters().toString();
                 nachricht.clear();
-                if(message.length()>1) {
-                    messages.getChildren().add(displayMessage(user,message));
+                if(messageFromClient.length()>1) {
+
+                    pWriter.println(messageFromClient);
+                    pWriter.flush();
                 }
             }
         });
+        class GetMsgFromServer extends Thread{
+            @Override
+            public void run() {
+                while (this.isAlive()) {
+                    try {
+                        String strMsg = bReader.readLine();
+                        if(strMsg != null) {
+                            Platform.runLater(new Runnable() {
+                                public void run() {
+                                    messages.getChildren().add(displayMessage(user,strMsg));
+                                }
+                            });
+                        }
+                        Thread.sleep(50);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        new GetMsgFromServer().start();
+
+
+
+
+
         senden.setMaxWidth(100);
         HBox.setHgrow(nachricht,Priority.ALWAYS);
         messageboard.getChildren().addAll(nachricht,senden);
@@ -568,6 +617,8 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
 
                     } catch (RemoteException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                     room = null;
                 }
@@ -638,10 +689,11 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
      * @param user                  Benutzer der die Nachricht geschrieben hat
      * @param message               Nachricht die im Chat angezeigt werden soll
      * @return                      Label in dem die Nachricht steht
-     * @throws RemoteException
+     * @throws RemoteException      Fehler bei Datenübertragung
+     * @throws IOException          Fehler bei IO
      */
     @Override
     public Label displayMessage(User user, String message) {
-        return new Label(user.getName()+":\t" + message);
+        return new Label(message);
     }
 }

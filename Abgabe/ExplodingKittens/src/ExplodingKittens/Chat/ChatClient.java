@@ -3,6 +3,7 @@ package ExplodingKittens.Chat;
 import ExplodingKittens.User.User;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 /**
@@ -16,6 +17,7 @@ public interface ChatClient {
      * @param message               Nachricht die im Chat angezeigt werden soll
      * @return                      Gibt ein Label zurück das die Nachricht enthält
      * @throws RemoteException      Fehler bei Datenübertragung
+     * @throws IOException          Fehler bei IO
      */
-    Label displayMessage(User user, String message) throws RemoteException;
+    Label displayMessage(User user, String message) throws RemoteException, IOException;
 }
