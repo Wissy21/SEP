@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Eploding Kittens" company="" webLink="http://" view-date="2020-06-01" view-index="1" gantt-divider-location="404" resource-divider-location="358" version="2.8.11" locale="de_DE">
+    <description/>
+    <view zooming-state="default:4" id="gantt-chart">
+        <field id="tpd3" name="Vorgang" width="268" order="0"/>
+        <field id="tpd4" name="Anfang" width="76" order="1"/>
+        <field id="tpd5" name="Ende" width="56" order="2"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Ressource" width="254" order="0"/>
+        <field id="1" name="Rolle" width="85" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="34" name="1. Phase" meeting="false" start="2020-05-26" duration="19" complete="0" expand="true">
+            <task id="0" name="Implemantierung Spielraum" color="#8cb6ce" meeting="false" start="2020-05-26" duration="4" complete="0" thirdDate="2020-05-26" thirdDate-constraint="0" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="43" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="23" name="Implementierung Spielraum GUI" color="#8cb6ce" meeting="false" start="2020-06-01" duration="5" complete="0" thirdDate="2020-06-01" thirdDate-constraint="0" expand="true"/>
+            <task id="2" name="Implementierung Lobby" color="#8cb6ce" meeting="false" start="2020-05-28" duration="5" complete="0" thirdDate="2020-05-27" thirdDate-constraint="0" expand="true">
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+                <depend id="43" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="22" name="Implementierung Lobby GUI" color="#8cb6ce" meeting="false" start="2020-06-04" duration="2" complete="0" thirdDate="2020-06-04" thirdDate-constraint="0" expand="true"/>
+            <task id="16" name="Implementierung Nachricht" color="#8cb6ce" meeting="false" start="2020-05-26" duration="2" complete="0" thirdDate="2020-05-26" thirdDate-constraint="0" expand="true">
+                <depend id="10" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="10" name="Implementierung SpielChat" color="#8cb6ce" meeting="false" start="2020-05-28" duration="8" complete="0" thirdDate="2020-05-27" thirdDate-constraint="0" expand="true">
+                <depend id="43" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="19" name="Implementierung Benutzer" color="#8cb6ce" meeting="false" start="2020-05-26" duration="3" complete="0" thirdDate="2020-05-26" thirdDate-constraint="0" expand="true">
+                <depend id="18" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="18" name="Implementierung DBmanager" color="#8cb6ce" meeting="false" start="2020-05-29" duration="8" complete="0" thirdDate="2020-05-29" thirdDate-constraint="0" expand="true">
+                <depend id="25" type="2" difference="0" hardness="Strong"/>
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+                <depend id="43" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="25" name="Implementierung DBmanager GUI" color="#8cb6ce" meeting="false" start="2020-06-10" duration="5" complete="0" thirdDate="2020-06-10" thirdDate-constraint="0" expand="true"/>
+            <task id="26" name="Implementierung Interface Spielen" color="#8cb6ce" meeting="false" start="2020-06-10" duration="3" complete="0" thirdDate="2020-06-10" thirdDate-constraint="0" expand="true">
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="27" name="Implementierung SpielenImpl" color="#8cb6ce" meeting="false" start="2020-06-15" duration="5" complete="0" thirdDate="2020-06-15" thirdDate-constraint="0" expand="true"/>
+            <task id="15" name="Implementierung Bestenlist" color="#8cb6ce" meeting="false" start="2020-05-29" duration="4" complete="0" thirdDate="2020-05-29" thirdDate-constraint="0" expand="true">
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="24" name="Implementierung Bestenlist GUI" color="#8cb6ce" meeting="false" start="2020-06-04" duration="3" complete="0" thirdDate="2020-06-04" thirdDate-constraint="0" expand="true"/>
+            <task id="43" name="Unit-Tests" color="#8cb6ce" meeting="false" start="2020-06-10" duration="8" complete="0" thirdDate="2020-06-10" thirdDate-constraint="0" expand="true"/>
+            <task id="20" name="Java-Doc" color="#8cb6ce" meeting="false" start="2020-05-26" duration="19" complete="0" thirdDate="2020-05-26" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="35" name="2. Phase" meeting="false" start="2020-06-23" duration="15" complete="0" expand="true">
+            <task id="31" name="Implementierung Karte" color="#8cb6ce" meeting="false" start="2020-06-23" duration="5" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="29" type="2" difference="0" hardness="Strong"/>
+                <depend id="30" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="29" name="Implementierung Spielstapel" color="#8cb6ce" meeting="false" start="2020-06-30" duration="5" complete="0" thirdDate="2020-06-30" thirdDate-constraint="0" expand="true">
+                <depend id="46" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="30" name="Implementierung Ablagestabel" color="#8cb6ce" meeting="false" start="2020-06-30" duration="5" complete="0" thirdDate="2020-06-30" thirdDate-constraint="0" expand="true">
+                <depend id="46" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="46" name="Inplementierung Spielraum Funktion" color="#8cb6ce" meeting="false" start="2020-07-07" duration="4" complete="0" thirdDate="2020-07-07" thirdDate-constraint="0" expand="true"/>
+            <task id="17" name="Implementierung Spieler" color="#8cb6ce" meeting="false" start="2020-06-23" duration="4" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true">
+                <depend id="36" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="36" name="Implementierung Bot" color="#8cb6ce" meeting="false" start="2020-06-29" duration="5" complete="0" thirdDate="2020-06-29" thirdDate-constraint="0" expand="true"/>
+            <task id="28" name="Implementierung SpielenServer" color="#8cb6ce" meeting="false" start="2020-07-01" duration="4" complete="0" thirdDate="2020-07-01" thirdDate-constraint="0" expand="true">
+                <depend id="32" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="32" name="Implementierung SpielenClient" color="#8cb6ce" meeting="false" start="2020-07-07" duration="4" complete="0" thirdDate="2020-07-07" thirdDate-constraint="0" expand="true"/>
+            <task id="42" name="Java-Doc" color="#8cb6ce" meeting="false" start="2020-06-23" duration="15" complete="0" thirdDate="2020-06-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Siyu Zhang" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Manuela Kuaguim" function="Default:0" contacts="" phone=""/>
+        <resource id="1" name="Yirui Fu" function="Default:0" contacts="" phone=""/>
+        <resource id="3" name="Florent Tandjune Tamoyem" function="Default:0" contacts="" phone=""/>
+        <resource id="4" name="Thiemo Lachmund" function="Default:0" contacts="" phone=""/>
+        <resource id="5" name="Alexander Nachtigall" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="10" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="43" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="15" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="42" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="24" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="23" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="17" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="10" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="43" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="15" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="16" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="20" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="36" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="18" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="23" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="20" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="30" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="19" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="25" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="26" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="27" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="4" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="46" resource-id="4" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="4" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="19" resource-id="5" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="18" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="20" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="42" resource-id="5" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="31" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="28" resource-id="5" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
