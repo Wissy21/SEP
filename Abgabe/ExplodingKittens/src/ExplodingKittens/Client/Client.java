@@ -615,7 +615,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                         server.deleteRoom(room);
                         displayLobby(stage);
 
-                    } catch (RemoteException e) {
+                    } catch (RemoteException | RoomNameTakenException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -649,7 +649,7 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     popup("Der Raum ist bereits voll.");
                 } catch (NoPermissionException e) {
                     popup("Dazu sind Sie nicht berechtigt.");
-                } catch (RemoteException e) {
+                } catch (RemoteException | RoomNameTakenException e) {
                     e.printStackTrace();
                 }
             }
@@ -671,6 +671,8 @@ public class Client extends Application implements LoginClient, LobbyClient, Spi
                     popup("Dazu sind Sie nicht berechtigt.");
                 } catch (RemoteException e) {
                     e.printStackTrace();
+                } catch (RoomNameTakenException e) {
+                    popup("Dieser Raumname ist bereits vergeben.");
                 }
             }
         });
