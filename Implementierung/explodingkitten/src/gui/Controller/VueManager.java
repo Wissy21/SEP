@@ -131,7 +131,7 @@ public class VueManager {
         stage.centerOnScreen();
     }
 
-    public static int karteNehmen(MouseEvent mouseEvent) {
+   /*public static int karteNehmen(MouseEvent mouseEvent) {
         return 0;
-    }
+    }*/
 }

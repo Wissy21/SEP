@@ -1,6 +1,7 @@
 package gui.Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
@@ -8,21 +9,13 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
 public class spielraumController {
+    @FXML
     public ImageView send;
 
-    public void textMessage(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenü(actionEvent);
-    }
 
-
-    public void karteNehmen(MouseEvent mouseEvent) {
+    /*public void karteNehmen(MouseEvent mouseEvent) {
         VueManager.karteNehmen(mouseEvent);
-    }
-
-    public void onClickSpieler4(MouseEvent mouseEvent) throws IOException {
-        VueManager.karteNehmen(mouseEvent);
-    }
-
+    }*/
 
     public void onInput(ActionEvent actionEvent) {
     }
