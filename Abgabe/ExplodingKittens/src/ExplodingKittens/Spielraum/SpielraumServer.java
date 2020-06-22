@@ -1,6 +1,7 @@
 package ExplodingKittens.Spielraum;
 
 import ExplodingKittens.Bestenliste.BestenlisteServer;
+import ExplodingKittens.Exceptions.RoomNameTakenException;
 
 import java.rmi.RemoteException;
 
@@ -24,7 +25,7 @@ public interface SpielraumServer extends BestenlisteServer {
      * @param newroom           Neuer Raum
      * @throws RemoteException  Fehler bei Datenübertragung
      */
-    void updateRoom(String oldroom, Spielraum newroom) throws  RemoteException;
+    void updateRoom(String oldroom, Spielraum newroom) throws  RemoteException, RoomNameTakenException;
 
 
 }

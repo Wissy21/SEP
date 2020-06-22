@@ -101,7 +101,6 @@ public class Spielraum implements Serializable {
         if(user.getName().equals(owner.getName())) {
             owner = possibleNewOwner;
         }
-        System.out.println(empty);
         return empty;
     }
 
@@ -127,5 +126,22 @@ public class Spielraum implements Serializable {
 
     public User getOwner() {
         return owner;
+    }
+
+    /**
+     * Neue equals Methde zum vergleichen von Räumen
+     *
+     * @param obj   Zu vergleichendes Objekt
+     * @return      Boolena ob Objekte identisch sind
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Spielraum)) {
+            return false;
+        }
+        Spielraum room = (Spielraum) obj;
+        if (room.getName().equals(name)&&room.getOwner().equals(owner)&&room.players.equals(players)) {
+            return true;
+        } else { return false;}
     }
 }
