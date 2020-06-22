@@ -1,86 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c50a45fa-34e3-4a59-8fe5-e7a3756f1c6c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Client/LobbyClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Client/LoginClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Common/Bot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Common/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Exceptions/RoomIsFullException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Exceptions/UserNotExistException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Exceptions/UsernameTakenException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Exceptions/WrongPasswordException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/BestenlisteServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/LobbyServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/LoginServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/ServerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/Server/Spielraum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/RegistrierenController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/SpielMenueController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/VueManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/anmeldenController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/bestenListeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/dateiAendernController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/lobbyController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/spielNiveauController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/spielOptionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/spielraumController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Controller/startFensterController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/GuiHelper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Style/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/anmelden.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/bestenListe.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/dateiAendern.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/lobby.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/registrieren.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/spielNiveau.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/spielOption.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/spielmenue.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/spielraum.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/Vue/startfenster.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/avatars.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/background2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/ekit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explo.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explode.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explodingK.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explodingKI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explodingkitten.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/explosion.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/jetpack-kitten.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/kaboom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/logo1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/logo2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/luis.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/main_deck_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/sendicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/sendred.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/smiley.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/images/user_images/playericon9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/scratch/anmeld.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ExplodingKitten/src/gui/scratch/anmeldController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Implementierung/explodingkitten/src/gui/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Implementierung/explodingkitten/src/gui/Lobby.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
   <component name="ComposerSettings">
     <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1daqVNbWCrDM5PiXVO10NIousLx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -92,10 +52,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SvnConfiguration">
@@ -109,10 +71,22 @@
       <option name="presentableId" value="Default" />
       <updated>1592673574711</updated>
       <workItem from="1592673576119" duration="14000" />
+      <workItem from="1592812028390" duration="2251000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
