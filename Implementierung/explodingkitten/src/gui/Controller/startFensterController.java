@@ -7,7 +7,6 @@ import java.io.IOException;
 
 public class startFensterController {
     public void satrtFenster(ActionEvent actionEvent) {
-
     }
 
     public void gotoRegister(ActionEvent actionEvent) throws IOException {

@@ -37,7 +37,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwort1" prefHeight="30.0" prefWidth="154.0" promptText="passwort" />
+            <PasswordField fx:id="passwort" prefHeight="30.0" prefWidth="154.0" promptText="passwort" />
          </children>
       </HBox>
       <HBox layoutX="146.0" layoutY="506.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="300.0">
@@ -50,7 +50,7 @@
             <PasswordField fx:id="passwortBestätigen" prefHeight="30.0" prefWidth="154.0" promptText="Passwort bestätigen " />
          </children>
       </HBox>
-      <Button alignment="CENTER" layoutX="105.0" layoutY="570.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#zurück" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
+      <Button alignment="CENTER" layoutX="103.0" layoutY="570.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#zurück" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -61,7 +61,12 @@
          </image>
       </ImageView>
       <Text fill="#363434ba" layoutX="145.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ihre Daten bearbeiten" />
-      <Button alignment="CENTER" layoutX="392.0" layoutY="569.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#datenÄndern" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="Daten ändern" textFill="WHITE">
+      <Button alignment="CENTER" layoutX="394.0" layoutY="569.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#datenÄndern" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="Daten ändern" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="237.0" layoutY="650.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#accountLöschen" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: red;" text="Account Löschen" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

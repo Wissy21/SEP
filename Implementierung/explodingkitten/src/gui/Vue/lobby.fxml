@@ -25,7 +25,13 @@
                                     <children>
                                         <VBox fx:id="eintragRaum1" layoutX="13.0" layoutY="39.0" prefHeight="160.0" prefWidth="173.0">
                                             <children>
-                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                                <Pane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Label fx:id="raum1Label1" layoutX="14.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum1Label2" layoutX="13.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum1Label3" layoutX="14.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum1Label4" layoutX="12.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                       </children></Pane>
                                             </children>
                                         </VBox>
                                         <Label fx:id="label1" layoutX="24.0" layoutY="14.0" text="Raum1" textFill="#fffefe" underline="true">
@@ -33,14 +39,26 @@
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <VBox fx:id="eintragRaum11" layoutX="14.0" layoutY="235.0" prefHeight="160.0" prefWidth="173.0">
+                                        <VBox fx:id="eintragRaum2" layoutX="14.0" layoutY="248.0" prefHeight="144.0" prefWidth="173.0">
                                             <children>
-                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                                <Pane prefHeight="142.0" prefWidth="173.0">
+                                       <children>
+                                          <Label fx:id="raum2Label1" layoutX="11.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum2Label2" layoutX="11.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum2Label3" layoutX="11.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum2Label4" layoutX="12.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                       </children></Pane>
                                             </children>
                                         </VBox>
-                                        <VBox fx:id="eintragRaum111" layoutX="14.0" layoutY="434.0" prefHeight="160.0" prefWidth="173.0">
+                                        <VBox fx:id="eintragRaum3" layoutX="13.0" layoutY="453.0" prefHeight="140.0" prefWidth="174.0">
                                             <children>
-                                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="174.0">
+                                       <children>
+                                          <Label fx:id="raum3Label1" layoutX="11.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum3Label2" layoutX="12.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum3Label3" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                          <Label fx:id="raum3Label4" layoutX="11.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+                                       </children></Pane>
                                             </children>
                                         </VBox>
                                         <Label fx:id="label2" layoutX="24.0" layoutY="218.0" text="Raum2" textFill="#fffefe" underline="true">
@@ -48,7 +66,7 @@
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="label3" layoutX="24.0" layoutY="408.0" text="Raum3" textFill="#fffefe" underline="true">
+                                        <Label fx:id="label3" layoutX="24.0" layoutY="422.0" text="Raum3" textFill="#fffefe" underline="true">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -63,7 +81,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="79.0" layoutY="406.0" mnemonicParsing="false" onAction="#raum3Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
+                              <Button layoutX="79.0" layoutY="418.0" mnemonicParsing="false" onAction="#raum3Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
