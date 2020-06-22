@@ -45,22 +45,36 @@ public class DBmanager {
      */
     public static boolean spielerRegistrieren (String nickname, String pass, String bestpass) throws UserNameAlreadyExistsException, WrongPassWordException, SQLException, ClassNotFoundException {
 
-        if (pass == bestpass) {
 
-            Connection conn = verbindung();
-            String anfrage = "insert into benutzer values(?,?) ";
-            PreparedStatement pstmt = conn.prepareStatement(anfrage);
-            pstmt.setString(1, nickname);
-            pstmt.setString(2, pass);
+        Connection conn = verbindung();
+        String anfrage1 = "select pass from benutzer b where benutzername = ? ";
+        String anfrage2 = "insert into benutzer values(?,?) ";
+        PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
+        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
+        pstmt1.setString(1,nickname);
+        ResultSet rst1 = pstmt1.executeQuery();
 
-            boolean check = pstmt.execute();
+        if(rst1.next()){
 
-            return !check;
+            throw new UserNameAlreadyExistsException();
+
         }
+        else{
 
-        else {
+            if (pass == bestpass) {
+                pstmt2.setString(1, nickname);
+                pstmt2.setString(2, pass);
 
-            return false;
+                boolean check = pstmt2.execute();
+
+                return !check;
+            }
+
+            else {
+
+                throw new WrongPassWordException();
+            }
+
         }
 
     }
@@ -88,10 +102,10 @@ public class DBmanager {
 
         }
 
-        return false;}
+        throw new WrongPassWordException();}
 
         else
-            return false;
+            throw new UserNotExistException();
 
     }
 
@@ -114,25 +128,42 @@ public class DBmanager {
         return !check;
     }
 
-    public static boolean DatenAendern(String altnickname, String neunickname, String neupass, String passbest ) throws WrongPassWordException, UserNotExistException, SQLException, ClassNotFoundException {
+    public static boolean DatenAendern(String altnickname, String neunickname, String neupass, String passbest ) throws WrongPassWordException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException {
 
-        if(neupass==passbest){
 
-            Connection conn = verbindung();
-            String anfrage = "update benutzer set benutzername = ?, pass = ? where benutzername = ?";
-            PreparedStatement pstmt = conn.prepareStatement(anfrage);
-            pstmt.setString(1, neunickname);
-            pstmt.setString(2, neupass);
-            pstmt.setString(3, altnickname);
+        Connection conn = verbindung();
+        String anfrage1 = "select pass from benutzer b where benutzername = ? ";
+        String anfrage = "update benutzer set benutzername = ?, pass = ? where benutzername = ?";
+        PreparedStatement pstmt = conn.prepareStatement(anfrage);
+        pstmt.setString(1, neunickname);
+        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
+        pstmt1.setString(1,neunickname);
+        ResultSet rst1 = pstmt1.executeQuery();
 
-            boolean check = pstmt.execute();
+        if(rst1.next()){
 
-            return !check;
-        }
-        else{
+            throw new UserNameAlreadyExistsException();
 
-            return false;
         }
 
+        else {
+
+            if(neupass==passbest){
+
+
+                pstmt.setString(2, neupass);
+                pstmt.setString(3, altnickname);
+
+                boolean check = pstmt.execute();
+
+                return !check;
+            }
+            else{
+
+                throw new WrongPassWordException();
+
+            }
+        }
+        
     }
 }
