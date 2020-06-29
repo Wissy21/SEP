@@ -1,6 +1,9 @@
 package gui.Controller;
 
 import Exceptions.DoppelterEintragException;
+import Exceptions.UserNameAlreadyExistsException;
+import Exceptions.WrongPasswordException;
+import Server.datenbankmanager.DBinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,6 +12,9 @@ import javafx.scene.control.TextField;
 
 
 import java.io.IOException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.sql.SQLException;
 
 import static gui.GuiHelper.showErrorOrWarningAlert;
 
@@ -25,14 +31,30 @@ public class RegistrierenController {
 //VueManager.goToRegistrieren(event);
 
     public void registrieren(ActionEvent actionEvent) throws IOException, DoppelterEintragException {
-        if (benutzername.getText().isEmpty() && passwort.getText().isEmpty() && passwortBestätigen.getText().isEmpty() ) {
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabe Fehler", "Eingabefehler", " Bitte,Geben Sie Ihre Anmeldedaten ein");
-        }
-        if (!(passwort.getText().equals(passwortBestätigen.getText()))) {
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", " Bitte,Geben Sie dasselbe Passwort ein");
-        }
-        showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Erfolgreiche Registrierung","Erfolgreiche Registrierung"," Sie Haben Sie sich Erfolgreich Registriert");
 
+        try {
+            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+
+            if (benutzername.getText().isEmpty() && passwort.getText().isEmpty() && passwortBestätigen.getText().isEmpty() ) {
+                showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabe Fehler", "Eingabefehler", " Bitte,Geben Sie Ihre Anmeldedaten ein");
+            }
+
+            boolean check = db.spielerRegistrieren(benutzername.getText(), passwort.getText(), passwortBestätigen.getText());
+            if(check){
+                VueManager.goToLogIn(actionEvent);
+            }
+        } catch (NotBoundException e) {
+            //e.printStackTrace();
+        } catch (UserNameAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (WrongPasswordException e) {
+            //e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", " Bitte,Geben Sie dasselbe Passwort ein");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void goToAnmelden(ActionEvent actionEvent) throws IOException {

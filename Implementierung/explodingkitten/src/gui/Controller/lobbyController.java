@@ -1,7 +1,10 @@
 package gui.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -47,6 +50,8 @@ public class lobbyController {
     public VBox eintragRaum2;
     @FXML
     public VBox eintragRaum3;
+    @FXML
+    public VBox roomList;
 
     public void message(InputMethodEvent inputMethodEvent) {
 
@@ -69,7 +74,7 @@ public class lobbyController {
     }
 
     public void zurückLobby(ActionEvent actionEvent) throws IOException {
-        VueManager.goToLobby(actionEvent);
+        VueManager.goToSpiel(actionEvent);
     }
 
     public void raum1Beitreten(ActionEvent actionEvent) throws IOException {
@@ -85,4 +90,31 @@ public class lobbyController {
     }
 
 
+    public void createRoom(ActionEvent actionEvent) {
+        /*try {
+            LobbyInterface l = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
+            boolean check = l.addRoom(userId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }*/
+        updateRoomList();
+    }
+
+    public void updateRoomList(){
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../Vue/LobbyRoom.fxml"));
+
+        try {
+            Parent root = fxmlLoader.load();
+
+            //LobbyRoom lb = fxmlLoader.getController();
+            //lb.setRaum(this, sr.id, sr.playerList.size(), sr.started);
+            Platform.runLater(() -> this.roomList.getChildren().add(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

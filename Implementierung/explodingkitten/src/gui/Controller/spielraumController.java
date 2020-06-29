@@ -11,6 +11,7 @@ import java.io.IOException;
 public class spielraumController {
     @FXML
     public ImageView send;
+    public String name;
 
 
     /*public void karteNehmen(MouseEvent mouseEvent) {
@@ -31,7 +32,7 @@ public class spielraumController {
     }
 
     public void zurückSpielraum(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenü(actionEvent);
+        VueManager.goToSpiel(actionEvent);
     }
 
     public void stappel(MouseEvent mouseEvent) {

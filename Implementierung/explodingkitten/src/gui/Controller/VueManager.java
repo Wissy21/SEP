@@ -1,11 +1,11 @@
 package gui.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,9 +35,12 @@ public class VueManager {
         stage.centerOnScreen();
     }
 
-    public static void goToMenü(Event event) throws IOException {
+    public static void goToMenü(Event event, String name) throws IOException {
         FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../Vue/spielmenue.fxml"));
         Parent root = loader.load();
+
+        SpielMenueController c = loader.getController();
+        c.setName(name);
 
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -72,8 +75,7 @@ public class VueManager {
     }
 
     public static void goToBestenliste(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../Vue/bestenListe.fxml"));
-        Parent root = loader.load();
+        Parent root = FXMLLoader.load(VueManager.class.getResource("Vue/bestenListe.fxml"));
 
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -130,6 +132,7 @@ public class VueManager {
         stage.show();
         stage.centerOnScreen();
     }
+
 
    /*public static int karteNehmen(MouseEvent mouseEvent) {
         return 0;

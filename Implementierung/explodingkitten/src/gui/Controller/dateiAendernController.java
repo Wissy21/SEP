@@ -19,9 +19,11 @@ public class dateiAendernController {
     @FXML
     public TextField benutzername;
 
+    public String name;
+
 
     public void zurück(ActionEvent actionEvent) throws IOException{
-        VueManager.goToMenü(actionEvent);
+        VueManager.goToMenü(actionEvent,name);
     }
 
     public void datenÄndern(ActionEvent actionEvent) throws IOException {

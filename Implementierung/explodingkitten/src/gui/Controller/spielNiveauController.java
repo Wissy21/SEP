@@ -19,8 +19,9 @@ public class spielNiveauController {
         RadioButton selectedRadioButton = (RadioButton) spielNiveau.getSelectedToggle();
         String toggleGroupValue = selectedRadioButton.getText();
 
+        System.out.print(toggleGroupValue);
         // if you play with bot
-        if (false) {
+        if (toggleGroupValue.equals("Einfach")) {
             VueManager.goToSpielraum(actionEvent);
 
         } else {  // if you play with Friends

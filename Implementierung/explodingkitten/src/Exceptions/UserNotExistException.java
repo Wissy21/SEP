@@ -7,4 +7,7 @@ public class UserNotExistException extends Exception {
      * oder die Eingabe sonstig fehlerhaft ist.
      */
     public UserNotExistException(){}
+    public UserNotExistException(String message) {
+        super(message);
+    }
 }

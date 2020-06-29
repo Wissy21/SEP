@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller.lobbyController">
     <children>
@@ -19,74 +21,21 @@
             <items>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="200.0">
                     <children>
-                        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="200.0" text="Lobby">
+                        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="200.0" style="-fx-background-color: brown;" text="Lobby">
                             <content>
-                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="200.0" style="-fx-background-color: brown;">
-                                    <children>
-                                        <VBox fx:id="eintragRaum1" layoutX="13.0" layoutY="39.0" prefHeight="160.0" prefWidth="173.0">
-                                            <children>
-                                                <Pane prefHeight="200.0" prefWidth="200.0">
-                                       <children>
-                                          <Label fx:id="raum1Label1" layoutX="14.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum1Label2" layoutX="13.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum1Label3" layoutX="14.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum1Label4" layoutX="12.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                       </children></Pane>
-                                            </children>
-                                        </VBox>
-                                        <Label fx:id="label1" layoutX="24.0" layoutY="14.0" text="Raum1" textFill="#fffefe" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font>
-                                        </Label>
-                                        <VBox fx:id="eintragRaum2" layoutX="14.0" layoutY="248.0" prefHeight="144.0" prefWidth="173.0">
-                                            <children>
-                                                <Pane prefHeight="142.0" prefWidth="173.0">
-                                       <children>
-                                          <Label fx:id="raum2Label1" layoutX="11.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum2Label2" layoutX="11.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum2Label3" layoutX="11.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum2Label4" layoutX="12.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                       </children></Pane>
-                                            </children>
-                                        </VBox>
-                                        <VBox fx:id="eintragRaum3" layoutX="13.0" layoutY="453.0" prefHeight="140.0" prefWidth="174.0">
-                                            <children>
-                                                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="163.0" prefWidth="174.0">
-                                       <children>
-                                          <Label fx:id="raum3Label1" layoutX="11.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum3Label2" layoutX="12.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum3Label3" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                          <Label fx:id="raum3Label4" layoutX="11.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
-                                       </children></Pane>
-                                            </children>
-                                        </VBox>
-                                        <Label fx:id="label2" layoutX="24.0" layoutY="218.0" text="Raum2" textFill="#fffefe" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="label3" layoutX="24.0" layoutY="422.0" text="Raum3" textFill="#fffefe" underline="true">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font>
-                                        </Label>
-                              <Button layoutX="79.0" layoutY="10.0" mnemonicParsing="false" onAction="#raum1Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="79.0" layoutY="215.0" mnemonicParsing="false" onAction="#raum2Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="79.0" layoutY="418.0" mnemonicParsing="false" onAction="#raum3Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                                    </children></AnchorPane>
+                        <StackPane>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: brown;" />
+                              <ScrollPane styleClass="lobby-scroll" stylesheets="@../Style/style.css">
+                                 <content>
+                                    <VBox fx:id="roomList" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                           <padding>
+                              <Insets top="-1.0" />
+                           </padding>
+                        </StackPane>
                             </content>
                         </TitledPane>
                     </children>
@@ -117,6 +66,11 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <Text layoutX="5.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ExplodingKittens" />
+      <FlowPane prefHeight="200.0" prefWidth="200.0" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="660.0" mnemonicParsing="false" onAction="#createRoom" prefHeight="30.0" prefWidth="143.0" style="-fx-background-color: orangered;" text="Spielraum erzeugen" textFill="WHITE" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

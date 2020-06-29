@@ -5,6 +5,12 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class SpielMenueController {
+    public String name;
+
+    public void setName(String n){
+        this.name = n;
+    }
+
     public void goToSpiel(ActionEvent actionEvent) throws IOException {
         VueManager.goToSpiel(actionEvent);
     }
