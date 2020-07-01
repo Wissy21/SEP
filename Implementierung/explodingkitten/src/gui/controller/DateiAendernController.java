@@ -50,18 +50,12 @@ public class DateiAendernController {
                 showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account bearbeitet", "Account bearbeitet", "Ihre Daten wurde aktualisiert!");
             }
 
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (UserNameAlreadyExistsException e) {
-            showErrorOrWarningAlert(Alert.AlertType.ERROR, "Benutzername schon definiert", "Benutzername schon definiert", "Ihr Benutzername ist schon definiert");
-        } catch (WrongPasswordException e) {
-            showErrorOrWarningAlert(Alert.AlertType.ERROR, "Falsche Passwort", "Falsche Passwort", "Ihr Passwort ist Falsch");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.ERROR, "Benutzername vergeben", "Benutzername schon vergeben", "Ihr gewünschter Benutzername ist schon vergeben.");
         } catch (NotEqualPassWordException e) {
-            showErrorOrWarningAlert(Alert.AlertType.ERROR, "Account bearbeitet", "Account bearbeitet", "Bitte prüfen Sie Ihre Passwörte ein");
+            showErrorOrWarningAlert(Alert.AlertType.ERROR, "Passwort Fehler", "Falsche Passwörter", "Bitte prüfen Sie, das beide Passwörter glech sind.");
         }
     }
 
@@ -74,16 +68,10 @@ public class DateiAendernController {
             if (check) {
                 System.out.println(benutzername.getText());
             }
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (UserNotExistException e) {
+        } catch (NotBoundException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account Löschen", "Account Löschen", "Möchten Sie Ihr Konto löschen ?");
+        showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account gelöscht", "Account gelöscht", "Ihr Konto wurde gelöscht.");
         VueManager.goToStartFenster(actionEvent);
     }
 }

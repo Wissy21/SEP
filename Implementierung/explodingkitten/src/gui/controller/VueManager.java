@@ -80,7 +80,7 @@ public class VueManager {
     }
 
     public static void goToBestenliste(Event event, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("Vue/bestenListe.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("vue/bestenListe.fxml"));
         Parent root = loader.load();
 
         BestenListeController so = loader.getController();

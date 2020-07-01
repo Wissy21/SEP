@@ -16,7 +16,7 @@ public interface DBinterface extends Remote {
 
     public boolean spielerAnmelden(String nickname, String pass) throws RemoteException, UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException;
 
-    public boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException,UserNotExistException;
+    public boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
 
-    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException, NotEqualPassWordException;
+    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException;
 }

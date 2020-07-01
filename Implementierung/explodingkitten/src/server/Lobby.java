@@ -28,6 +28,7 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
     public SpielRaum spielraum_erstellen() {
         return null;
     }
+
     public void sendMessage(String msg , String time ,String benutzername){
         chat.nachrichSchreiben(msg , time ,benutzername);
 

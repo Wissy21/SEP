@@ -1,6 +1,5 @@
 package gui.controller;
 
-import exceptions.DoppelterEintragException;
 import exceptions.UserNameAlreadyExistsException;
 import exceptions.WrongPasswordException;
 import server.datenbankmanager.DBinterface;
@@ -27,36 +26,35 @@ public class RegistrierenController {
     public PasswordField passwortBestätigen;
 
 
-    //getMeldung("Dieser Benutzername ist bereits vergeben");
-//VueManager.goToRegistrieren(event);
-
-    public void registrieren(ActionEvent actionEvent) throws IOException, DoppelterEintragException {
+    public void registrieren(ActionEvent actionEvent) throws IOException {
 
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
 
-            if (benutzername.getText().isEmpty() && passwort.getText().isEmpty() && passwortBestätigen.getText().isEmpty() ) {
-                showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabe Fehler", "Eingabefehler", " Bitte,Geben Sie Ihre Anmeldedaten ein");
+            if (benutzername.getText().isEmpty() || passwort.getText().isEmpty() || passwortBestätigen.getText().isEmpty() ) {
+                showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabefehler", "Eingabefehler", "Bitte füllen Sie alle Felder aus.");
             }
 
             boolean check = db.spielerRegistrieren(benutzername.getText(), passwort.getText(), passwortBestätigen.getText());
             if(check){
                 VueManager.goToLogIn(actionEvent);
             }
-        } catch (NotBoundException e) {
-            //e.printStackTrace();
+        } catch (NotBoundException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (UserNameAlreadyExistsException e) {
-            e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Benutzername Fehler", "Benutzername vergeben", "Diese Benutzername ist bereits vergeben.");
+            clearFields();
         } catch (WrongPasswordException e) {
-            //e.printStackTrace();
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", " Bitte,Geben Sie dasselbe Passwort ein");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", "Bitte geben Sie in beide Felder das selbe Passwort ein.");
+            clearFields();
         }
     }
 
+    private void clearFields() {
+        benutzername.clear();
+        passwort.clear();
+        passwortBestätigen.clear();
+    }
     public void goToAnmelden(ActionEvent actionEvent) throws IOException {
         VueManager.goToLogIn(actionEvent);
     }

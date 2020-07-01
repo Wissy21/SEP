@@ -6,14 +6,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.VBox;
 import server.LobbyInterface;
 import server.Nachricht;
-import server.datenbankmanager.DBinterface;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,8 +21,6 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static gui.GuiHelper.showErrorOrWarningAlert;
 
 public class LobbyController implements ILobbyObserver {
     public String name;
@@ -48,11 +44,7 @@ public class LobbyController implements ILobbyObserver {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
 
             lb.registerObserver(name, il);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
+        } catch (RemoteException | NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
         updateMessageList();
@@ -80,11 +72,7 @@ public class LobbyController implements ILobbyObserver {
             Timestamp tm = new Timestamp(new Date().getTime());
             lb.sendMessage(messageField.getText(), tm.toString(), name);
             messageField.clear();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
+        } catch (NotBoundException | MalformedURLException | RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -148,13 +136,7 @@ public class LobbyController implements ILobbyObserver {
                 Platform.runLater(() -> this.messageList.getChildren().add(root));
                 lastMessage++;
             }
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NotBoundException | IOException e) {
             e.printStackTrace();
         }
     }

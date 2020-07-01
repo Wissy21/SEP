@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class StartFensterController {
-    public void satrtFenster(ActionEvent actionEvent) {
+    public void startFenster(ActionEvent actionEvent) {
     }
 
     public void gotoRegister(ActionEvent actionEvent) throws IOException {

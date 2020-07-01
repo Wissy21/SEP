@@ -1,21 +1,18 @@
 package server.datenbankmanager;
 
 import exceptions.*;
-import server.Benutzer;
 import exceptions.UserNameAlreadyExistsException;
 
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
-import java.util.List;
 
 /**
  *
  */
 public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
-    public List<Benutzer> benutzerList;
 
     public Connection verbindung() throws SQLException, ClassNotFoundException {
 
@@ -58,8 +55,6 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         if (rst1.next()) {
             throw new UserNameAlreadyExistsException();
         } else {
-            System.out.println(pass);
-            System.out.println(bestpass);
             if (pass.equals(bestpass)) {
                 pstmt2.setString(1, nickname);
                 pstmt2.setString(2, pass);
@@ -111,7 +106,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         return !check;
     }
 
-    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException, NotEqualPassWordException {
+    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException {
         Connection conn = verbindung();
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
         String anfrage = "update benutzer set benutzername = ?, pass = ? where benutzername = ?";
@@ -147,10 +142,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
                     return !check;
                 } else
                     throw new NotEqualPassWordException();
-
             }
         }
-
-
     }
 }
