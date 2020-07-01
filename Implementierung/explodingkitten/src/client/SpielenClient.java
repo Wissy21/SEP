@@ -1,6 +1,6 @@
 package client;
 
-import Server.Spielen;
+import server.Spielen;
 
 public class SpielenClient implements Spielen {
 

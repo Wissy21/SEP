@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.LobbyRoom">
+   <children>
+      <VBox fx:id="eintragRaum1" layoutX="13.0" layoutY="39.0" prefWidth="173.0">
+         <children>
+            <Label fx:id="raum1Label1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" />
+         </children>
+      </VBox>
+      <Label fx:id="label1" layoutX="24.0" layoutY="14.0" text="Raum1" textFill="#fffefe" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="79.0" layoutY="10.0" mnemonicParsing="false" onAction="#raum1Beitreten" style="-fx-background-color: orangered;" text="beitreten" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
