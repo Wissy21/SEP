@@ -14,6 +14,10 @@ public class Spieler {
     public Spieler() {
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public void karteLegen(Karte k) {
     }
 
