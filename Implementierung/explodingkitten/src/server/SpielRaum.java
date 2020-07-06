@@ -1,6 +1,7 @@
 package server;
 
 import exceptions.NichtGenugSpielerException;
+import exceptions.NoExplodingKittenException;
 import exceptions.NotYourRundeException;
 import exceptions.SpielraumVollException;
 import gui.controller.ILobbyObserver;
@@ -9,6 +10,8 @@ import server.karten.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface{
 
@@ -22,7 +25,17 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public Stack<Karte> ablagestapel;
     public Spieler current;
     public ListIterator<Spieler> reihenfolge;
-    public String letzterZug;
+
+    Executor kartenExecutor = Executors.newSingleThreadExecutor();
+
+
+    public boolean angriff = false;
+    public Spieler ausgewahlter;
+    public Karte abgegeben;
+    public boolean expolding = false;
+    public int position;
+    public Karte explKitten;
+    public boolean noe = false;
 
 
     public SpielRaum() throws RemoteException{
@@ -127,57 +140,22 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         current = reihenfolge.next();
     }
 
-    public void karteLegen(String username, Karte k) throws NotYourRundeException {
+
+    public void karteLegen(String username, Karte k) throws NotYourRundeException, NoExplodingKittenException {
         if(!username.equals(amZug())) {
             if (!k.getEffekt().equals("Noe")){
                 throw new NotYourRundeException();
             } else {
-                //TODO Nö ausführen
-                current.handkarte.remove(k);
-                ablagestapel.add(k);
+                kartenExecutor.execute(new KartenHandler(k,this));
             }
         } else {
-            if(k.getEffekt().equals("Angriff")){
-                letzterZug=k.getEffekt();
+            if(k.getEffekt().equals("Entschaerfung")){
+                if(!isExpolding()) {
+                    throw new NoExplodingKittenException();
+                }
+            } else{
+                kartenExecutor.execute(new KartenHandler(k,this));
             }
-             else if(k.getEffekt().equals("Hops")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Wunsch")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Mischen")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("BlickInDieZukunft")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Entschaerfung")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Noe")){
-                letzterZug=k.getEffekt();
-
-                current.handkarte.remove(k);
-                ablagestapel.add(k);
-            }
-            else if(k.getEffekt().equals("Katze1")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Katze2")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Katze3")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Katze4")){
-                letzterZug=k.getEffekt();
-            }
-            else if(k.getEffekt().equals("Katze5")){
-                letzterZug=k.getEffekt();
-            }
-            current.handkarte.remove(k);
-            ablagestapel.add(k);
         }
     }
 
@@ -185,34 +163,81 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         if (!username.equals(amZug())) {
             throw new NotYourRundeException();
         } else {
-            Karte k = spielstapel.pop();
-            current.handkarte.add(k);
-
-            if(k.getEffekt().equals("Exploding Kitten")){
-                //TODO Exploding Kitten entschärfen
-                spielraumVerlassen(username);
-                reihenfolge.remove();
-                naechsterSpieler();
-            } else {
-                naechsterSpieler();
-            }
+            Thread draw = new Thread(new Drawer(username,this));
+            draw.start();
         }
     }
 
 
     public void naechsterSpieler() {
-        if(reihenfolge.hasNext()){
-            current = reihenfolge.next();
-        } else {
-            while (reihenfolge.hasPrevious()) {
-                current = reihenfolge.previous();
+        if(!angriff) {
+            if (reihenfolge.hasNext()) {
+                current = reihenfolge.next();
+            } else {
+                while (reihenfolge.hasPrevious()) {
+                    current = reihenfolge.previous();
+                }
             }
+            angriff = false;
         }
     }
 
 
     public String amZug() {
         return current.getNickname();
+    }
+
+    //Methode für Angriff
+    public boolean isAngriff() {
+        return angriff;
+    }
+
+    public void setAngriff(boolean angriff) {
+        this.angriff = angriff;
+    }
+
+    //Methoden für Wunsch
+    public void selectSpieler(Spieler s) {
+        this.ausgewahlter = s;
+    }
+    public void abgeben (String name,Karte k) throws NotYourRundeException {
+        if (name.equals(ausgewahlter.getNickname())) {
+            abgegeben = k;
+            ausgewahlter.handkarte.remove(k);
+            current.handkarte.add(k);
+        } else {
+            throw new NotYourRundeException();
+        }
+    }
+
+    //Methoden für Entschärfung
+
+    public boolean isExpolding() {
+        return expolding;
+    }
+
+    public void setExpolding(boolean expolding) {
+        this.expolding = expolding;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    //Methoden für Nö
+
+    public boolean isNoe() {
+        return noe;
+    }
+    public void changeNoe() {
+        noe = !noe;
+    }
+    public void setNoe(boolean noe) {
+        this.noe = noe;
     }
 
     //Chat-Methoden
