@@ -11,6 +11,12 @@ public class KartenHandler implements Runnable{
     SpielRaum room;
     Karte gespielt;
 
+    /**
+     * Thread der für die Ausführung der Karte zuständig ist
+     *
+     * @param k Karte die auszuführen ist
+     * @param raum  Spiewlraum in dem die karte gespielt wurde
+     */
     public KartenHandler(Karte k,SpielRaum raum) {
 
         gespielt = k;
@@ -18,10 +24,23 @@ public class KartenHandler implements Runnable{
         this.room = raum;
     }
 
+    /**
+     * Methode die den Karteneffekt ausführt:
+     * Anfangs wird die karte immer aus der Hand auf den Ablagestapel gelegt
+     * Prüfen ob die Karte Nö! ist. Wenn ja wird die Nö-Situation geändert
+     * Prüfen ob die karte Entschärfung ist. Wenn ja wird das Exploding Kitten entschärft und zurückgelegt.
+     * Anderfalls Wird 15 Sekunden gewartet, on jemand anderes eine Nö-Karte spielen will.
+     * Je nach der Nö-Situation wird der Effekt der gespielten Karte dann ausgeführt oder nicht.
+     * Zum Schluss wird die karte immer aus der Hand auf den Ablagestapel gelegt
+     *
+     */
     @Override
     public void run() {
 
         //TODO Anzeigen welche Karte gespielt wurde
+
+        room.current.handkarte.remove(gespielt);
+        room.ablagestapel.add(gespielt);
 
         if(effekt.equals("Noe")) {
             room.changeNoe();
@@ -76,7 +95,5 @@ public class KartenHandler implements Runnable{
                 room.setNoe(false);
             }
         }
-        room.current.handkarte.remove(gespielt);
-        room.ablagestapel.add(gespielt);
     }
 }

@@ -19,6 +19,8 @@ public interface SpielRaumInterface extends Remote {
 
     void registerObserver(String userName, ILobbyObserver io) throws RemoteException;
 
+    void betreten(String name) throws RemoteException;
+
     void spielraumVerlassen(String spielername) throws RemoteException;
 
     void botHinzufuegen() throws RemoteException, SpielraumVollException;
@@ -34,4 +36,6 @@ public interface SpielRaumInterface extends Remote {
     String amZug() throws RemoteException;
 
     ArrayList<Spieler> getSpieler() throws RemoteException;
+
+    String ping() throws RemoteException;
 }
