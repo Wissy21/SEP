@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import server.SpielRaum;
 
 import java.io.IOException;
 
@@ -109,12 +110,12 @@ public class VueManager {
         stage.centerOnScreen();
     }
 
-    public static void goToSpielraum(Event event, String n) throws IOException {
+    public static void goToSpielraum(Event event, String n, String raumname) throws IOException {
         FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/spielraum.fxml"));
         Parent root = loader.load();
 
         SpielraumController src = loader.getController();
-        src.setName(n);
+        src.setName(n,raumname);
 
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -150,6 +151,7 @@ public class VueManager {
         stage.show();
         stage.centerOnScreen();
     }
+
 
 
    /*public static int karteNehmen(MouseEvent mouseEvent) {

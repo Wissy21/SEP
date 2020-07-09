@@ -9,7 +9,7 @@ public class Spieler {
     String nickname;
     int id;
     int punkt;
-    List<Karte> handkarte;
+    public List<Karte> handkarte;
 
     public Spieler() {
     }

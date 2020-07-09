@@ -14,8 +14,7 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
 
     public List<SpielRaum> listeSpielraeume;
     public HashMap<String, ILobbyObserver> userLobserverMap;
-
-    public server.SpielChat lobbyChat;
+    public ArrayList<String> spielräume;
 
     public Lobby() throws RemoteException {
         this.chat = new SpielChat();

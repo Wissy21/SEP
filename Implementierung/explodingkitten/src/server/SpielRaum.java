@@ -47,7 +47,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         if(anzahlSpieler>4) {
             throw new SpielraumVollException();
         } else {
-
+            //TODO bot hinzufügen
             //spieler.add(new Bot());
             anzahlSpieler++;
         }
@@ -197,6 +197,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
     //Methoden für Wunsch
+    //TODO
     public void selectSpieler(Spieler s) {
         this.ausgewahlter = s;
     }
@@ -268,4 +269,8 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         userLobserverMap.put(userName, io);
     }
 
+
+    public ArrayList<Spieler> getSpieler() {
+        return spieler;
+    }
 }

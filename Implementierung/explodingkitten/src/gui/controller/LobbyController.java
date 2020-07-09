@@ -1,26 +1,35 @@
 package gui.controller;
 
+import exceptions.RaumnameVergebenException;
+import gui.GuiHelper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.VBox;
 import server.LobbyInterface;
 import server.Nachricht;
+import server.SpielRaum;
+import server.SpielRaumInterface;
+import server.datenbankmanager.DBinterface;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 public class LobbyController implements ILobbyObserver {
     public String name;
@@ -51,15 +60,12 @@ public class LobbyController implements ILobbyObserver {
     }
 
     public void message(InputMethodEvent inputMethodEvent) {
-
         clearFields();
     }
     private void clearFields() {
         messageField.clear();
     }
-    public void onInput(ActionEvent actionEvent) {
 
-    }
 
     public void onInputText(InputMethodEvent inputMethodEvent) {
 
@@ -78,23 +84,44 @@ public class LobbyController implements ILobbyObserver {
     }
 
     public void zurückLobby(ActionEvent actionEvent) throws IOException {
-        VueManager.goToSpiel(actionEvent, name);
+        VueManager.goToMenue(actionEvent, name);
     }
 
 
 
     public void createRoom(ActionEvent actionEvent) {
-        /*try {
-            LobbyInterface l = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
-            boolean check = l.addRoom(userId);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }*/
-        updateRoomList();
+
+        TextInputDialog dialog = new TextInputDialog("Raumname");
+        dialog.setTitle("Raumname");
+        dialog.setHeaderText("Bitte geben Sie den Raumnamen ein.");
+        dialog.setContentText("Raumame:");
+
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent()) {
+            String raumname = result.get();
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
+
+            try {
+
+                DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+                db.raumErstellen(name, raumname);
+
+                Parent root = loader.load();
+                LobbyRoom lr = loader.getController();
+                lr.setName(name,raumname);
+                Platform.runLater(() -> this.roomList.getChildren().add(root));
+                SpielRaumInterface sb = new SpielRaum();
+                Naming.rebind("rmi://localhost:1900/spielraum_"+raumname,sb);
+                VueManager.goToSpielraum(actionEvent,name,raumname);
+
+            } catch (NotBoundException | ClassNotFoundException | SQLException | IOException e) {
+                e.printStackTrace();
+            } catch (RaumnameVergebenException e) {
+                GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Name vergeben","Eingegebener Name vergeben","Der eingegebene Name ist vergeben.");
+            }
+        } else {
+            GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Keine Eingabe","Keine Eingabe","Sie haben keinen Name eingegeben.");
+        }
     }
 
     public void updateRoomList(){
@@ -102,9 +129,6 @@ public class LobbyController implements ILobbyObserver {
 
         try {
             Parent root = fxmlLoader.load();
-
-            //LobbyRoom lb = fxmlLoader.getController();
-            //lb.setRaum(this, sr.id, sr.playerList.size(), sr.started);
             Platform.runLater(() -> this.roomList.getChildren().add(root));
         } catch (IOException e) {
             e.printStackTrace();

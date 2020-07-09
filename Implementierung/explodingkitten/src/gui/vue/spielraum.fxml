@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SpielraumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SpielraumController">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0">
             <items>
@@ -38,29 +32,24 @@
                     <children>
                         <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" text="Spielraum">
                             <content>
-                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="600.0" style="-fx-background-color: white;">
+                                <AnchorPane fx:id="feld" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="600.0" style="-fx-background-color: white;">
                                     <children>
                               <ImageView fitHeight="623.0" fitWidth="591.0" layoutY="4.0" pickOnBounds="true">
                                  <image>
                                     <Image url="@../images/background2.jpg" />
                                  </image>
                               </ImageView>
-                                        <ImageView fitHeight="83.0" fitWidth="150.0" layoutX="270.0" layoutY="35.0" onMouseClicked="#bot" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/user_images/playericon6.png" />
-                                            </image>
-                                        </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="142.0" layoutY="266.0" onMouseClicked="#stappel" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="stapel" fitHeight="150.0" fitWidth="107.0" layoutX="150.0" layoutY="200.0" onMouseClicked="#ziehen" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../images/main_deck_1.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="372.0" layoutY="266.0" onMouseClicked="#leereStappel" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="200.0" onMouseClicked="#leereStappel" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../images/EmptyDiscardDeck.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="212.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+                              <HBox fx:id="opponents" layoutX="13.0" layoutY="14.0" prefHeight="100.0" prefWidth="567.0" />
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -74,6 +63,21 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
+        <Button fx:id="regeln" alignment="CENTER" contentDisplay="CENTER" layoutX="620.0" layoutY="660.0" mnemonicParsing="false" onAction="#zeigeRegeln" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="Regeln" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Button>
         <Text layoutX="5.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ExplodingKittens" />
+      <Button fx:id="start" alignment="CENTER" contentDisplay="CENTER" layoutX="520.0" layoutY="660.0" mnemonicParsing="false" onAction="#set" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="Starten" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="bot" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="660.0" mnemonicParsing="false" onAction="#bot" prefHeight="30.0" prefWidth="113.0" style="-fx-background-color: orangered;" text="Bot hinzufügen" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

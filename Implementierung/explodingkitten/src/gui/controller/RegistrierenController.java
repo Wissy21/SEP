@@ -1,5 +1,6 @@
 package gui.controller;
 
+import exceptions.NotEqualPassWordException;
 import exceptions.UserNameAlreadyExistsException;
 import exceptions.WrongPasswordException;
 import server.datenbankmanager.DBinterface;
@@ -47,6 +48,8 @@ public class RegistrierenController {
         } catch (WrongPasswordException e) {
             showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", "Bitte geben Sie in beide Felder das selbe Passwort ein.");
             clearFields();
+        } catch (NotEqualPassWordException e) {
+            e.printStackTrace();
         }
     }
 

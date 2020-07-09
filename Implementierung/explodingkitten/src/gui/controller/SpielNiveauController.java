@@ -28,7 +28,7 @@ public class SpielNiveauController {
         System.out.print(toggleGroupValue);
         // if you play with bot
         if (toggleGroupValue.equals("Einfach")) {
-            VueManager.goToSpielraum(actionEvent, name);
+            //VueManager.goToSpielraum(actionEvent, name);
 
         } else {  // if you play with Friends
             VueManager.goToLobby(actionEvent, name);
