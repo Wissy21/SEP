@@ -14,4 +14,9 @@ public class RaumObserver extends UnicastRemoteObject implements IRaumObserver {
     public void updateMessageList() throws RemoteException {
         raum.updateMessageList();
     }
+
+    @Override
+    public void notify(String spielername,String message) throws RemoteException {
+        raum.notify(spielername, message);
+    }
 }

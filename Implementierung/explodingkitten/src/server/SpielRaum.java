@@ -26,6 +26,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public Spieler current;
     public ListIterator<Spieler> reihenfolge;
     boolean running = false;
+    int botcounter = 1;
 
     Executor kartenExecutor = Executors.newSingleThreadExecutor();
 
@@ -50,7 +51,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
     /**
-     * Fügt einen Bot in den Spielraum ein, wenn noch Paltz ist
+     * Fügt einen Bot in den Spielraum ein, wenn noch Platz ist
      *
      * @throws SpielraumVollException   Wenn kein Platz mehr ist
      */
@@ -58,8 +59,10 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         if(anzahlSpieler>4) {
             throw new SpielraumVollException();
         } else {
-            //TODO bot hinzufügen
-            spieler.add(new Spieler(true));
+            Spieler bot = new Spieler(true);
+            bot.nickname = "BOT"+botcounter;
+            spieler.add(bot);
+            botcounter++;
             anzahlSpieler++;
         }
     }
@@ -71,17 +74,8 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public void spielraumVerlassen(String spielername) {
         spieler.removeIf(n -> (n.getNickname().equals(spielername)));
         anzahlSpieler--;
-        if(anzahlSpieler<1) {
-            spielraumSchliessen();
-        }
     }
 
-    /**
-     * TODO
-     */
-    public void spielraumSchliessen() {
-
-    }
 
     /**
      * Startet das Spiel indem wie im Regelwerk vorgeschrieben die Karten verteilt werden
@@ -169,6 +163,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         Collections.shuffle(spieler);
         reihenfolge = spieler.listIterator();
         current = reihenfolge.next();
+        notify(current,"DuBistDran");
     }
 
     /**
@@ -226,6 +221,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
                     current = reihenfolge.previous();
                 }
             }
+            notify(current,"DuBistDran");
         }
         angriff = false;
     }
@@ -258,12 +254,15 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
     //Methoden für Wunsch
 
-    /**
-     * TODO mit Client
-     * @param s
-     */
+
     public void selectSpieler(Spieler s) {
-        this.ausgewahlter = s;
+        notify(s,"Auswahl");
+    }
+
+    @Override
+    public void setAusgewaehler(Spieler s) throws RemoteException {
+        ausgewahlter = s;
+        notify(ausgewahlter,"Abgeben");
     }
 
     /**
@@ -272,14 +271,10 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      * @param k
      * @throws NotYourRundeException
      */
-    public void abgeben (String name,Karte k) throws NotYourRundeException {
-        if (name.equals(ausgewahlter.getNickname())) {
+    public void abgeben (String name,Karte k) {
             abgegeben = k;
             ausgewahlter.handkarte.remove(k);
             current.handkarte.add(k);
-        } else {
-            throw new NotYourRundeException();
-        }
     }
 
     //Methoden für Entschärfung
@@ -386,5 +381,30 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     @Override
     public Spieler getCurrent() {
         return current;
+    }
+
+
+    public void notify(Spieler s, String message) {
+        //TODO einen Spieler benachrichtigen
+        for(String nom : userRaumServerMap.keySet()){
+            IRaumObserver observer = userRaumServerMap.get(nom);
+            try {
+                observer.notify(s.getNickname(),message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void notifyEverybody(String message) {
+        //TODO alle Spieler benachrichtigen
+        for(String nom : userRaumServerMap.keySet()){
+            IRaumObserver observer = userRaumServerMap.get(nom);
+            try {
+                observer.notify(nom,message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

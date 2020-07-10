@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import server.Nachricht;
 import server.SpielRaumInterface;
 import server.Spieler;
+import server.datenbankmanager.DBinterface;
 import server.karten.Karte;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +57,7 @@ public class SpielraumController implements IRaumObserver{
     public String raumname;
     public int lastMessage = 0;
     SpielRaumInterface sb;
+    DBinterface db;
 
     public void setName(String name, String raumname){
         this.name = name;
@@ -62,6 +65,7 @@ public class SpielraumController implements IRaumObserver{
         cardbox.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
         try {
             RaumObserver ro = new RaumObserver(this);
+            db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
             sb = (SpielRaumInterface) Naming.lookup("rmi://localhost:1900/spielraum_"+raumname);
             sb.registerObserver(name,ro);
 
@@ -127,16 +131,6 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
-
-    public void onInput(ActionEvent actionEvent) {
-        //TODO
-    }
-
-
-    public void onInputText(InputMethodEvent inputMethodEvent) {
-        //TODO
-    }
-
     public void sendmessage(Event mouseEvent) {
         try {
             Timestamp tm = new Timestamp(new Date().getTime());
@@ -145,9 +139,6 @@ public class SpielraumController implements IRaumObserver{
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    }
-
-    public void leereStappel(Event mouseEvent) {
     }
 
 
@@ -161,7 +152,13 @@ public class SpielraumController implements IRaumObserver{
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 //TODO aufgeben, Karten ablegen
-                sb.spielraumVerlassen(name);
+                try {
+                    sb.spielraumVerlassen(name);
+                    db.raumVerlassen(name,raumname);
+                } catch (SQLException | ClassNotFoundException throwables) {
+                    throwables.printStackTrace();
+                }
+
                 VueManager.goToLobby(actionEvent, name);
 
             }
@@ -185,7 +182,7 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
-    public void bot(ActionEvent mouseEvent) {
+    public void bot(ActionEvent actionEvent) {
         try {
             if(!sb.isRunning()) {
                 try {
@@ -234,5 +231,62 @@ public class SpielraumController implements IRaumObserver{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void notify(String spielername,String message) {
+        if(name.equals(spielername)) {
+            switch (message) {
+                case "Auswahl":
+                    try {
+                        sb.setAusgewaehler(zielAuswaehlen());
+                        break;
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                case "DuBistDran":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Ihr Zug","Ihr Zug","Es ist Ihr Zug."));
+                    break;
+                case "Abgeben":
+                    try {
+                        sb.abgeben(name,karteAuswaehlen());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                    //TODO zusätzliche Nachrichten
+
+                default:
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Blick in die Zukunft","Die nächsten Kartten sind",message));
+            }
+        }
+    }
+
+    public Spieler zielAuswaehlen() throws RemoteException {
+        ArrayList<Spieler> choice = new ArrayList<>();
+        for(Spieler s: sb.getSpieler()) {
+            if(!s.getNickname().equals(name)) {
+                choice.add(s);
+            }
+        }
+        ChoiceDialog<Spieler> dialog = new ChoiceDialog<>(choice.get(1),choice);
+        dialog.setOnCloseRequest(e->{Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Bitte etwas auswählen","Bitte etwas auswählen","Sie müssen einen anderen Spieler auswählen."));});
+        Optional<Spieler> result = dialog.showAndWait();
+        return result.get();
+    }
+
+
+    public Karte karteAuswaehlen() throws RemoteException {
+        Spieler geber = null;
+        for(Spieler s : sb.getSpieler()) {
+            if(s.getNickname().equals(name)) {
+                geber = s;
+            }
+        }
+        ArrayList<Karte> choice = geber.getHandkarte();
+        ChoiceDialog<Karte> dialog = new ChoiceDialog<>(choice.get(1),choice);
+        dialog.setOnCloseRequest(e->{Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Bitte etwas auswählen","Bitte etwas auswählen","Sie müssen eine Karte auswählen."));});
+        Optional<Karte> result = dialog.showAndWait();
+        return result.get();
     }
 }

@@ -31,7 +31,6 @@ public class LobbyRoom {
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
             db.raumBeitreten(name,rname.getText());
-            //TODO in Raum-GUI gehen
         } catch (NotBoundException | MalformedURLException | RemoteException | SQLException | ClassNotFoundException  e) {
             e.printStackTrace();
         } catch (SpielraumVollException e) {

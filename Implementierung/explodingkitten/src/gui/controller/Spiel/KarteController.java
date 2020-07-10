@@ -40,15 +40,6 @@ public class KarteController {
             e.printStackTrace();
         }
     }
-    /*
-    public void bewegen(MouseEvent mouseEvent) {
-
-        ImageView p = (ImageView) mouseEvent.getTarget();
-
-        p.setX(mouseEvent.getX()-53);
-        p.setY(mouseEvent.getY()-75);
-
-    }*/
 
     public void legen(MouseEvent mouseEvent) {
 
@@ -66,13 +57,5 @@ public class KarteController {
             e.printStackTrace();
         }
     }
-/*
-    public void record(MouseEvent mouseEvent) {
-        ImageView r = (ImageView) mouseEvent.getTarget();
-        System.out.println(k.getName()+"\t"+k.getEffekt());
 
-        ogX = r.getX();
-        ogY = r.getY();
-
-    }*/
 }

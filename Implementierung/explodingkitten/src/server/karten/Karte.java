@@ -26,5 +26,15 @@ public class Karte implements Serializable {
     public void setEffekt(String effekt) {
         this.effekt = effekt;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Karte)) {
+            return false;
+        }
+        Karte k = (Karte) o;
+
+        return k.getEffekt().equals(effekt)&&k.getName().equals(name);
     }
+}
 

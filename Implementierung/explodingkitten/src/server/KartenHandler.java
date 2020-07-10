@@ -71,7 +71,9 @@ public class KartenHandler implements Runnable{
                         break;
 
                     case "Wunsch":
+                        room.selectSpieler(room.getCurrent());
                         //TODO Aufruf Client Methode zum auswählen eines Ziels und dann Auswahl der zu gebenden Karte
+
                         break;
                     case "Mischen":
                         Collections.shuffle(room.spielstapel);
@@ -81,7 +83,7 @@ public class KartenHandler implements Runnable{
                         Karte k2 = room.spielstapel.pop();
                         Karte k3 = room.spielstapel.pop();
                         ausgabe = k1.getEffekt() + "," + k2.getEffekt() + "," + k3.getEffekt();
-                        //TODO ausgabe an Client von current senden
+                        room.notify(room.getCurrent(),ausgabe);
                         room.spielstapel.push(k3);
                         room.spielstapel.push(k2);
                         room.spielstapel.push(k1);

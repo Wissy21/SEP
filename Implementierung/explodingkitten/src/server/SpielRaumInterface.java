@@ -42,4 +42,8 @@ public interface SpielRaumInterface extends Remote {
     boolean isRunning() throws RemoteException;
 
     Spieler getCurrent() throws RemoteException;
+
+    void setAusgewaehler(Spieler s) throws RemoteException;
+
+    void abgeben(String name, Karte k) throws RemoteException;
 }

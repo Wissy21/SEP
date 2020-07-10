@@ -29,7 +29,7 @@
                         </TitledPane>
                         <Pane layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="500.0" style="-fx-background-color: white;">
                             <children>
-                                <TextField fx:id="messageField" layoutX="5.0" layoutY="10.0" onAction="#sendmessage" onInputMethodTextChanged="#onInputText" prefHeight="36.0" prefWidth="400.0" promptText="type in a text" />
+                                <TextField fx:id="messageField" layoutX="5.0" layoutY="10.0" onAction="#sendmessage" prefHeight="36.0" prefWidth="400.0" promptText="type in a text" />
                                 <ImageView fx:id="send" fitHeight="36.0" fitWidth="43.0" layoutX="430.0" layoutY="11.0" onMouseClicked="#sendmessage" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../images/sendicon2.png" />
@@ -55,7 +55,7 @@
                                                 <Image url="@../images/main_deck_1.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="250.0" onMouseClicked="#leereStappel" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../images/EmptyDiscardDeck.png" />
                                             </image>
