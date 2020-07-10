@@ -4,7 +4,7 @@ import exceptions.NichtGenugSpielerException;
 import exceptions.NoExplodingKittenException;
 import exceptions.NotYourRundeException;
 import exceptions.SpielraumVollException;
-import gui.controller.ILobbyObserver;
+import gui.controller.IRaumObserver;
 import server.karten.Karte;
 
 import java.rmi.Remote;
@@ -17,7 +17,7 @@ public interface SpielRaumInterface extends Remote {
 
     ArrayList<Nachricht> getMessage() throws RemoteException;
 
-    void registerObserver(String userName, ILobbyObserver io) throws RemoteException;
+    void registerObserver(String userName, IRaumObserver io) throws RemoteException;
 
     void betreten(String name) throws RemoteException;
 
@@ -38,4 +38,8 @@ public interface SpielRaumInterface extends Remote {
     ArrayList<Spieler> getSpieler() throws RemoteException;
 
     String ping() throws RemoteException;
+
+    boolean isRunning() throws RemoteException;
+
+    Spieler getCurrent() throws RemoteException;
 }

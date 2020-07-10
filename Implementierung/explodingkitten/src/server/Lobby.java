@@ -12,20 +12,12 @@ import java.util.List;
 public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
     SpielChat chat;
 
-    public List<SpielRaum> listeSpielraeume;
     public HashMap<String, ILobbyObserver> userLobserverMap;
     public ArrayList<String> spielräume;
 
     public Lobby() throws RemoteException {
         this.chat = new SpielChat();
         userLobserverMap = new HashMap<String, ILobbyObserver>();
-    }
-
-    public void spielraumBeitreten(SpielRaum s) {
-    }
-
-    public SpielRaum spielraum_erstellen() {
-        return null;
     }
 
     public void sendMessage(String msg , String time ,String benutzername){

@@ -1,6 +1,8 @@
 package server.karten;
 
-public class Karte {
+import java.io.Serializable;
+
+public class Karte implements Serializable {
     String name;
     String effekt;
 

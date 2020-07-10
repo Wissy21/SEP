@@ -51,7 +51,9 @@ public class KartenHandler implements Runnable{
              room.naechsterSpieler();
         } else {
             try {
-                Thread.sleep(15000);
+                System.out.println("Warten auf Nö!");
+                Thread.sleep(7000);
+                System.out.println("Warten beendet");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

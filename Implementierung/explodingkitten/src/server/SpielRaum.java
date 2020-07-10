@@ -4,7 +4,7 @@ import exceptions.NichtGenugSpielerException;
 import exceptions.NoExplodingKittenException;
 import exceptions.NotYourRundeException;
 import exceptions.SpielraumVollException;
-import gui.controller.ILobbyObserver;
+import gui.controller.IRaumObserver;
 import server.karten.*;
 
 import java.rmi.RemoteException;
@@ -16,15 +16,16 @@ import java.util.concurrent.Executors;
 public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface{
 
     public SpielChat chat;
-    public HashMap<String, ILobbyObserver> userLobserverMap;
+    public HashMap<String, IRaumObserver> userRaumServerMap;
 
     public String name;
     public int anzahlSpieler;
     public ArrayList<Spieler> spieler = new ArrayList<>();
-    public Stack<Karte> spielstapel;
-    public Stack<Karte> ablagestapel;
+    public Stack<Karte> spielstapel = new Stack<Karte>();
+    public Stack<Karte> ablagestapel = new Stack<Karte>();
     public Spieler current;
     public ListIterator<Spieler> reihenfolge;
+    boolean running = false;
 
     Executor kartenExecutor = Executors.newSingleThreadExecutor();
 
@@ -45,7 +46,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     public SpielRaum() throws RemoteException{
         this.chat = new SpielChat();
-        userLobserverMap = new HashMap<String, ILobbyObserver>();
+        userRaumServerMap = new HashMap<String, IRaumObserver>();
     }
 
     /**
@@ -58,7 +59,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             throw new SpielraumVollException();
         } else {
             //TODO bot hinzufügen
-            //spieler.add(new Bot());
+            spieler.add(new Spieler(true));
             anzahlSpieler++;
         }
     }
@@ -90,44 +91,48 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     public void spielStarten() throws NichtGenugSpielerException {
 
+
         /*Prüfen ob genug Spieler im Raum sind um ein Spiel zu starten*/
         if(anzahlSpieler<2) {
             throw new NichtGenugSpielerException();
         }
+
+        running= true;
+
         /*Vorbereiten des Spielstapels und der Hände der Spieler*/
 
         for (int i=1; i<5 ; i++) {
-            spielstapel.add(new Angriff(Integer.toString(i),"Angriff"));
+            spielstapel.push(new Karte(Integer.toString(i),"Angriff"));
         }
         for (int i = 5;i<9;i++) {
-            spielstapel.add(new Hops(Integer.toString(i),"Hops"));
+            spielstapel.push(new Karte(Integer.toString(i),"Hops"));
         }
         for (int i = 9;i<13;i++) {
-            spielstapel.add(new Wunsch(Integer.toString(i),"Wunsch"));
+            spielstapel.push(new Karte(Integer.toString(i),"Wunsch"));
         }
         for (int i = 13;i<17;i++) {
-            spielstapel.add(new Mischen(Integer.toString(i),"Mischen"));
+            spielstapel.push(new Karte(Integer.toString(i),"Mischen"));
         }
         for (int i = 17;i<22;i++) {
-            spielstapel.add(new Noe(Integer.toString(i),"Noe"));
+            spielstapel.push(new Karte(Integer.toString(i),"Noe"));
         }
         for (int i = 22;i<27;i++) {
-            spielstapel.add(new BlickInDieZukunkt(Integer.toString(i),"BlickInDieZukunft"));
+            spielstapel.push(new Karte(Integer.toString(i),"BlickInDieZukunft"));
         }
         for (int i = 27;i<31;i++) {
-            spielstapel.add(new Katze1(Integer.toString(i),"Katze1"));
+            spielstapel.push(new Karte(Integer.toString(i),"Katze1"));
         }
         for (int i = 31;i<35;i++) {
-            spielstapel.add(new Katze2(Integer.toString(i),"Katze2"));
+            spielstapel.push(new Karte(Integer.toString(i),"Katze2"));
         }
         for (int i = 35;i<39;i++) {
-            spielstapel.add(new Katze3(Integer.toString(i),"Katze3"));
+            spielstapel.push(new Karte(Integer.toString(i),"Katze3"));
         }
         for (int i = 39;i<43;i++) {
-            spielstapel.add(new Katze4(Integer.toString(i),"Katze4"));
+            spielstapel.push(new Karte(Integer.toString(i),"Katze4"));
         }
         for (int i = 43;i<47;i++) {
-            spielstapel.add(new Katze5(Integer.toString(i),"Katze5"));
+            spielstapel.push(new Karte(Integer.toString(i),"Katze5"));
         }
         Collections.shuffle(spielstapel);
 
@@ -135,30 +140,34 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
         for (Spieler s : spieler) {
             for (int i = 1; i<8;i++) {
-                s.handkarte.add(spielstapel.pop());
+                Karte k = spielstapel.pop();
+                s.handkarte.add(k);
             }
-            s.handkarte.add(new Entschaerfung(Integer.toString(count),"Entschaerfung"));
+            Karte e = new Karte(Integer.toString(count),"Entschaerfung");
+            s.handkarte.add(e);
             count++;
         }
         if(anzahlSpieler==2) {
-            spielstapel.add(new Entschaerfung(Integer.toString(count),"Entschaerfung"));
-            spielstapel.add(new Entschaerfung(Integer.toString(count+1),"Entschaerfung"));
+            spielstapel.push(new Karte(Integer.toString(count),"Entschaerfung"));
+            spielstapel.push(new Karte(Integer.toString(count+1),"Entschaerfung"));
             count+=2;
         } else {
             for (int i =6-anzahlSpieler; i>0;i--) {
-                spielstapel.add(new Entschaerfung(Integer.toString(count),"Entschaerfung"));
+                spielstapel.push(new Karte(Integer.toString(count),"Entschaerfung"));
                 count++;
             }
         }
         for (int i = 1;i<anzahlSpieler;i++) {
-            spielstapel.add(new ExplodingKitten(Integer.toString(count),"ExplodingKitten"));
+            spielstapel.push(new Karte(Integer.toString(count),"ExplodingKitten"));
             count++;
         }
         Collections.shuffle(spielstapel);
+        System.out.println("Spiel vorbereitet.");
+
 
         /*Spielreihenfolge festlegen*/
         Collections.shuffle(spieler);
-        reihenfolge = (ListIterator<Spieler>) spieler.iterator();
+        reihenfolge = spieler.listIterator();
         current = reihenfolge.next();
     }
 
@@ -311,10 +320,10 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public void sendMessage(String msg , String time ,String benutzername){
         chat.nachrichSchreiben(msg , time ,benutzername);
 
-        for(String nom : userLobserverMap.keySet()){
-            ILobbyObserver current = userLobserverMap.get(nom);
+        for(String nom : userRaumServerMap.keySet()){
+            IRaumObserver observer = userRaumServerMap.get(nom);
             try {
-                current.updateMessageList();
+                observer.updateMessageList();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -328,9 +337,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
+
+
     @Override
-    public void registerObserver(String userName, ILobbyObserver io){
-        userLobserverMap.put(userName, io);
+    public void registerObserver(String userName, IRaumObserver io){
+        userRaumServerMap.put(userName, io);
     }
 
     /**
@@ -341,7 +352,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     @Override
     public void betreten(String name) {
-        Spieler sp = new Spieler();
+        Spieler sp = new Spieler(false);
         sp.nickname = name;
         spieler.add(sp);
         anzahlSpieler++;
@@ -358,11 +369,22 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     public String ping() {
         String s="";
+        betreten("Test");
         for(Spieler sp: spieler ) {
             s+=sp.getNickname();
         }
         s+=anzahlSpieler;
         s+="\tHallelujah";
         return s;
+    }
+
+    @Override
+    public boolean isRunning(){
+        return running;
+    }
+
+    @Override
+    public Spieler getCurrent() {
+        return current;
     }
 }

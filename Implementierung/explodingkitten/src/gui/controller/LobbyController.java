@@ -98,7 +98,8 @@ public class LobbyController implements ILobbyObserver {
 
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()) {
-            String raumname = result.get();
+            String temp = result.get();
+            String raumname= temp.replace(' ','_');
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
 
             try {
@@ -112,6 +113,7 @@ public class LobbyController implements ILobbyObserver {
                 Platform.runLater(() -> this.roomList.getChildren().add(root));
                 SpielRaumInterface sb = new SpielRaum();
                 Naming.rebind("rmi://localhost:1900/spielraum_"+raumname,sb);
+                sb.betreten(name);
                 VueManager.goToSpielraum(actionEvent,name,raumname);
 
             } catch (NotBoundException | ClassNotFoundException | SQLException | IOException e) {
