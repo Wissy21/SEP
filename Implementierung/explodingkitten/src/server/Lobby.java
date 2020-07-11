@@ -25,16 +25,17 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
     public void spielraumBeitreten(SpielRaum s) {
     }
 
-    public SpielRaum spielraum_erstellen() {
+    public SpielRaum spielraumErstellen() {
         return null;
     }
+
     public void sendMessage(String msg , String time ,String benutzername){
         chat.nachrichSchreiben(msg , time ,benutzername);
 
-        for(String nom : userLobserverMap.keySet()){
-            ILobbyObserver current = userLobserverMap.get(nom);
+        for(String name : userLobserverMap.keySet()){
+            ILobbyObserver current = userLobserverMap.get(name);
             try {
-                current.updateMessageList();
+                current. updateMessageList();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

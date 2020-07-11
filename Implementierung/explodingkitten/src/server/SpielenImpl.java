@@ -1,13 +1,9 @@
 package server;
 
-
-
 import server.datenbankmanager.DBmanager;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-
 
 public class SpielenImpl extends UnicastRemoteObject implements Spielen {
 

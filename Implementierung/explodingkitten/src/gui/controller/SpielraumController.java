@@ -30,6 +30,7 @@ public class SpielraumController {
     }
 
     public void sendmessage(MouseEvent mouseEvent) {
+
     }
 
     public void leereStappel(MouseEvent mouseEvent) {

@@ -6,14 +6,14 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import server.LobbyInterface;
 import server.Nachricht;
-import server.datenbankmanager.DBinterface;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,11 +23,12 @@ import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static gui.GuiHelper.showErrorOrWarningAlert;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LobbyController implements ILobbyObserver {
     public String name;
+
     public int lastMessage = 0;
 
     @FXML
@@ -39,6 +40,11 @@ public class LobbyController implements ILobbyObserver {
     public ImageView send;
     @FXML
     public VBox messageList;
+    @FXML
+    public VBox roomPlayer;
+
+    private static int spielraumNummer = 1;
+
 
     public void setName(String n) {
         this.name = n;
@@ -59,12 +65,13 @@ public class LobbyController implements ILobbyObserver {
     }
 
     public void message(InputMethodEvent inputMethodEvent) {
-
         clearFields();
     }
+
     private void clearFields() {
         messageField.clear();
     }
+
     public void onInput(ActionEvent actionEvent) {
 
     }
@@ -94,26 +101,28 @@ public class LobbyController implements ILobbyObserver {
     }
 
 
-
     public void createRoom(ActionEvent actionEvent) {
-        /*try {
+        try {
             LobbyInterface l = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
-            boolean check = l.addRoom(userId);
+            //boolean check = l.addRoom(name);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotBoundException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }*/
+        }
         updateRoomList();
     }
 
-    public void updateRoomList(){
+    public void updateRoomList() {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
 
         try {
             Parent root = fxmlLoader.load();
+            Label label = (Label) root.lookup("#label1");
+            if (label != null) label.setText("Raum " + spielraumNummer);
+            spielraumNummer++;
 
             //LobbyRoom lb = fxmlLoader.getController();
             //lb.setRaum(this, sr.id, sr.playerList.size(), sr.started);
@@ -122,16 +131,38 @@ public class LobbyController implements ILobbyObserver {
             e.printStackTrace();
         }
     }
-    public void updateMessageList(){
+
+    @FXML
+    public void lobbyRoomPlayer(ActionEvent event) {
+
+        System.out.println("Beitreten first step: " + name);
+        updateRoomPlayer();
+    }
+
+    public void updateRoomPlayer() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("../vue/lobbyRoomPlayer.fxml"));
+            Parent finalRoot = root;
+            Platform.runLater(() -> this.roomPlayer.getChildren().add(finalRoot));
+            System.out.println(name);
+
+        } catch (IOException e) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        VBox.setVgrow(root, null);
+    }
+
+    public void updateMessageList() {
         try {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
             ArrayList<Nachricht> nList = lb.getMessage();
 
-            for(int i = lastMessage; i<nList.size(); i++){
+            for (int i = lastMessage; i < nList.size(); i++) {
                 Nachricht n = nList.get(i);
                 FXMLLoader fxmlLoader;
                 Parent root;
-                if(n.sender.equals(name)) {
+                if (n.sender.equals(name)) {
                     fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/rightMessage.fxml"));
                     root = fxmlLoader.load();
                     RightMessageController rc = fxmlLoader.getController();

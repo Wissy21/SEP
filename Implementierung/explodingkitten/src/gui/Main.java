@@ -14,6 +14,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("vue/startFenster.fxml"));
         Scene scene = new Scene(root);
 
+        scene.getStylesheets().add(getClass().getResource("style/style.css").toExternalForm());
         primaryStage.setTitle("Exploding Kittens - Anmelden");
         primaryStage.getIcons().add( new Image(getClass().getResourceAsStream("images/explode.png")) );
 

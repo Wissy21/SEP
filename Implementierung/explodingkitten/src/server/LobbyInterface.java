@@ -10,4 +10,7 @@ public interface LobbyInterface extends Remote {
     public void sendMessage(String msg , String time ,String benutzername) throws RemoteException;
     public ArrayList<Nachricht> getMessage() throws RemoteException;
     public void registerObserver(String userName, ILobbyObserver io) throws RemoteException;
+
+    //boolean addRoom(String name);
+
 }
