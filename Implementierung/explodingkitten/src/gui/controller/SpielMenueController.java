@@ -14,8 +14,6 @@ public class SpielMenueController {
 
     public void goToSpiel(ActionEvent actionEvent) throws IOException {
         VueManager.goToLobby(actionEvent, name);
-
-        //VueManager.goToSpiel(actionEvent, name);
     }
 
     public void goToBestenliste(Event actionEvent) throws IOException {

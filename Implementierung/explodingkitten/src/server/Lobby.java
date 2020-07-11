@@ -13,7 +13,7 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
     SpielChat chat;
 
     public HashMap<String, ILobbyObserver> userLobserverMap;
-    public ArrayList<String> spielräume;
+    public ArrayList<String> spielraume;
 
     public Lobby() throws RemoteException {
         this.chat = new SpielChat();
@@ -39,5 +39,23 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
 
     public void registerObserver(String userName, ILobbyObserver io){
         userLobserverMap.put(userName, io);
+    }
+
+    @Override
+    public void addroom(String raumname) {
+        spielraume.add(raumname);
+        for(String nom : userLobserverMap.keySet()){
+            ILobbyObserver current = userLobserverMap.get(nom);
+            try {
+                current.updateMessageList();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<String> getRooms() throws RemoteException {
+        return spielraume;
     }
 }

@@ -11,14 +11,17 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import server.Nachricht;
 import server.SpielRaumInterface;
@@ -52,6 +55,8 @@ public class SpielraumController implements IRaumObserver{
     TextField messageField;
     @FXML
     public VBox messageList;
+    @FXML
+    public  ImageView ablage;
 
     public String name;
     public String raumname;
@@ -63,6 +68,7 @@ public class SpielraumController implements IRaumObserver{
         this.name = name;
         this.raumname = raumname;
         cardbox.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
+
         try {
             RaumObserver ro = new RaumObserver(this);
             db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
@@ -142,7 +148,7 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
-    public void zurueckSpielraum(ActionEvent actionEvent) throws IOException {
+    public void zurueckSpielraum(Event actionEvent) throws IOException {
         if(sb.isRunning()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Spiel Verlassen?");
@@ -151,19 +157,25 @@ public class SpielraumController implements IRaumObserver{
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                //TODO aufgeben, Karten ablegen
+                for(Spieler sp : sb.getSpieler()) {
+                    if(sp.getNickname().equals(name)) {
+                        sb.explodiert(name);
+                    }
+                }
                 try {
-                    sb.spielraumVerlassen(name);
                     db.raumVerlassen(name,raumname);
                 } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
                 }
-
                 VueManager.goToLobby(actionEvent, name);
-
             }
         } else {
             sb.spielraumVerlassen(name);
+            try {
+                db.raumVerlassen(name,raumname);
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
+            }
             VueManager.goToLobby(actionEvent, name);
         }
     }
@@ -187,6 +199,8 @@ public class SpielraumController implements IRaumObserver{
             if(!sb.isRunning()) {
                 try {
                     sb.botHinzufuegen();
+                    Timestamp tm = new Timestamp(new Date().getTime());
+                    sb.sendMessage("BOT hinzugefügt",tm.toString(),"Serveradmin");
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (SpielraumVollException e) {
@@ -234,30 +248,133 @@ public class SpielraumController implements IRaumObserver{
     }
 
     @Override
-    public void notify(String spielername,String message) {
+    public void notify(String spielername,String message,Karte k) {
         if(name.equals(spielername)) {
             switch (message) {
+
                 case "Auswahl":
                     try {
+                        ArrayList<Spieler> choice = new ArrayList<>();
+                        for(Spieler s: sb.getSpieler()) {
+                            if(!s.getNickname().equals(name)) {
+                                choice.add(s);
+                            }
+                        }
+                        Platform.runLater(()->GuiHelper.showSpielerSelect(choice));
                         sb.setAusgewaehler(zielAuswaehlen());
                         break;
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+
                 case "DuBistDran":
                     Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Ihr Zug","Ihr Zug","Es ist Ihr Zug."));
                     break;
+
                 case "Abgeben":
+                        Platform.runLater(()-> {
+                            try {
+                                sb.abgeben(name,karteAuswaehlen());
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        break;
+
+                case "AbgelegtDu":
+                        for(Node n : cardbox.getChildren()) {
+                        AnchorPane ap = (AnchorPane) n;
+                        for(Node node : ap.getChildren()) {
+                            ImageView iv = (ImageView) node;
+                            if (iv.getId().equals(k.getName())) {
+                                Platform.runLater(() -> cardbox.getChildren().remove(ap));
+                                break;
+                            }
+                        }
+                    }
+
+                    Platform.runLater(()->ablage.setImage(new Image(getClass().getResource("../images/Karten/"+k.getEffekt()+".png").toString(),0,150,true,false)));
+                    break;
+
+                case "Abgelegt":
+                    Platform.runLater(()->ablage.setImage(new Image(getClass().getResource("../images/Karten/"+k.getEffekt()+".png").toString(),0,150,true,false)));
+                    Platform.runLater(()->updateOpponent(spielername));
+                    break;
+
+                case "Bekommen":
                     try {
-                        sb.abgeben(name,karteAuswaehlen());
+                        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Karte.fxml"));
+                        Parent neuekarte = loader.load();
+                        KarteController kc = loader.getController();
+                        kc.setKarte(k, name, raumname);
+                        Platform.runLater(() -> this.cardbox.getChildren().add(neuekarte));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case "Abgegeben":
+                    Platform.runLater(()->cardbox.getChildren().removeIf(n -> n.getId().equals(k.getName())));
+                    break;
+
+                case "Exploding":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Exploding Kitten","Schnell! Entschärfen!","Sonst haben Sie verloren!"));
+                    break;
+
+                case "Ausgeschieden":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Ausgeschieden","Schade","Schade! Sie sind ausgeschieden."));
+                    try {
+                        sb.explodiert(spielername);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    break;
+
+                case "NotYourRunde":
+                    try {
+                        GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Nicht am Zug","Nicht dein Zug","Es ist der Zug von "+sb.getCurrent().getNickname());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Position":
+                    try {
+                        ArrayList<Integer> choice = new ArrayList<>();
+                        for (int i=0;i<=sb.getStapelSize();i++) {
+                            choice.add(i);
+                        }
+                        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(0,choice);
+                        dialog.setOnCloseRequest(e->Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Bitte etwas auswählen","Bitte etwas auswählen","Sie müssen einen anderen Spieler auswählen.")));
+                        Optional<Integer> result = dialog.showAndWait();
+                        sb.setPosition(result.get());
+                        break;
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+
+                case "Raus":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.INFORMATION,"Explosion!","Ein Spieler ist explodiert.",k.getEffekt()+" ist expoldiert."));
+                    break;
+
+                case "BotWin":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.INFORMATION,"Vorbei!","Ein Bot hat das Spiel gewonnen.","Das ist schon traurig."));
+                    break;
+
+                case "Gewonnen":
+                    Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.INFORMATION,"Glückwunsch!","Sie haben das Spiel gewonnen.","Gut gemacht."));
+                    try {
+                        db.siegEintragen(name);
+                    } catch (RemoteException | SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
 
                     //TODO zusätzliche Nachrichten
 
                 default:
                     Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Blick in die Zukunft","Die nächsten Kartten sind",message));
+                    break;
             }
         }
     }
@@ -269,10 +386,11 @@ public class SpielraumController implements IRaumObserver{
                 choice.add(s);
             }
         }
-        ChoiceDialog<Spieler> dialog = new ChoiceDialog<>(choice.get(1),choice);
+        ChoiceDialog<Spieler> dialog = new ChoiceDialog<>(choice.get(0),choice);
         dialog.setOnCloseRequest(e->{Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Bitte etwas auswählen","Bitte etwas auswählen","Sie müssen einen anderen Spieler auswählen."));});
         Optional<Spieler> result = dialog.showAndWait();
         return result.get();
+
     }
 
 
@@ -284,9 +402,47 @@ public class SpielraumController implements IRaumObserver{
             }
         }
         ArrayList<Karte> choice = geber.getHandkarte();
-        ChoiceDialog<Karte> dialog = new ChoiceDialog<>(choice.get(1),choice);
+        ChoiceDialog<Karte> dialog = new ChoiceDialog<>(choice.get(0),choice);
         dialog.setOnCloseRequest(e->{Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Bitte etwas auswählen","Bitte etwas auswählen","Sie müssen eine Karte auswählen."));});
         Optional<Karte> result = dialog.showAndWait();
         return result.get();
+    }
+
+    public void updateOpponent(String spielername) {
+        for(Node n :opponents.getChildren()){
+            AnchorPane ap =(AnchorPane) n;
+            for(Node node : ap.getChildren()) {
+                VBox op = (VBox) node;
+                boolean richtig = false;
+                for (Node no : op.getChildren()) {
+                    if (no.getId().equals("name")) {
+                        Text t = (Text) no;
+                        if (t.getText().equals(spielername)) {
+                            richtig = true;
+                        }
+                    }
+                }
+                if (richtig) {
+                    for (Node no : op.getChildren()) {
+                        if (no.getId().equals("anzahlk")) {
+                            Text t = (Text) no;
+                            String anzeige = t.getText();
+                            String[] res = anzeige.split(":");
+                            int zahl = Integer.parseInt(res[1]);
+                            zahl++;
+                            int finalZahl = zahl;
+                            t.setText(res[0] + finalZahl);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void scroll(ScrollEvent scrollEvent) {
+        if(scrollEvent.getDeltaX() == 0 && scrollEvent.getDeltaY() != 0) {
+            spane.setHvalue(spane.getHvalue() - scrollEvent.getDeltaY() / cardbox.getWidth());
+        }
+
     }
 }

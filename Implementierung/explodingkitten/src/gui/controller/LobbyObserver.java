@@ -14,4 +14,9 @@ public class LobbyObserver extends UnicastRemoteObject implements ILobbyObserver
     public void updateMessageList() throws RemoteException {
         lobby.updateMessageList();
     }
+
+    @Override
+    public void updateRaumList() throws RemoteException {
+        lobby.updateRaumList();
+    }
 }

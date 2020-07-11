@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SpielraumController">
+<AnchorPane fx:id="spielraum" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SpielraumController">
     <children>
         <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0">
             <items>
@@ -55,13 +55,13 @@
                                                 <Image url="@../images/main_deck_1.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="ablage" fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../images/EmptyDiscardDeck.png" />
                                             </image>
                                         </ImageView>
                               <HBox fx:id="opponents" layoutX="13.0" layoutY="14.0" prefHeight="100.0" prefWidth="567.0" />
-                              <ScrollPane fx:id="spane" layoutY="470.0" prefHeight="160.0" prefWidth="600.0">
+                              <ScrollPane fx:id="spane" layoutY="470.0" onScroll="#scroll" prefHeight="160.0" prefWidth="600.0">
                                  <content>
                                     <HBox fx:id="cardbox" prefHeight="150.0" prefWidth="600.0" />
                                  </content></ScrollPane>

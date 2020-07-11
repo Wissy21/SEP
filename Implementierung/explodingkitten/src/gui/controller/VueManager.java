@@ -1,11 +1,15 @@
 package gui.controller;
 
+import gui.GuiHelper;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import server.SpielRaum;
 
 import java.io.IOException;
@@ -81,7 +85,7 @@ public class VueManager {
     }
 
     public static void goToBestenliste(Event event, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("vue/bestenListe.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/bestenListe.fxml"));
         Parent root = loader.load();
 
         BestenListeController so = loader.getController();
@@ -154,7 +158,25 @@ public class VueManager {
 
 
 
-   /*public static int karteNehmen(MouseEvent mouseEvent) {
-        return 0;
-    }*/
+   public static void close(WindowEvent windowEvent) {
+        Stage stage = (Stage) windowEvent.getTarget();
+        Scene scene = stage.getScene();
+        Parent root = scene.getRoot();
+        switch(root.getId()) {
+            case "startfenster":
+            case "registrieren":
+            case "anmelden":
+                Platform.exit();
+                break;
+            case "spielraum":
+                GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Verlassen","Bitte verlassen Sie den Raum durch den vorgesehenen Knopf.","Bitte verlassen Sie den Raum durch den vorgesehenen Knopf.");
+                windowEvent.consume();
+                break;
+            default:
+                GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Verlassen","Bitte melden Sie sich vorher ab.","Bitte melden Sie sich vorher ab.");
+                windowEvent.consume();
+                break;
+
+        }
+   }
 }

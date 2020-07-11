@@ -19,28 +19,24 @@ public class OpponentController {
 
     public void set(int nummer, String n, int karten) {
         name.setText(n);
-        anzahlk.setText("Anzahl Karten: "+karten);
+        anzahlk.setText("Anzahl Karten:"+karten);
         switch (nummer) {
             case 1:
-                Image image = new Image(getClass().getResource("../../images/user_images/playericon2.png").toString());
+                Image image = new Image(getClass().getResource("../../images/user_images/playericon2.png").toString(),100,0,true,false);
                 bild.setImage(image);
                 break;
             case 2:
-                Image image2 = new Image(getClass().getResource("../../images/user_images/playericon3.png").toString());
+                Image image2 = new Image(getClass().getResource("../../images/user_images/playericon3.png").toString(),100,0,true,false);
                 bild.setImage(image2);
                 break;
             case 3:
-                Image image3 = new Image(getClass().getResource("../../images/user_images/playericon4.png").toString());
+                Image image3 = new Image(getClass().getResource("../../images/user_images/playericon4.png").toString(),100,0,true,false);
                 bild.setImage(image3);
                 break;
             case 4:
-                Image image4 = new Image(getClass().getResource("../../images/user_images/playericon7.png").toString());
+                Image image4 = new Image(getClass().getResource("../../images/user_images/playericon7.png").toString(),100,0,true,false);
                 bild.setImage(image4);
                 break;
         }
-    }
-
-    public void setAnzahlk(int karten) {
-        anzahlk.setText("Anzahl Karten: "+karten);
     }
 }

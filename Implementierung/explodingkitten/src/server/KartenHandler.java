@@ -29,7 +29,7 @@ public class KartenHandler implements Runnable{
      * Anfangs wird die karte immer aus der Hand auf den Ablagestapel gelegt
      * Prüfen ob die Karte Nö! ist. Wenn ja wird die Nö-Situation geändert
      * Prüfen ob die karte Entschärfung ist. Wenn ja wird das Exploding Kitten entschärft und zurückgelegt.
-     * Anderfalls Wird 15 Sekunden gewartet, on jemand anderes eine Nö-Karte spielen will.
+     * Anderfalls Wird 5 Sekunden gewartet, on jemand anderes eine Nö-Karte spielen will.
      * Je nach der Nö-Situation wird der Effekt der gespielten Karte dann ausgeführt oder nicht.
      * Zum Schluss wird die karte immer aus der Hand auf den Ablagestapel gelegt
      *
@@ -37,22 +37,16 @@ public class KartenHandler implements Runnable{
     @Override
     public void run() {
 
-        //TODO Anzeigen welche Karte gespielt wurde
-
         room.current.handkarte.remove(gespielt);
-        room.ablagestapel.add(gespielt);
+        room.ablagestapel.push(gespielt);
 
-        if(effekt.equals("Noe")) {
-            room.changeNoe();
-        }
-        else if (effekt.equals("Entschaerfung")) {
-             room.setExpolding(false);
-             room.spielstapel.insertElementAt(room.explKitten, room.getPosition());
-             room.naechsterSpieler();
+        if (effekt.equals("Entschaerfung")) {
+                room.setExpolding(false);
         } else {
             try {
+                room.setNoe(false);
                 System.out.println("Warten auf Nö!");
-                Thread.sleep(7000);
+                Thread.sleep(5000);
                 System.out.println("Warten beendet");
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -72,7 +66,6 @@ public class KartenHandler implements Runnable{
 
                     case "Wunsch":
                         room.selectSpieler(room.getCurrent());
-                        //TODO Aufruf Client Methode zum auswählen eines Ziels und dann Auswahl der zu gebenden Karte
 
                         break;
                     case "Mischen":
@@ -83,7 +76,11 @@ public class KartenHandler implements Runnable{
                         Karte k2 = room.spielstapel.pop();
                         Karte k3 = room.spielstapel.pop();
                         ausgabe = k1.getEffekt() + "," + k2.getEffekt() + "," + k3.getEffekt();
-                        room.notify(room.getCurrent(),ausgabe);
+                        if(room.getCurrent().isBot) {
+                            room.getCurrent().naechsteKarte(k1.getEffekt());
+                        }else {
+                            room.notify(room.getCurrent().getNickname(), ausgabe, null);
+                        }
                         room.spielstapel.push(k3);
                         room.spielstapel.push(k2);
                         room.spielstapel.push(k1);

@@ -5,6 +5,7 @@ import exceptions.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public interface DBinterface extends Remote {
 
@@ -23,4 +24,8 @@ public interface DBinterface extends Remote {
     public void raumBeitreten(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException;
 
     public boolean raumVerlassen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException;
+
+    void siegEintragen(String spielername) throws RemoteException,SQLException,ClassNotFoundException;
+
+    ArrayList<Row> getBestenliste() throws RemoteException,SQLException,ClassNotFoundException;
 }

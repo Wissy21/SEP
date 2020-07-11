@@ -1,18 +1,19 @@
 package gui.controller;
 
 import exceptions.RaumNotExistException;
+import exceptions.SpielLauftBereitsException;
 import exceptions.SpielraumVollException;
 import gui.GuiHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
+import server.SpielRaumInterface;
 import server.datenbankmanager.DBinterface;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 public class LobbyRoom {
@@ -30,13 +31,18 @@ public class LobbyRoom {
     public void raum1Beitreten(ActionEvent actionEvent) {
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            SpielRaumInterface si = (SpielRaumInterface) Naming.lookup("rmi://localhost:1900/spielraum_"+rname.getText());
             db.raumBeitreten(name,rname.getText());
-        } catch (NotBoundException | MalformedURLException | RemoteException | SQLException | ClassNotFoundException  e) {
+            si.betreten(name);
+            VueManager.goToSpielraum(actionEvent,name,rname.getText());
+        } catch (NotBoundException | SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } catch (SpielraumVollException e) {
             GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Raum voll","Raum ist voll","Dieser Spielraum ist voll.");
         } catch (RaumNotExistException e) {
             GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Raum gibt es nicht mehr","Raum gibt es nicht mehr","Diesen Raum gibt es nicht mehr.");
+        } catch (SpielLauftBereitsException e) {
+            GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Spiel läuft","Spiel läuft schon","Der Raum hat das Spiel bereits begonnen.");
         }
 
     }

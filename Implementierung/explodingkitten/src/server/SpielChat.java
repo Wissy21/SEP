@@ -7,7 +7,7 @@ public class SpielChat {
     public ArrayList<Nachricht> nachrichten;
 
     public SpielChat() {
-        nachrichten = new ArrayList<Nachricht>();
+        nachrichten = new ArrayList<>();
     }
 
     public void nachrichSchreiben(String msg , String time ,String benutzername) {

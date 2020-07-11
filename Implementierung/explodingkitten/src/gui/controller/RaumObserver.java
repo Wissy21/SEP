@@ -1,5 +1,7 @@
 package gui.controller;
 
+import server.karten.Karte;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -16,7 +18,7 @@ public class RaumObserver extends UnicastRemoteObject implements IRaumObserver {
     }
 
     @Override
-    public void notify(String spielername,String message) throws RemoteException {
-        raum.notify(spielername, message);
+    public void notify(String spielername, String message, Karte k) throws RemoteException {
+        raum.notify(spielername, message, k);
     }
 }

@@ -34,6 +34,7 @@ public class KarteController {
         this.name = name;
         this.raumname = raumname;
         karte.setImage(new Image(getClass().getResource("../../images/Karten/"+k.getEffekt()+".png").toString(),0,150,true,false));
+        karte.setId(k.getName());
         try {
             sb = (SpielRaumInterface) Naming.lookup("rmi://localhost:1900/spielraum_"+raumname);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {

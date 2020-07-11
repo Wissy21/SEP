@@ -5,6 +5,7 @@ import exceptions.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * die Klasse verwaltet die Datenbank
@@ -49,7 +50,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
         Connection conn = verbindung();
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
-        String anfrage2 = "insert into benutzer values(?,?) ";
+        String anfrage2 = "insert into benutzer values(?,?,?) ";
         PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, nickname);
@@ -64,6 +65,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
             if (pass.equals(bestpass)) {
                 pstmt2.setString(1, nickname);
                 pstmt2.setString(2, pass);
+                pstmt2.setInt(3,0);
 
                 boolean check = pstmt2.execute();
 
@@ -241,7 +243,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
         Connection conn = verbindung();
         String anfrage = "delete from inRaum where spieler = ? and raum = ?";
-        String anfrage2 = "select spieler as anz from inRaum where raum = ? ";
+        String anfrage2 = "select count(*) as anz from inRaum where raum = ? ";
         PreparedStatement pstmt = conn.prepareStatement(anfrage);
         pstmt.setString(1, username);
         pstmt.setString(2,raumname);
@@ -251,8 +253,8 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         ResultSet rst2 = pstmt2.executeQuery();
         boolean empty = true;
         while (rst2.next()) {
-            String name = rst2.getString("spieler");
-            if(!(name.equals("BOT1")||name.equals("BOT2")||name.equals("BOT3")||name.equals("BOT4"))) {
+            int anz = rst2.getInt("anz");
+            if(anz>1) {
                 empty = false;
                 break;
             }
@@ -272,8 +274,23 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         }
     }
 
+    public void siegEintragen(String username) throws SQLException, ClassNotFoundException {
+        Connection conn = verbindung();
+        String anfrage = "update benutzer set punkte = punkte + 1 where benutzername = ? ";
+        PreparedStatement pstmt = conn.prepareStatement(anfrage);
+        pstmt.setString(1, username);
+        pstmt.execute();
+    }
 
-
-
-
+    public ArrayList<Row> getBestenliste() throws SQLException, ClassNotFoundException {
+        Connection conn = verbindung();
+        String anfrage = "select benutzername,punkte,rank() over(order by punkte desc) as platz from benutzer order by platz ";
+        PreparedStatement pstmt = conn.prepareStatement(anfrage);
+        ArrayList<Row> result = new ArrayList<>();
+        ResultSet rslt = pstmt.executeQuery();
+        while (rslt.next()) {
+            result.add(new Row(rslt.getInt("platz"),rslt.getInt("punkte"),rslt.getString("benutzername")));
+        }
+        return result;
+    }
 }

@@ -7,9 +7,9 @@
 
 <AnchorPane prefHeight="203.0" prefWidth="170.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.Spiel.OpponentController">
    <children>
-      <VBox prefHeight="203.0" prefWidth="170.0" stylesheets="@../../style/style.css">
+      <VBox prefHeight="203.0" prefWidth="150.0" stylesheets="@../../style/style.css">
          <children>
-            <ImageView fx:id="bild" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="bild" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/user_images/playericon2.png" />
                </image>

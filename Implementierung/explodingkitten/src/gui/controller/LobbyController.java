@@ -1,6 +1,7 @@
 package gui.controller;
 
 import exceptions.RaumnameVergebenException;
+import exceptions.SpielLauftBereitsException;
 import gui.GuiHelper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ import java.util.Optional;
 public class LobbyController implements ILobbyObserver {
     public String name;
     public int lastMessage = 0;
+    public int lastRoom = 0;
 
     @FXML
     public TextField messageField;
@@ -120,22 +122,15 @@ public class LobbyController implements ILobbyObserver {
                 e.printStackTrace();
             } catch (RaumnameVergebenException e) {
                 GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Name vergeben","Eingegebener Name vergeben","Der eingegebene Name ist vergeben.");
+            } catch (SpielLauftBereitsException e) {
+                GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Spiel läuft","Spiel läuft schon","Der Raum hat das Spiel bereits begonnen.");
             }
         } else {
             GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Keine Eingabe","Keine Eingabe","Sie haben keinen Name eingegeben.");
         }
     }
 
-    public void updateRoomList(){
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
 
-        try {
-            Parent root = fxmlLoader.load();
-            Platform.runLater(() -> this.roomList.getChildren().add(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public void updateMessageList(){
         try {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
@@ -165,5 +160,26 @@ public class LobbyController implements ILobbyObserver {
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void updateRaumList() {
+        try {
+            LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
+            ArrayList<String> roomlist = lb.getRooms();
+            for(int i = lastRoom;i<roomlist.size();i++) {
+                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
+                Parent root = fxmlLoader.load();
+                LobbyRoom lr = fxmlLoader.getController();
+                lr.setName(name,roomlist.get(i));
+                Platform.runLater(() -> this.messageList.getChildren().add(root));
+                lastMessage++;
+            }
+
+
+        } catch (NotBoundException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
