@@ -3,11 +3,13 @@ package gui.controller;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import server.LobbyInterface;
 
 import java.io.IOException;
@@ -28,6 +30,12 @@ public class SpielraumController {
     public TextField messageField;
     @FXML
     public ImageView userImage;
+    @FXML
+    public ImageView myCard;
+    @FXML
+    public VBox spielraumUser;
+    @FXML
+    public Label player1;
 
     public void setName(String n) {
         this.name = n;
@@ -75,6 +83,9 @@ public class SpielraumController {
     public void stappel(MouseEvent mouseEvent) {
     }
 
-    public void bot(MouseEvent mouseEvent) {
+    public void karte(MouseEvent mouseEvent) {
+    }
+
+    public void play(ActionEvent actionEvent) {
     }
 }
