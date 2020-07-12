@@ -16,7 +16,13 @@ public class OpponentController {
     ImageView bild;
 
 
-
+    /**
+     * Erstellt die Ansicht für die Gegener im Spielraum
+     *
+     * @param nummer Nummer des Gegeners in der Lobby zwischne 1 und 4
+     * @param n Name des Gegners
+     * @param karten Anzahl an Handkarten
+     */
     public void set(int nummer, String n, int karten) {
         name.setText(n);
         anzahlk.setText("Anzahl Karten:"+karten);

@@ -11,6 +11,12 @@ public class LeftMessageController {
     @FXML
     public Text benutzername;
 
+    /**
+     * Initialisier eine linksseitige Nachricht
+     * @param m eigentliche Nachricht
+     * @param s Name des Nutzers der die Nachricht geschrieben hat
+     * @param t Zeitstempel
+     */
     public void set(String m, String s, String t){
         message.setText(m);
         benutzername.setText(s);

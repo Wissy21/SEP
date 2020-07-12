@@ -30,10 +30,22 @@ public class BestenListeController {
     TableView<Row> table;
     String username;
 
-    public void zurueckBestenListe(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenue(actionEvent, username);
+    /**
+     * Nutzer wird zurück ins Menü geleitet
+     * @param actionEvent Event das die Mwthode ausgelöst hat
+     */
+    public void zurueckBestenListe(ActionEvent actionEvent) {
+        try {
+            VueManager.goToMenue(actionEvent, username);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Methode die die Bestenliste von der Datenbank abfragt und darstellt
+     * @param n Name des anfragenden Benutzers
+     */
     public void setName(String n) {
         username = n;
         try {
@@ -58,8 +70,6 @@ public class BestenListeController {
                 }
             });
             table.setItems(rs);
-
-
         } catch (NotBoundException | MalformedURLException | RemoteException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

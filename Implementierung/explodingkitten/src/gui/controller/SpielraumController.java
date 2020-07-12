@@ -68,6 +68,11 @@ public class SpielraumController implements IRaumObserver{
     SpielRaumInterface sb;
     DBinterface db;
 
+    /**
+     * Initiiert den Spielraum in der GUI und verbindet sich mit allen notwendigen RMI Objekten
+     * @param name Name des Nutzers der GUI
+     * @param raumname Name des Raums
+     */
     public void setName(String name, String raumname){
         this.name = name;
         this.raumname = raumname;
@@ -85,6 +90,10 @@ public class SpielraumController implements IRaumObserver{
             updateMessageList();
     }
 
+    /**
+     * Wird beim drücken des Spiel starten Knopfes ausgeführt
+     * Wenn das Spiel noch nicht gestartet ist wird es jetzt gestartet
+     */
     public void set(){
         try {
             if(!sb.isRunning()) {
@@ -92,11 +101,16 @@ public class SpielraumController implements IRaumObserver{
             } else {
                 GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Spiel läuft bereits","Spiel läuft bereits","");
             }
-        } catch (RemoteException | NichtGenugSpielerException e) {
+        } catch (NichtGenugSpielerException e) {
+            GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Nicht genug Spieler","Nicht genug Spieler.","Nicht genug Spieler.");
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Erstellt das Spielfeld mit allen Handkarten und Informationen über die Gegner
+     */
     public void createGUI() {
         try {
             int i = 1;
@@ -124,6 +138,9 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
+    /**
+     * Zeigt die Regeln in einem externen Fenster
+     */
     public void zeigeRegeln() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Regeln.fxml"));
         Parent root = null;
@@ -139,6 +156,10 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
+    /**
+     *Sendet eine Nachricht von diesem Client an alle weiteren
+     * @param mouseEvent Event das die Methode auslöst
+     */
     public void sendmessage(Event mouseEvent) {
         try {
             Timestamp tm = new Timestamp(new Date().getTime());
@@ -150,6 +171,12 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
+    /**
+     * Bewegt den Nutzer zurück in die Lobby
+     * Falls ein Spiel läuft wird vorher nachgefragt und dann das Spiel aufgegeben
+     * @param actionEvent Event das die Methode auslöst
+     * @throws IOException Fehler bei GUI
+     */
     public void zurueckSpielraum(Event actionEvent) throws IOException {
         if(sb.isRunning()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -182,6 +209,11 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Lässt den Nutzer ein Karte ziehen
+     * Wenn man nicht am Zug ist wird man darauf hingewiesen und es wird keine Karte gezogen
+     * @param mouseEvent Event das die Methode auslöst
+     */
     public void ziehen(MouseEvent mouseEvent) {
         try {
             sb.zugBeenden(name);
@@ -196,6 +228,10 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Fügt dem Spiel einen Bot hinzu, wenn noch Platz ist
+     * @param actionEvent Event das die Methode auslöst
+     */
     public void bot(ActionEvent actionEvent) {
         try {
             if(!sb.isRunning()) {
@@ -216,6 +252,10 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Bekommt die neue Nachricht vom Server zugespielt und stellt diese dann im Chat dar, je nachdem wer sie geschickt hat
+     * eigene Nachrichten rechts, andere links
+     */
     @Override
     public void updateMessageList(){
         try {
@@ -254,6 +294,49 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Methode die dem Client verschiedene Aufgaben geben kann, je nachdem was der Server von dem Client will/was angezeigt werden soll
+     *
+     * startGUI : Zeige das Spielfeld
+     *
+     * Auswahl: Wähle ein Ziel für die gespielte Wunsch Karte aus
+     *
+     * DuBistDran: Dein Zug hat begonnen
+     *
+     * Abgeben: Wähle eine Karte die du einem anderen Spieler wegen Wusch geben willst
+     *
+     * AbgelegtDu: Die Karte die du gelegt hast wird aus der Hand entfernt und auf den Ablagestapel gelegt
+     *
+     * Abgelegt: Die Karte die jemand anderes gelegt hat kommt auf den Ablagestapel
+     *
+     * Bekommen: Du hast eine neue Karte auf die Hand bekommen
+     *
+     * Abgegeben: Entferen die abgegebene Karte aus der Hand
+     *
+     * Exploding: Du hast ein Exploding Kitten gezogen
+     *
+     * Ausgeschieden: Du bist aus dem Spiel ausgeschieden
+     *
+     * NotYourRunde: Es ist nicht deien Runde, du darfst keine Karte legen
+     *
+     * Position: Bestimme die Position für das Exploding Kitten das du entschärft hast
+     *
+     * Raus: Ein anderer Spieler ist ausgeschieden
+     *
+     * BotWin: Ein Bot hat das Spiel gewonnen
+     *
+     *Gewonnen: Du hast gewonnen, der Sieg wird in der Bestenliste erfasst und der Spielraum wird geschlossen
+     *
+     * Verlassen: Verlasse den Spielraum
+     *
+     * default: Durch Blick in die Zukunft hast du die ersten drei Karten des Spielstapel gesehen
+     *
+     * Wenn man nicht angesprochen wird hört man trotzdem mit um eventuelle Änderungen an der Anzahl von Handkarten der Gegner zu erfassen
+     *
+     * @param spielername Spieler der benachrichtigt wird
+     * @param message Nachricht an den SPieler
+     * @param k Optionale Karte zur Nachricht hinzu
+     */
     @Override
     public void notify(String spielername,String message,Karte k) {
         if(name.equals(spielername)) {
@@ -413,10 +496,6 @@ public class SpielraumController implements IRaumObserver{
                         }
                     });
                     break;
-
-
-                    //TODO zusätzliche Nachrichten
-
                 default:
                     Platform.runLater(()->GuiHelper.showErrorOrWarningAlert(Alert.AlertType.WARNING,"Blick in die Zukunft","Die nächsten Kartten sind",message));
                     break;
@@ -432,6 +511,11 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Erstellt einen Auswahldialog um das Ziel einer Wunsch Karte zu bestimmen
+     * @param choice Auswahlmöglichkeiten für das Ziel des Wunsches
+     * @return Auswahl des Spielers, von wem er die Karte will
+     */
     public Spieler zielAuswaehlen(ArrayList<Spieler> choice) {
         ChoiceDialog<Spieler> dialog = new ChoiceDialog<>(choice.get(0),choice);
         Optional<Spieler> result = dialog.showAndWait();
@@ -449,6 +533,11 @@ public class SpielraumController implements IRaumObserver{
     }
 
 
+    /**
+     * Erstellt einen Auswahldialog um die Karte zu bestimmen, die einem anderen Spieler mit Wunsch gegeben werden soll
+     * @param choice Auswahlmöglichkeiten für die Karte
+     * @return Auswahl der Karte, die abgegben wird
+     */
     public Karte karteAuswaehlen(ArrayList<Karte> choice) {
 
         ChoiceDialog<Karte> dialog = new ChoiceDialog<>(choice.get(0),choice);
@@ -465,7 +554,12 @@ public class SpielraumController implements IRaumObserver{
         return result.orElseGet(() -> choice.get(0));
     }
 
-    public int positionAuswahl(ArrayList<Integer> choice) throws RemoteException {
+    /**
+     * Erstellt einen Auswahldialog um den Platz  zu bestimmen, an den das Exploding Kitten in den Spielstapel gelegt werden soll
+     * @param choice Auswahlmöglichkeiten für den Platz
+     * @return Auswahl des Platzes
+     */
+    public int positionAuswahl(ArrayList<Integer> choice) {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(0,choice);
 
         Optional<Integer> result = dialog.showAndWait();
@@ -481,6 +575,11 @@ public class SpielraumController implements IRaumObserver{
         return result.orElseGet(() -> choice.get(0));
     }
 
+    /**
+     * Updatet die Anzeige des Gegners, nachdem er eine Karte gespielt oder Aufgenommen hat
+     * @param spielername Name des Gegners der betroffen ist
+     * @param value +1 wenn Karte genommen, -1 wenn Karte abgelegt
+     */
     public void updateOpponent(String spielername,int value) {
         for(Node n :opponents.getChildren()){
             AnchorPane ap =(AnchorPane) n;
@@ -512,6 +611,10 @@ public class SpielraumController implements IRaumObserver{
         }
     }
 
+    /**
+     * Methode die die Kartenleiste seitlich mit dem Scrollrad scrollen lässt
+     * @param scrollEvent Event das die Methode auslöst
+     */
     public void scrollh(ScrollEvent scrollEvent) {
         if(scrollEvent.getDeltaX() == 0 && scrollEvent.getDeltaY() != 0) {
             spane.setHvalue(spane.getHvalue() - scrollEvent.getDeltaY() / cardbox.getWidth());

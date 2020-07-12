@@ -3,6 +3,13 @@ package gui;
 import javafx.scene.control.Alert;
 
 public class GuiHelper {
+    /**
+     * Erzeigt ein Popup mit gewünschten Texten
+     * @param alertType Art des Popups
+     * @param title Titel des Popups
+     * @param headerText Header des Popups
+     * @param contentText Content des Popups
+     */
     public static void showErrorOrWarningAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

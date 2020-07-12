@@ -1,8 +1,9 @@
 package exceptions;
 
 public class NoExplodingKittenException extends Exception{
-
-    public NoExplodingKittenException() {super();};
-    public NoExplodingKittenException(String message) {super(message);};
+    /**
+     * Wird geworfen wenn es kein Exploding Kitten zum entschärfen gibt
+     */
+    public NoExplodingKittenException() {super();}
 
 }

@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.VBox;
 import server.LobbyInterface;
 import server.Nachricht;
@@ -47,6 +46,10 @@ public class LobbyController implements ILobbyObserver {
     @FXML
     public VBox messageList;
 
+    /**
+     * Initialisert die Lobby GUI
+     * @param n Name des eingeloggten Benutzers
+     */
     public void setName(String n) {
         this.name = n;
 
@@ -61,18 +64,10 @@ public class LobbyController implements ILobbyObserver {
         updateMessageList();
     }
 
-    public void message(InputMethodEvent inputMethodEvent) {
-        clearFields();
-    }
-    private void clearFields() {
-        messageField.clear();
-    }
-
-
-    public void onInputText(InputMethodEvent inputMethodEvent) {
-
-    }
-
+    /**
+     * Sendet die eingetippte Nachricht an alle anderen Nutzer in der Lobby
+     * @param mouseEvent Event das die Methode ausgelöst hat
+     */
     public void sendmessage(Event mouseEvent) {
         try {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
@@ -85,7 +80,11 @@ public class LobbyController implements ILobbyObserver {
         }
     }
 
-    public void zurückLobby(ActionEvent actionEvent) {
+    /**
+     * Bewegt den Nutzer zurück zum Menü Bildschirm
+     * @param actionEvent Event das die Methode ausgelöst hat
+     */
+    public void zurueckLobby(ActionEvent actionEvent) {
         try {
             VueManager.goToMenue(actionEvent, name);
         } catch (IOException e) {
@@ -94,7 +93,11 @@ public class LobbyController implements ILobbyObserver {
     }
 
 
-
+    /**
+     * Lässt eine Nutzer einen neuen Raum erstellen, den er selbst benennen kann
+     * Bei auftretenden Fehlern werden Popups erstellt
+     * @param actionEvent Event das die Methode ausgelöst hat
+     */
     public void createRoom(ActionEvent actionEvent) {
 
         TextInputDialog dialog = new TextInputDialog("Raumname");
@@ -135,6 +138,9 @@ public class LobbyController implements ILobbyObserver {
     }
 
 
+    /**
+     * Frischt die Nachrichtenlsite auf, sodass alle Nachrichten angezeigt werden
+     */
     public void updateMessageList(){
         try {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
@@ -166,6 +172,10 @@ public class LobbyController implements ILobbyObserver {
         }
     }
 
+    /**
+     * Frischt die Raumliste auf, sodass alle offenen Räume angezeigt werden
+     * TODO auf Fehler überprüfen
+     */
     @Override
     public void updateRaumList() {
         try {
@@ -179,8 +189,6 @@ public class LobbyController implements ILobbyObserver {
                 Platform.runLater(() -> this.messageList.getChildren().add(root));
                 lastMessage++;
             }
-
-
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
         }

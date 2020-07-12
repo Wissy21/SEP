@@ -21,6 +21,12 @@ public class LobbyRoom {
     @FXML
     Text rname;
     String name;
+
+    /**
+     * Initialisiert den Raum in der Raumliste der GUI
+     * @param username Name des angemeldeten Nutzers
+     * @param raumname Name des Raums, der hierdurch dargestellt wird
+     */
     public void setName(String username, String raumname) {
         rname.setText(raumname);
         System.out.println(rname.getText());
@@ -28,6 +34,11 @@ public class LobbyRoom {
     }
 
 
+    /**
+     * Lässt den Nutzer den ausgewählten Raum betreten
+     * Bei Fehlern werden Popups zur Erklärung erstellt
+     * @param actionEvent Event das die Methode ausgelöst hat
+     */
     public void raum1Beitreten(ActionEvent actionEvent) {
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");

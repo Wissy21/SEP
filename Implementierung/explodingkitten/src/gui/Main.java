@@ -12,6 +12,11 @@ import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
+    /**
+     * Erstellt die GUI
+     * @param primaryStage Stage auf der die unterschiedlichen Bildschirme angezeigt werden
+     * @throws Exception Mogliche Fehler
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("vue/startFenster.fxml"));
@@ -33,6 +38,10 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Startet den Client
+     * @param args Eingaben
+     */
     public static void main(String[] args) {
         launch(args);
     }

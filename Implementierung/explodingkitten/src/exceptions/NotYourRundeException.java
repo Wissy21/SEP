@@ -1,10 +1,9 @@
 package exceptions;
 
 public class NotYourRundeException extends PlayException{
-    public NotYourRundeException() {
-    }
+    /**
+     * Wird geworfen wenn man versucht eine Karte zu spielen, aber nicht an der Runde ist
+     */
+    public NotYourRundeException() { super();}
 
-    public NotYourRundeException(String message) {
-        super(message);
-    }
 }

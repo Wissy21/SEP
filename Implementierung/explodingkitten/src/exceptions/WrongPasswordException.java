@@ -6,5 +6,6 @@ public class  WrongPasswordException extends Exception{
      * wenn beim Anmelden ein richtiger Benutzernamen, aber das falsche Passwort angegeben wird.
      */
     public WrongPasswordException(){
+        super();
     }
 }

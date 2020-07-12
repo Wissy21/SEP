@@ -1,10 +1,9 @@
 package exceptions;
 
 public class PlayException extends Exception {
-    public PlayException() {
-    }
+    /**
+     * Exception die während dem Spiel geworfen werden kann
+     */
+    public PlayException() { super(); }
 
-    public PlayException(String message) {
-        super(message);
-    }
 }

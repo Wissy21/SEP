@@ -25,7 +25,13 @@ public class AnmeldenController {
     public PasswordField passwort;
 
 
-    public void anmelden(ActionEvent actionEvent) throws IOException {
+    /**
+     * Nimmt die eingegebenen Daten und überprüft in der Datenbank, ob der Account vorhanden ist
+     * Wenn ja wird der Nutzer in das Menü weitergeleitet
+     * Falls es Probleme gab werden diese durch Popups erklärt
+     * @param actionEvent Event das die Methode ausgelöst hat
+     */
+    public void anmelden(ActionEvent actionEvent) {
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
 
@@ -37,7 +43,7 @@ public class AnmeldenController {
             VueManager.goToMenue(actionEvent, benutzername.getText());
 
 
-        } catch (NotBoundException | ClassNotFoundException | SQLException e) {
+        } catch (NotBoundException | ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
         } catch (UserNotExistException e) {
             showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabefehler", "Name nicht vergeben", "Dieser Benutzername ist noch nicht vergeben.");
@@ -50,12 +56,23 @@ public class AnmeldenController {
         }
     }
 
+    /**
+     * Leert die Textfelder
+     */
     private void clearFields() {
         benutzername.clear();
         passwort.clear();
     }
 
-    public void gotoRegister(ActionEvent actionEvent) throws IOException {
-        VueManager.goToRegister(actionEvent);
+    /**
+     * Nutzer wird zum Registrieren Bildschirm weitergeleitet
+     * @param actionEvent Event das die Methode ausgelöst hat
+     */
+    public void gotoRegister(ActionEvent actionEvent) {
+        try {
+            VueManager.goToRegister(actionEvent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

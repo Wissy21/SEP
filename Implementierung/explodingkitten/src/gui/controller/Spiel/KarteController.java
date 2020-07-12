@@ -27,8 +27,13 @@ public class KarteController {
     Karte k;
 
 
-
-
+    /**
+     * Initialisiert die Karte für die GUI
+     *
+     * @param k Karte die dargestellt werden soll
+     * @param name Name des Spielers, dem die Karte gehört
+     * @param raumname Name des Raums, in dem sich die Karte befindet
+     */
     public void setKarte(Karte k,String name,String raumname) {
         this.k = k;
         this.name = name;
@@ -42,6 +47,11 @@ public class KarteController {
         }
     }
 
+    /**
+     * Versucht die Karte zu legen und deren Effekt auszuführen
+     * Erstellt Warnungs Dialoge für jede Exception die das aufhält
+     * @param mouseEvent Event das die Methode auslöst
+     */
     public void legen(MouseEvent mouseEvent) {
 
         try {
