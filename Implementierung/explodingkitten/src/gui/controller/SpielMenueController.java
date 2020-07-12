@@ -1,9 +1,14 @@
 package gui.controller;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import server.datenbankmanager.DBinterface;
 
 import java.io.IOException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.sql.SQLException;
 
 public class SpielMenueController {
     public String name;
@@ -20,13 +25,18 @@ public class SpielMenueController {
         VueManager.goToBestenliste(actionEvent, name);
     }
 
-    public void goToDatenÄndern(ActionEvent actionEvent) throws IOException {
+    public void goToDatenAendern(ActionEvent actionEvent) throws IOException {
         VueManager.datenAendern(actionEvent, name);
 
     }
 
     public void goToAbmelden(ActionEvent actionEvent) throws IOException {
-        VueManager.goToStartFenster(actionEvent);
-
+        try {
+            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            db.spielerAbmelden(name);
+            VueManager.goToStartFenster(actionEvent);
+        } catch (NotBoundException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

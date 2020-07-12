@@ -16,7 +16,6 @@ public class Drawer implements Runnable{
     public Drawer(String username, SpielRaum s) {
         room = s;
         this.username = username;
-        System.out.println("Drawer gestartet\t"+room.getCurrent().getNickname());
     }
 
     /**
@@ -29,43 +28,38 @@ public class Drawer implements Runnable{
     @Override
     public void run() {
 
-            Karte k = room.spielstapel.pop();
-
-            if(k.getEffekt().equals("ExplodingKitten")){
-                room.setExpolding(true);
-                room.explKitten = k;
-                if(room.current.isBot) {
-                    room.current.entschaerfen(room,k);
-                } else {
-                    room.notify(username, "Exploding", k);
-                }
-
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(room.isExpolding()) {
-                    if(room.current.isBot) {
-                        room.current.explodiert(room);
-                    } else {
-                        room.notify(username, "Ausgeschieden", k);
-                    }
-                } else {
-                    room.notify(username,"Position",null);
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    room.spielstapel.insertElementAt(k,room.getPosition());
-                }
-                room.explKitten = null;
-                room.setPosition(0);
+        Karte k = room.spielstapel.pop();
+        room.sendMessage(username+" zieht.","","Serveradmin");
+        if(k.getEffekt().equals("ExplodingKitten")){
+            room.setExpolding(true);
+            room.explKitten = k;
+            if(room.current.isBot) {
+                room.current.entschaerfen(room,k);
             } else {
+                room.notify(username, "Exploding", k);
+            }
+
+            try {
+                Thread.sleep(7000);
+            } catch (InterruptedException e) {
+                System.out.println("Drawer closed.");
+            }
+            if(room.isExpolding()) {
+                if(room.current.isBot) {
+                    room.explodiert(username,k);
+                } else {
+                    room.notify(username, "Ausgeschieden", k);
+                }
+            } else {
+                room.notify(username,"Position",null);
+                room.spielstapel.insertElementAt(k,room.getPosition());
+            }
+            room.explKitten = null;
+            room.setPosition(0);
+        } else {
             room.current.handkarte.add(k);
             room.notify(username,"Bekommen",k);
         }
-            room.naechsterSpieler();
+        room.naechsterSpieler();
     }
 }

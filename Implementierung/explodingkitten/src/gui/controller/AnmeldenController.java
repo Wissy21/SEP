@@ -1,5 +1,6 @@
 package gui.controller;
 
+import exceptions.AccountOnlineException;
 import exceptions.UserNotExistException;
 import exceptions.WrongPasswordException;
 import server.datenbankmanager.DBinterface;
@@ -32,11 +33,9 @@ public class AnmeldenController {
                 showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabefehler", "Eingabefehler", "Bitte füllen Sie alle Felder aus.");
             }
 
-            boolean check = db.spielerAnmelden(benutzername.getText(), passwort.getText());
+            db.spielerAnmelden(benutzername.getText(), passwort.getText());
+            VueManager.goToMenue(actionEvent, benutzername.getText());
 
-            if (check) {
-                VueManager.goToMenue(actionEvent, benutzername.getText());
-            }
 
         } catch (NotBoundException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -46,6 +45,8 @@ public class AnmeldenController {
         } catch (WrongPasswordException e) {
             showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", "Bitte geben Sie das korrekte Passwort ein.");
             clearFields();
+        } catch (AccountOnlineException e) {
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Account Fehler", "Bereits verwendet", "Mit diesem Account ist bereits jemad anderes eingeloggt.");
         }
     }
 

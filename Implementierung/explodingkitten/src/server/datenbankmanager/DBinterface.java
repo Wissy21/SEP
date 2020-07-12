@@ -9,21 +9,23 @@ import java.util.ArrayList;
 
 public interface DBinterface extends Remote {
 
-    public  Connection verbindung() throws RemoteException, SQLException, ClassNotFoundException;
+    Connection verbindung() throws RemoteException, SQLException, ClassNotFoundException;
 
-    public boolean spielerRegistrieren(String nickname, String pass, String bestpass) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException, NotEqualPassWordException;
+    boolean spielerRegistrieren(String nickname, String pass, String bestpass) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException, NotEqualPassWordException;
 
-    public boolean spielerAnmelden(String nickname, String pass) throws RemoteException, UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException;
+    boolean spielerAnmelden(String nickname, String pass) throws RemoteException, UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException, AccountOnlineException;
 
-    public boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
+    boolean spielerAbmelden(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
 
-    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException;
+    boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
 
-    public void raumErstellen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumnameVergebenException;
+    boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException;
 
-    public void raumBeitreten(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException;
+    void raumErstellen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumnameVergebenException;
 
-    public boolean raumVerlassen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException;
+    void raumBeitreten(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException;
+
+    boolean raumVerlassen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException;
 
     void siegEintragen(String spielername) throws RemoteException,SQLException,ClassNotFoundException;
 

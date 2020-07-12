@@ -10,6 +10,8 @@ public class KartenHandler implements Runnable{
     String effekt;
     SpielRaum room;
     Karte gespielt;
+    String user;
+
 
     /**
      * Thread der für die Ausführung der Karte zuständig ist
@@ -17,11 +19,12 @@ public class KartenHandler implements Runnable{
      * @param k Karte die auszuführen ist
      * @param raum  Spiewlraum in dem die karte gespielt wurde
      */
-    public KartenHandler(Karte k,SpielRaum raum) {
+    public KartenHandler(Karte k,SpielRaum raum, String user) {
 
         gespielt = k;
         this.effekt = k.getEffekt();
         this.room = raum;
+        this.user = user;
     }
 
     /**
@@ -40,61 +43,64 @@ public class KartenHandler implements Runnable{
         room.current.handkarte.remove(gespielt);
         room.ablagestapel.push(gespielt);
 
-        if (effekt.equals("Entschaerfung")) {
-                room.setExpolding(false);
+
+
+        try {
+            room.notify(user, "AbgelegtDu", gespielt);
+            room.notifyEverybody("Abgelegt", gespielt);
+            room.setNoe(false);
+            room.sendMessage(user+" hat " + effekt+" gespielt.","","Serveradmin");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            System.out.println("Handler closed.");
+        }
+        if(!room.isNoe()) {
+            switch (effekt) {
+                case "Angriff":
+                    if (room.isAngriff()) {
+                        room.setAngriff(false);
+                    }
+                    room.naechsterSpieler();
+                    room.setAngriff(true);
+                    break;
+
+                case "Hops":
+                    room.naechsterSpieler();
+                    break;
+
+                case "Wunsch":
+                    room.selectSpieler();
+                    break;
+
+                case "Mischen":
+                    Collections.shuffle(room.spielstapel);
+                    break;
+
+                case "BlickInDieZukunft":
+                    Karte k1 = room.spielstapel.pop();
+                    Karte k2 = room.spielstapel.pop();
+                    Karte k3 = room.spielstapel.pop();
+                    ausgabe = k1.getEffekt() + "," + k2.getEffekt() + "," + k3.getEffekt();
+                    if(room.getCurrent().isBot) {
+                        room.getCurrent().naechsteKarte(k1.getEffekt());
+                    }else {
+                        room.notify(room.getCurrent().getNickname(), ausgabe, null);
+                    }
+                    room.spielstapel.push(k3);
+                    room.spielstapel.push(k2);
+                    room.spielstapel.push(k1);
+                    break;
+
+                case "Katze1":
+                case "Katze2":
+                case "Katze3":
+                case "Katze4":
+                case "Katze5":
+                break;
+            }
         } else {
-            try {
-                room.setNoe(false);
-                System.out.println("Warten auf Nö!");
-                Thread.sleep(5000);
-                System.out.println("Warten beendet");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(!room.isNoe()) {
-                switch (effekt) {
-                    case "Angriff":
-                        if (room.isAngriff()) {
-                            room.setAngriff(false);
-                        }
-                        room.naechsterSpieler();
-                        room.setAngriff(true);
-                        break;
-                    case "Hops":
-                        room.naechsterSpieler();
-                        break;
-
-                    case "Wunsch":
-                        room.selectSpieler(room.getCurrent());
-
-                        break;
-                    case "Mischen":
-                        Collections.shuffle(room.spielstapel);
-                        break;
-                    case "BlickInDieZukunft":
-                        Karte k1 = room.spielstapel.pop();
-                        Karte k2 = room.spielstapel.pop();
-                        Karte k3 = room.spielstapel.pop();
-                        ausgabe = k1.getEffekt() + "," + k2.getEffekt() + "," + k3.getEffekt();
-                        if(room.getCurrent().isBot) {
-                            room.getCurrent().naechsteKarte(k1.getEffekt());
-                        }else {
-                            room.notify(room.getCurrent().getNickname(), ausgabe, null);
-                        }
-                        room.spielstapel.push(k3);
-                        room.spielstapel.push(k2);
-                        room.spielstapel.push(k1);
-                        break;
-                    case "Katze1":
-                    case "Katze2":
-                    case "Katze3":
-                    case "Katze4":
-                    case "Katze5":
-                        break;
-                }
-            } else {
-                room.setNoe(false);
-            }
+            room.sendMessage(effekt+" wurde durch Nö! aufgehalten.","","Serveradmin");
+            room.setNoe(false);
         }
     }
 }

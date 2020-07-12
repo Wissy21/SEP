@@ -85,8 +85,12 @@ public class LobbyController implements ILobbyObserver {
         }
     }
 
-    public void zurückLobby(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenue(actionEvent, name);
+    public void zurückLobby(ActionEvent actionEvent) {
+        try {
+            VueManager.goToMenue(actionEvent, name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

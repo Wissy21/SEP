@@ -4,11 +4,15 @@ import exceptions.*;
 import gui.controller.IRaumObserver;
 import server.karten.*;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface{
 
@@ -16,21 +20,21 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public HashMap<String, IRaumObserver> userRaumServerMap;
 
     public String name;
-    public int anzahlSpieler;
+    public int anzahlSpieler=0;
     public ArrayList<Spieler> spieler = new ArrayList<>();
     public Stack<Karte> spielstapel = new Stack<>();
     public Stack<Karte> ablagestapel = new Stack<>();
     public Spieler current;
-    public ListIterator<Spieler> reihenfolge;
+    Spieler[] reihenfolge;
+    int iter = 0;
     boolean running = false;
     int botcounter = 1;
 
-    Executor kartenExecutor = Executors.newSingleThreadExecutor();
+    ExecutorService kartenExecutor = newSingleThreadExecutor();
 
 
     public boolean angriff = false;
     public Spieler ausgewahlter;
-    public Karte abgegeben;
     public boolean expolding = false;
     public int position = 0;
     public Karte explKitten;
@@ -153,7 +157,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             spielstapel.push(new Karte(Integer.toString(count+1),"Entschaerfung"));
             count+=2;
         } else {
-            for (int i =6-anzahlSpieler; i>0;i--) {
+            for (int i =anzahlSpieler; i<6;i++) {
                 spielstapel.push(new Karte(Integer.toString(count),"Entschaerfung"));
                 count++;
             }
@@ -165,16 +169,13 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         Collections.shuffle(spielstapel);
         System.out.println("Spiel vorbereitet.");
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        notifyEverybody("startGUI",null);
 
         /*Spielreihenfolge festlegen*/
         Collections.shuffle(spieler);
-        reihenfolge = spieler.listIterator();
-        current = reihenfolge.next();
+        reihenfolge = spieler.toArray(new Spieler[0]);
+        current = reihenfolge[iter];
         if(current.isBot) {
             current.zugDurchfuehren(this);
         } else {
@@ -187,29 +188,46 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      * Lässt immer nur eine Karte nacheinander ausspielen
      *
      *
-     * @param username  Benutzer der die Karte legen will
+     * @param user  Benutzer der die Karte legen will
      * @param k Karte die gelegt werden soll
      * @throws NotYourRundeException    Verhindert das jemad außerhalb seiner Runde ein Karte legt, außer Nö!
      * @throws NoExplodingKittenException   Verhindert das ablegen einer Entschärfung ohne Exploding Kitten.
      */
-    public void karteLegen(String username, Karte k) throws NotYourRundeException, NoExplodingKittenException {
+    public void karteLegen(String user, Karte k) throws NotYourRundeException, NoExplodingKittenException {
 
         if(k.getEffekt().equals("Noe")) {
-            notify(username,"AbgelegtDu",k);
+            notify(user,"AbgelegtDu",k);
             notifyEverybody("Abgelegt",k);
-            current.handkarte.remove(k);
+            for(Spieler s: spieler) {
+                if(s.getNickname().equals(user)) {
+                    s.handkarte.remove(k);
+
+                }
+            }
             ablagestapel.push(k);
             changeNoe();
-        } else if (!username.equals(amZug())) {
+            sendMessage(user + " hat Nö! gespielt!.","","Serveradmin");
+
+        } else if (!user.equals(amZug())) {
             throw new NotYourRundeException();
         } else if (k.getEffekt().equals("Entschaerfung")) {
             if (!isExpolding()) {
                 throw new NoExplodingKittenException();
+            } else {
+                setExpolding(false);
+                for(Spieler s: spieler) {
+                    if(s.getNickname().equals(user)) {
+                        s.handkarte.remove(k);
+
+                    }
+                }
+                ablagestapel.push(k);
+                notify(user,"AbgelegtDu",k);
+                notifyEverybody("Abgelegt",k);
+                sendMessage(user + " hat ein Exploding Kitten entschärft!.","","Serveradmin");
             }
         } else {
-                notify(username, "AbgelegtDu", k);
-                notifyEverybody("Abgelegt", k);
-                kartenExecutor.execute(new KartenHandler(k, this));
+                kartenExecutor.execute(new KartenHandler(k, this,user));
         }
     }
 
@@ -223,8 +241,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         if (!username.equals(amZug())) {
             throw new NotYourRundeException();
         } else {
-            Thread drawer = new Thread(new Drawer(username,this));
-            drawer.start();
+            kartenExecutor.execute(new Drawer(username,this));
         }
     }
 
@@ -233,12 +250,12 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     public void naechsterSpieler() {
         if(!angriff) {
-            if (!reihenfolge.hasNext()) {
-                while (reihenfolge.hasPrevious()) {
-                    current = reihenfolge.previous();
-                }
+            if (iter>=spieler.size()-1) {
+                iter = 0;
+            } else {
+                iter++;
             }
-            current = reihenfolge.next();
+            current = reihenfolge[iter];
         } else {
             angriff = false;
         }
@@ -248,6 +265,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             notify(current.getNickname(), "DuBistDran", null);
         }
     }
+
 
     /**
      *
@@ -278,7 +296,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     //Methoden für Wunsch
 
 
-    public void selectSpieler(Spieler s) {
+    public void selectSpieler() {
         if(current.isBot) {
             current.auswaehlen(this);
         } else {
@@ -298,14 +316,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
 
     public void abgeben (String name,Karte k) {
-        abgegeben = k;
         ausgewahlter.handkarte.remove(k);
         current.handkarte.add(k);
-        if(!current.isBot) {
-            notify(current.getNickname(), "Bekommen", k);
-        } if (!ausgewahlter.isBot) {
-            notify(name, "Abgegeben", k);
-        }
+        notify(current.getNickname(), "Bekommen", k);
+        notify(name, "Abgegeben", k);
+
     }
 
     //Methoden für Entschärfung
@@ -432,9 +447,14 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
     @Override
-    public void explodiert(String spielername) {
+    public void explodiert(String spielername,Karte karte) {
 
         boolean leer = spielraumVerlassen(spielername);
+        reihenfolge = spieler.toArray(new Spieler[0]);
+
+        notifyEverybody("Raus", new Karte("", spielername));
+        notifyEverybody("Abgelegt",karte);
+
 
         for(Karte k : current.handkarte) {
             ablagestapel.push(k);
@@ -447,10 +467,20 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         }
         if(anzahlSpieler == 1) {
             notify(spieler.get(0).getNickname(),"Gewonnen",null);
-            //TODO + bestenliste + raum schließen
 
-        } else {
-            reihenfolge = spieler.listIterator();
+        }
+    }
+
+    public void exit() {
+        try{
+            notifyEverybody("Verlassen",null);
+            kartenExecutor.shutdownNow();
+            Thread.sleep(5000);
+            Naming.unbind("spielraum_"+name);
+
+            UnicastRemoteObject.unexportObject(this,true);
+        } catch (RemoteException | NotBoundException | MalformedURLException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

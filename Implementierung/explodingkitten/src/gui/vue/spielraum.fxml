@@ -16,7 +16,7 @@
                             <content>
                                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="500.0" style="-fx-background-color: white;">
                            <children>
-                              <ScrollPane layoutY="11.0" prefHeight="576.0" prefWidth="500.0">
+                              <ScrollPane layoutY="11.0" prefHeight="576.0" prefWidth="500.0" vvalue="1.0">
                                  <content>
                                     <VBox fx:id="messageList" prefHeight="563.0" prefWidth="500.0" spacing="13.0">
                                        <padding>
@@ -61,7 +61,7 @@
                                             </image>
                                         </ImageView>
                               <HBox fx:id="opponents" layoutX="13.0" layoutY="14.0" prefHeight="100.0" prefWidth="567.0" />
-                              <ScrollPane fx:id="spane" layoutY="470.0" onScroll="#scroll" prefHeight="160.0" prefWidth="600.0">
+                              <ScrollPane fx:id="spane" layoutY="470.0" onScroll="#scrollh" prefHeight="160.0" prefWidth="600.0">
                                  <content>
                                     <HBox fx:id="cardbox" prefHeight="150.0" prefWidth="600.0" />
                                  </content></ScrollPane>

@@ -50,7 +50,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
         Connection conn = verbindung();
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
-        String anfrage2 = "insert into benutzer values(?,?,?) ";
+        String anfrage2 = "insert into benutzer values(?,?,?,?) ";
         PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, nickname);
@@ -66,6 +66,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
                 pstmt2.setString(1, nickname);
                 pstmt2.setString(2, pass);
                 pstmt2.setInt(3,0);
+                pstmt2.setBoolean(4,false);
 
                 boolean check = pstmt2.execute();
 
@@ -80,7 +81,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
     }
 
     /**
-     * Die Methode loggt einen Benutzer mit seineen Daten ein
+     * Die Methode loggt einen Benutzer mit seinen Daten ein
      * @param nickname das Betnutzername
      * @param pass das Benutzerpasswort
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist.
@@ -90,14 +91,16 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
 
-    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, SQLException, ClassNotFoundException, WrongPasswordException {
+    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, SQLException, ClassNotFoundException, WrongPasswordException, AccountOnlineException {
 
-        String anfrage1 = "select pass from benutzer b where benutzername = ? ";
+        String anfrage1 = "select pass, online from benutzer b where benutzername = ? ";
         String anfrage2 = "select pass from benutzer b where benutzername = ? and pass = ? ";
+
         Connection conn = verbindung();
 
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, nickname);
+
         ResultSet rst1 = pstmt1.executeQuery();
 
         if (rst1.next()) {
@@ -108,13 +111,33 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
             ResultSet rst2 = pstmt2.executeQuery();
 
             if (rst2.next()) {
+                if (rst1.getBoolean("online")) {
+                    throw new AccountOnlineException();
+                } else {
 
-                return true;
+                    String anfrage3 = "update benutzer set online = true where benutzername = ?";
+                    PreparedStatement pstmt3 = conn.prepareStatement(anfrage3);
+                    pstmt3.setString(1, nickname);
+                    return pstmt3.execute();
+                }
             }
-
             throw new WrongPasswordException();
-        } else
+        } else {
             throw new UserNotExistException();
+        }
+    }
+
+
+    public boolean spielerAbmelden(String name) throws SQLException, ClassNotFoundException {
+
+        String anfrage1 = "update benutzer set online = false where benutzername = ?";
+
+        Connection conn = verbindung();
+        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
+        pstmt1.setString(1, name);
+        return pstmt1.execute();
+
+
     }
 
     /**
@@ -284,7 +307,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
     public ArrayList<Row> getBestenliste() throws SQLException, ClassNotFoundException {
         Connection conn = verbindung();
-        String anfrage = "select benutzername,punkte,rank() over(order by punkte desc) as platz from benutzer order by platz ";
+        String anfrage = "select benutzername,punkte,dense_rank() over(order by punkte desc) as platz from benutzer order by platz ";
         PreparedStatement pstmt = conn.prepareStatement(anfrage);
         ArrayList<Row> result = new ArrayList<>();
         ResultSet rslt = pstmt.executeQuery();

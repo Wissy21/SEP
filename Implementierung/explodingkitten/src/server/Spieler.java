@@ -35,14 +35,15 @@ public class Spieler implements Serializable {
 
     public void zugDurchfuehren(SpielRaum raum){
         try{
+
+            Thread.sleep(4000);
             for(Karte k : handkarte) {
                 if(k.getEffekt().equals("BlickInDieZukunft")) {
                     raum.karteLegen(nickname,k);
                     break;
                 }
             }
-            Thread.sleep(6000);
-
+            Thread.sleep(4000);
             if(naechsteKarte.equals("ExplodingKitten")) {
                 for(Karte k : handkarte) {
                     if(k.getEffekt().equals("Angriff")||k.getEffekt().equals("Hops")||k.getEffekt().equals("Mischen")) {
@@ -74,7 +75,7 @@ public class Spieler implements Serializable {
 
     public void entschaerfen(SpielRaum raum,Karte kitten) {
         for(Karte k : handkarte) {
-            if(k.getEffekt().equals("Entschaerfen")) {
+            if(k.getEffekt().equals("Entschaerfung")) {
                 try {
                     raum.karteLegen(nickname,k);
                     raum.notifyEverybody("Abgelegt",k);
@@ -86,18 +87,8 @@ public class Spieler implements Serializable {
                 }
             }
         }
-        raum.notifyEverybody("Abgelegt",kitten);
-        raum.notifyEverybody("Raus",new Karte("",nickname));
     }
 
-    public void explodiert(SpielRaum raum) {
-        for(Karte k: handkarte) {
-            raum.ablagestapel.push(k);
-            raum.notifyEverybody("Abgelegt",k);
-        }
-        raum.explodiert(nickname);
-
-    }
 
     public void naechsteKarte(String effekt) {
         naechsteKarte = effekt;
