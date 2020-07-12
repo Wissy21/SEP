@@ -18,7 +18,6 @@ import java.sql.SQLException;
 
 import static gui.GuiHelper.*;
 
-
 public class AnmeldenController {
     @FXML
     public TextField benutzername;
@@ -63,8 +62,4 @@ public class AnmeldenController {
     public void gotoRegister(ActionEvent actionEvent) throws IOException {
         VueManager.goToRegister(actionEvent);
     }
-
-    /*public void gotoMenü(ActionEvent actionEvent) throws IOException {
-        VueManager.goToMenü(actionEvent);
-    }*/
 }

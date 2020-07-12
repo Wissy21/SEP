@@ -3,6 +3,9 @@ package gui.controller;
 import exceptions.DoppelterEintragException;
 import exceptions.UserNameAlreadyExistsException;
 import exceptions.WrongPasswordException;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import server.datenbankmanager.DBinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +44,7 @@ public class RegistrierenController {
 
             boolean check = db.spielerRegistrieren(benutzername.getText(), passwort.getText(), passwortBestätigen.getText());
             if(check){
+                showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Erfolgreich Registrierung", "Erfolgreich Registrierung", " Schön ,Sie sind elforgreich registriert.");
                 VueManager.goToLogIn(actionEvent);
             }
         } catch (NotBoundException e) {
@@ -62,4 +66,18 @@ public class RegistrierenController {
     }
 
 
+    public void fromPassword2Reg(KeyEvent keyEvent) {
+        passwortBestätigen.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    try {
+                        VueManager.goToLogIn(keyEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
 }

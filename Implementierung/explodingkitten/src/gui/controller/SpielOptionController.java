@@ -33,7 +33,7 @@ public class SpielOptionController {
 
         } else {  // if you play with Bot
             //add Bot -> spielraum
-            VueManager.goToSpielNiveau(actionEvent, name);
+            VueManager.goToSpielraum(actionEvent, name);
         }
     }
 

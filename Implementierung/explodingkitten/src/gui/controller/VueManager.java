@@ -94,21 +94,6 @@ public class VueManager {
         stage.centerOnScreen();
     }
 
-    public static void goToSpielNiveau(Event event, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/spielNiveau.fxml"));
-        Parent root = loader.load();
-
-        SpielNiveauController sp = loader.getController();
-        sp.setName(n);
-
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Exploding Kittens - Spiel Niveau");
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
-
     public static void goToSpielraum(Event event, String n) throws IOException {
         FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/spielraum.fxml"));
         Parent root = loader.load();

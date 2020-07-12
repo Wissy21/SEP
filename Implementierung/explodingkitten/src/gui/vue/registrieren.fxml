@@ -45,7 +45,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="passwortBestätigen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0" promptText="Passwort bestätigen " />
+                  <PasswordField fx:id="passwortBestätigen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#fromPassword2Reg" prefHeight="30.0" prefWidth="200.0" promptText="Passwort bestätigen " />
                </children>
             </HBox>
                 <Button alignment="CENTER" layoutX="248.0" layoutY="569.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#registrieren" prefHeight="40.0" prefWidth="116.0" style="-fx-background-color: orangered;" text="Registrieren" textFill="WHITE">

@@ -35,7 +35,7 @@ public class Lobby extends UnicastRemoteObject implements LobbyInterface  {
         for(String name : userLobserverMap.keySet()){
             ILobbyObserver current = userLobserverMap.get(name);
             try {
-                current. updateMessageList();
+                current.updateMessageList();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -3,6 +3,7 @@ package gui.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -10,10 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LobbyRoomController {
+public class LobbyRoomController implements Initializable {
 
     @FXML
     public Label label1;
@@ -34,7 +37,7 @@ public class LobbyRoomController {
         //updateRoomPlayer();
     }
 
-    public void updateRoomPlayer() {
+    public void updateRoomPlayer()  {
         System.out.println("Beitreten: " + name);
         Parent root = null;
         try {
@@ -47,5 +50,10 @@ public class LobbyRoomController {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, e);
         }
         //VBox.setVgrow(root, null);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

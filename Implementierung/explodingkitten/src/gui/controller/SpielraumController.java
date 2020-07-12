@@ -1,26 +1,46 @@
 package gui.controller;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
+import server.LobbyInterface;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Random;
 
 public class SpielraumController {
     @FXML
     public ImageView send;
-    public String name;
 
-    public void setName(String n){
+    public String name;
+    @FXML
+    public TextField messageField;
+    @FXML
+    public ImageView userImage;
+
+    public void setName(String n) {
         this.name = n;
+
+        LobbyController lbC = new LobbyController();
+        lbC.updateMessageList();
+
+        Random r = new Random();
+        int index = r.nextInt(9-2) + 2;
+        String imgPth = "../images/user_images/playericon" + index + ".png";
+        userImage.setImage(new Image(this.getClass().getResource(imgPth).toString()));
     }
 
-
-    /*public void karteNehmen(MouseEvent mouseEvent) {
-        VueManager.karteNehmen(mouseEvent);
-    }*/
 
     public void onInput(ActionEvent actionEvent) {
     }
@@ -29,8 +49,20 @@ public class SpielraumController {
     public void onInputText(InputMethodEvent inputMethodEvent) {
     }
 
-    public void sendmessage(MouseEvent mouseEvent) {
+    public void sendmessage(Event mouseEvent) {
+        try {
+            LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
 
+            Timestamp tm = new Timestamp(new Date().getTime());
+            lb.sendMessage(messageField.getText(), tm.toString(), name);
+            messageField.clear();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public void leereStappel(MouseEvent mouseEvent) {
