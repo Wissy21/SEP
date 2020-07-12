@@ -1,9 +1,6 @@
 package gui.controller;
 
-import exceptions.NameFalschException;
-import exceptions.PasswortFalschException;
-import exceptions.UserNotExistException;
-import exceptions.WrongPasswordException;
+import exceptions.*;
 import server.datenbankmanager.DBinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,32 +22,28 @@ public class AnmeldenController {
     public PasswordField passwort;
 
 
-    public void anmelden(ActionEvent actionEvent) throws IOException, NameFalschException, PasswortFalschException {
+    public void anmelden(ActionEvent actionEvent) throws IOException, NameFalschException, PasswortFalschException ,AccountOnlineException{
         try {
             DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
 
             if (benutzername.getText().isEmpty() && passwort.getText().isEmpty()) {
-                showErrorOrWarningAlert(Alert.AlertType.WARNING, "Textfields are empty", "Eingabefehler", " Bitte,Geben Sie Ihre Anmeldedaten ein");
+                showErrorOrWarningAlert(Alert.AlertType.WARNING, "Textfields are empty", "Eingabefehler", " Bitte füllen Sie alle Felder aus.");
             }
 
             boolean check = db.spielerAnmelden(benutzername.getText(), passwort.getText());
-
             if (check) {
                 System.out.println(benutzername.getText() + " " + passwort.getText());
                 VueManager.goToMenue(actionEvent, benutzername.getText());
             }
 
-        } catch (NotBoundException e) {
+        } catch (NotBoundException | ClassNotFoundException  | SQLException e) {
             e.printStackTrace();
         } catch (UserNotExistException e) {
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Textfields are empty", "Eingabefehler", " Bitte,Geben Sie Ihre Anmeldedaten ein");
-            //e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabefehler", "Name nicht vergeben", "Dieser Benutzername ist noch nicht vergeben.");
+            clearFields();
         } catch (WrongPasswordException e) {
-            e.printStackTrace();
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", "Bitte geben Sie das korrekte Passwort ein.");
+            clearFields();
         }
     }
 
