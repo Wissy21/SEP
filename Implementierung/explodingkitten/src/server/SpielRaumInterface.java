@@ -24,7 +24,7 @@ public interface SpielRaumInterface extends Remote {
 
     void spielStarten() throws RemoteException, NichtGenugSpielerException;
 
-    void karteLegen(String user, Karte k) throws RemoteException, NotYourRundeException, NoExplodingKittenException;
+    void karteLegen(String username, Karte k) throws RemoteException, NotYourRundeException, NoExplodingKittenException;
 
     void naechsterSpieler() throws RemoteException;
 
@@ -46,7 +46,6 @@ public interface SpielRaumInterface extends Remote {
 
     void setPosition(int pos) throws RemoteException;
 
-    void explodiert(String spielername,Karte kitten) throws RemoteException;
-
-    void exit() throws RemoteException;
+    void explodiert(String spielername) throws RemoteException;
 }
+

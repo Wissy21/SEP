@@ -1,36 +1,35 @@
 package server.datenbankmanager;
 
-import exceptions.*;
+import exceptions.NotEqualPassWordException;
+import exceptions.UserNameAlreadyExistsException;
+import exceptions.UserNotExistException;
+import exceptions.WrongPasswordException;
+import server.Benutzer;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * die Klasse verwaltet die Datenbank
  */
-public class DBmanager extends UnicastRemoteObject implements DBinterface {
+public class DBmanager {
 
-    public DBmanager() throws RemoteException {
-        super();
-    }
+    public List<Benutzer> benutzerList;
 
     /**
      * Diese Methode erstellt eine Verbindung mit der Datenbank
-     * @return gibt ein Verbindungsobjekt zu der Datenbank zurück
+     * @return gibt ein Verbingsobjekt zu der Datenbank zurück
      * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
-    public  Connection verbindung() throws SQLException, ClassNotFoundException {
+    public static Connection verbindung() throws SQLException, ClassNotFoundException {
 
         String url = "jdbc:postgresql://localhost:5432/ExplodingKittens";
         String user = "postgres";
         String password = "postgres";
-
         Class.forName("org.postgresql.Driver");
-
-        return DriverManager.getConnection(url, user, password);
+        Connection conn = DriverManager.getConnection(url, user, password);
+        return conn;
 
     }
 
@@ -50,7 +49,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
         Connection conn = verbindung();
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
-        String anfrage2 = "insert into benutzer values(?,?,?,?) ";
+        String anfrage2 = "insert into benutzer values(?,?) ";
         PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, nickname);
@@ -65,8 +64,6 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
             if (pass.equals(bestpass)) {
                 pstmt2.setString(1, nickname);
                 pstmt2.setString(2, pass);
-                pstmt2.setInt(3,0);
-                pstmt2.setBoolean(4,false);
 
                 boolean check = pstmt2.execute();
 
@@ -81,7 +78,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
     }
 
     /**
-     * Die Methode loggt einen Benutzer mit seinen Daten ein
+     * Die Methode loggt einen Benutzer mit seineen Daten ein
      * @param nickname das Betnutzername
      * @param pass das Benutzerpasswort
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist.
@@ -91,16 +88,14 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
 
-    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, SQLException, ClassNotFoundException, WrongPasswordException, AccountOnlineException {
+    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException {
 
-        String anfrage1 = "select pass, online from benutzer b where benutzername = ? ";
+        String anfrage1 = "select pass from benutzer b where benutzername = ? ";
         String anfrage2 = "select pass from benutzer b where benutzername = ? and pass = ? ";
-
         Connection conn = verbindung();
 
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, nickname);
-
         ResultSet rst1 = pstmt1.executeQuery();
 
         if (rst1.next()) {
@@ -110,34 +105,14 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
             pstmt2.setString(2, pass);
             ResultSet rst2 = pstmt2.executeQuery();
 
-            if (rst2.next()) {
-                if (rst1.getBoolean("online")) {
-                    throw new AccountOnlineException();
-                } else {
+            while (rst2.next()) {
 
-                    String anfrage3 = "update benutzer set online = true where benutzername = ?";
-                    PreparedStatement pstmt3 = conn.prepareStatement(anfrage3);
-                    pstmt3.setString(1, nickname);
-                    return pstmt3.execute();
-                }
+                return true;
             }
+
             throw new WrongPasswordException();
-        } else {
+        } else
             throw new UserNotExistException();
-        }
-    }
-
-
-    public boolean spielerAbmelden(String name) throws SQLException, ClassNotFoundException {
-
-        String anfrage1 = "update benutzer set online = false where benutzername = ?";
-
-        Connection conn = verbindung();
-        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
-        pstmt1.setString(1, name);
-        return pstmt1.execute();
-
-
     }
 
     /**
@@ -170,7 +145,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
      * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
-    public  boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws NotEqualPassWordException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException {
+    public static boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws NotEqualPassWordException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException {
 
         Connection conn = verbindung();
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
@@ -211,109 +186,5 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
                 }
             }
         }
-    }
-
-    public void raumErstellen(String username, String raumname) throws SQLException, ClassNotFoundException, RaumnameVergebenException {
-        String anfrage1 = "select name from räume where name = ? ";
-        String anfrage2 = "insert into räume values(?) ";
-        String anfrage3 = "insert into inRaum values(?,?) ";
-
-        Connection conn = verbindung();
-        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
-        pstmt1.setString(1, raumname);
-        ResultSet rst1 = pstmt1.executeQuery();
-        if(rst1.next()) {
-            throw new RaumnameVergebenException();
-        } else {
-            PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
-            pstmt2.setString(1, raumname);
-            pstmt2.execute();
-            PreparedStatement pstmt3 = conn.prepareStatement(anfrage3);
-            pstmt3.setString(1,username);
-            pstmt3.setString(2,raumname);
-            pstmt3.execute();
-        }
-    }
-
-    public void raumBeitreten(String username, String raumname) throws SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException {
-        String anfrage1 = "select name from räume where name = ? ";
-        String anfrage2 = "select count(*) as anz from inRaum where raum = ? ";
-        String anfrage3 = "insert into inRaum values(?,?) ";
-
-        Connection conn = verbindung();
-        PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
-        pstmt1.setString(1, raumname);
-        ResultSet rst1 = pstmt1.executeQuery();
-        if(rst1.next()) {
-            PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
-            pstmt2.setString(1, raumname);
-            ResultSet rst2 = pstmt2.executeQuery();
-            int anz = rst2.getInt("anz");
-            if(anz>=5) {
-                throw new SpielraumVollException();
-            } else {
-                PreparedStatement pstmt3 = conn.prepareStatement(anfrage3);
-                pstmt3.setString(1,username);
-                pstmt3.setString(2,raumname);
-                pstmt3.execute();
-            }
-        } else {
-           throw new RaumNotExistException();
-        }
-    }
-
-    public boolean raumVerlassen(String username, String raumname) throws SQLException, ClassNotFoundException {
-
-        Connection conn = verbindung();
-        String anfrage = "delete from inRaum where spieler = ? and raum = ?";
-        String anfrage2 = "select count(*) as anz from inRaum where raum = ? ";
-        PreparedStatement pstmt = conn.prepareStatement(anfrage);
-        pstmt.setString(1, username);
-        pstmt.setString(2,raumname);
-        pstmt.execute();
-        PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
-        pstmt2.setString(1, raumname);
-        ResultSet rst2 = pstmt2.executeQuery();
-        boolean empty = true;
-        while (rst2.next()) {
-            int anz = rst2.getInt("anz");
-            if(anz>1) {
-                empty = false;
-                break;
-            }
-        }
-        if(empty) {
-            String anfrage3 = "delete from inRaum where raum = ?";
-            PreparedStatement pstmt3 = conn.prepareStatement(anfrage3);
-            pstmt3.setString(1, raumname);
-            pstmt3.execute();
-            String anfrage4 = "delete from Räume where name = ?";
-            PreparedStatement pstmt4 = conn.prepareStatement(anfrage4);
-            pstmt4.setString(1, raumname);
-            pstmt4.execute();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void siegEintragen(String username) throws SQLException, ClassNotFoundException {
-        Connection conn = verbindung();
-        String anfrage = "update benutzer set punkte = punkte + 1 where benutzername = ? ";
-        PreparedStatement pstmt = conn.prepareStatement(anfrage);
-        pstmt.setString(1, username);
-        pstmt.execute();
-    }
-
-    public ArrayList<Row> getBestenliste() throws SQLException, ClassNotFoundException {
-        Connection conn = verbindung();
-        String anfrage = "select benutzername,punkte,dense_rank() over(order by punkte desc) as platz from benutzer order by platz ";
-        PreparedStatement pstmt = conn.prepareStatement(anfrage);
-        ArrayList<Row> result = new ArrayList<>();
-        ResultSet rslt = pstmt.executeQuery();
-        while (rslt.next()) {
-            result.add(new Row(rslt.getInt("platz"),rslt.getInt("punkte"),rslt.getString("benutzername")));
-        }
-        return result;
     }
 }

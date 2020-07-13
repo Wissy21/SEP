@@ -1,0 +1,8 @@
+exceptions
+gui
+gui.controller
+gui.controller.Spiel
+server
+server.datenbankmanager
+server.karten
+tests
