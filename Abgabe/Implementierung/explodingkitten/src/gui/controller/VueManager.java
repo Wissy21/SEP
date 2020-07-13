@@ -49,6 +49,7 @@ public class VueManager {
     /**
      * Der Menü Bildschirm wird angezeigt
      * @param event Event das die Methode auslöst
+     * @param name Name des Spielers
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToMenue(Event event, String name) throws IOException {
@@ -68,6 +69,7 @@ public class VueManager {
     /**
      * Der Daten ändern Bildschirm wird angezeigt
      * @param event Event das die Methode auslöst
+     * @param name Name des Spielers
      * @throws IOException Fehler bei Anzeige
      */
     public static void datenAendern(Event event, String name) throws IOException {
@@ -87,6 +89,7 @@ public class VueManager {
     /**
      * Der Bestenliste Bildschirm wird angezeigt
      * @param event Event das die Methode auslöst
+     * @param n Name des Spielers
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToBestenliste(Event event, String n) throws IOException {
@@ -106,6 +109,8 @@ public class VueManager {
     /**
      * Der Spielraum Bildschirm wird angezeigt
      * @param event Event das die Methode auslöst
+     * @param n Name des Spielers
+     * @param raumname Name des Spielraums
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToSpielraum(Event event, String n, String raumname) throws IOException {
@@ -141,6 +146,7 @@ public class VueManager {
     /**
      * Der Lobby Bildschirm wird angezeigt
      * @param event Event das die Methode auslöst
+     * @param n Name des Spielers
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToLobby(Event event, String n) throws IOException {

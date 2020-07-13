@@ -71,6 +71,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     /**
      * Der angegebene Spieler verlässt den Spielraum
      * @param spielername   Name des Spielers der den Raum verlässt
+     * @return gibt true zurück wenn der Spielraum leer ist, oder nur noch bots enthält
      */
     public boolean spielraumVerlassen(String spielername) {
         spieler.removeIf(n -> (n.getNickname().equals(spielername)));
@@ -90,9 +91,9 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
     /**
      * Startet das Spiel indem wie im Regelwerk vorgeschrieben die Karten verteilt werden
-     * Bestimmt außerden die Spielreihenfolge und gibt diese als Iterator an
+     * Bestimmt außerden die Spielreihenfolge und gibt diese als Array an
      *
-     * @throws NichtGenugSpielerException Falls nur ein Spiler im Raum ist
+     * @throws NichtGenugSpielerException Falls nur ein Spieler im Raum ist
      */
     public void spielStarten() throws NichtGenugSpielerException {
 
@@ -185,12 +186,14 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
     /**
      * Ausführen des Regelwerks, wenn ein Spieler eine bestimmte Karte ablegt
-     * Lässt immer nur eine Karte nacheinander ausspielen
+     * Lässt immer nur eine Karte nacheinander ausspielen, außer
+     *  Nö! kann immer gespielt werden, hat aber nur einen Effekt wenn davor eine andere Karte gespielt wurde
+     *  Entschärfen kann nur gespielt werden, wenn ein Exploding Kitten gezogen wurde
      *
      *
      * @param user  Benutzer der die Karte legen will
      * @param k Karte die gelegt werden soll
-     * @throws NotYourRundeException    Verhindert das jemad außerhalb seiner Runde ein Karte legt, außer Nö!
+     * @throws NotYourRundeException    Verhindert das jemand außerhalb seiner Runde ein Karte legt, außer Nö!
      * @throws NoExplodingKittenException   Verhindert das ablegen einer Entschärfung ohne Exploding Kitten.
      */
     public void karteLegen(String user, Karte k) throws NotYourRundeException, NoExplodingKittenException {
@@ -246,7 +249,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
     /**
-     * Lässt den Iterator einen Schritt weiter laufen, außer es wurde vorher eine Angriff-Karte gespielt
+     * Lässt die Reihenfolge einen Schritt weiter laufen, außer es wurde vorher eine Angriff-Karte gespielt
      */
     public void naechsterSpieler() {
         if(!angriff) {
@@ -268,7 +271,6 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
 
     /**
-     *
      * @return Gibt den Namen des Spielers zurück, der am Zug ist
      */
     public String amZug() {
@@ -278,7 +280,6 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     //Methode für Angriff
 
     /**
-     *
      * @return gibt an ob eine Angriff-Karte aktiv ist
      */
     public boolean isAngriff() {
@@ -296,6 +297,9 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     //Methoden für Wunsch
 
 
+    /**
+     * Lässt den Spieler oder Bot ein Ziel für den Wunsch bestimmen
+     */
     public void selectSpieler() {
         if(current.isBot) {
             current.auswaehlen(this);
@@ -304,6 +308,10 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         }
     }
 
+    /**
+     * Benachrichtigt einen Spieler oder Bot eine Karte abzugeben
+     * @param s Spieler der ausgewählt wurde
+     */
     @Override
     public void setAusgewaehler(Spieler s) {
         ausgewahlter = s;
@@ -315,6 +323,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
+    /**
+     * Methode die den Kartentausch implementiert
+     * @param name Name des Spielers der die Karte abgibt
+     * @param k Karte die abgegeben wurde
+     */
     public void abgeben (String name,Karte k) {
         ausgewahlter.handkarte.remove(k);
         current.handkarte.add(k);
@@ -357,6 +370,12 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
     //Chat-Methoden
 
+    /**
+     * Schreint eine Nachricht in den Raum - Chat
+     * @param msg Inhalt
+     * @param time Zeitstempel
+     * @param benutzername Sender
+     */
     @Override
     public void sendMessage(String msg , String time ,String benutzername){
         chat.nachrichSchreiben(msg , time ,benutzername);
@@ -378,8 +397,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
-
-
+    /**
+     * Registriert einen Spieler im Raum, sodass er alle Veränderunmgen mitbekommt
+     * @param userName Name des zu registrierenden Spielers
+     * @param io Observer der den Spieler benachrichtigt
+     */
     @Override
     public void registerObserver(String userName, IRaumObserver io){
         userRaumServerMap.put(userName, io);
@@ -420,6 +442,12 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
+    /**
+     * Benachrichtigt den Client eines Spielers, damit er eine Aktion ausführt
+     * @param s Name des Spielers, dessen Client benachrichtigt werden soll
+     * @param message Nachricht an den Client
+     * @param k optionale Karte zur Nachricht hinzu
+     */
     public void notify(String s, String message,Karte k) {
         for(String nom : userRaumServerMap.keySet()){
             IRaumObserver observer = userRaumServerMap.get(nom);
@@ -431,6 +459,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         }
     }
 
+    /**
+     * Benachrichtigt den Client jedes Spielers, damit er eine Aktion ausführt
+     * @param message Nachricht an den Client
+     * @param k optionale Karte zur Nachricht hinzu
+     */
     public void notifyEverybody(String message,Karte k) {
         for(String nom : userRaumServerMap.keySet()){
             IRaumObserver observer = userRaumServerMap.get(nom);
@@ -446,6 +479,13 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         return spielstapel.size();
     }
 
+    /**
+     * Methode die nach dem explodieren eines Spielers oder Bots aufgerufen wird und diesen aus dem laufenden Spiel entfernt
+     * Alle Karten werden abgelegt und die Reihenfolge angepasst
+     * Wenn nur noch ein Spieler übrig ist wird geprüft wer gewonnen hat, der Gewinner wird dann benachrichtigt
+     * @param spielername Name des explodierten Spielers
+     * @param karte Exploding Kitten das für das explodieren verantwortlich war
+     */
     @Override
     public void explodiert(String spielername,Karte karte) {
 
@@ -471,6 +511,9 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         }
     }
 
+    /**
+     * Methode die den Clients sagt, dass Sie den Spielraum verlassen sollen
+     */
     public void exit() {
         try{
             notifyEverybody("Verlassen",null);

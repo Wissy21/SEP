@@ -275,6 +275,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
             PreparedStatement pstmt2 = conn.prepareStatement(anfrage2);
             pstmt2.setString(1, raumname);
             ResultSet rst2 = pstmt2.executeQuery();
+            rst2.next();
             int anz = rst2.getInt("anz");
             if(anz>=5) {
                 throw new SpielraumVollException();

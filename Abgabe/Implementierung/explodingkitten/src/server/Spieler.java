@@ -41,6 +41,12 @@ public class Spieler implements Serializable {
     }
 
 
+    /**
+     * Zug des Bots wird durchgeführt
+     * Wenn er einen BlickInDieZukunft hat spielt er diesen um einem möglichen Exploding Kitten auszuweichen
+     * Danach beendet er seinen Zug
+     * @param raum Raum in dem Der bot ist
+     */
     public void zugDurchfuehren(SpielRaum raum){
         try{
 
@@ -69,19 +75,34 @@ public class Spieler implements Serializable {
         }
     }
 
+    /**
+     * Methode für Wunsch
+     * Gibt eine zufällige Karte ab
+     * @param raum Spielraum in dem der Bot ist
+     */
     public void abgeben(SpielRaum raum) {
         Random r = new Random();
         Karte abgabe = handkarte.get(r.nextInt(handkarte.size()));
         raum.abgeben(nickname,abgabe);
     }
-
+    /**
+     * Methode für Wunsch
+     * Wählt einen zufälligen Spieler aus
+     * @param raum Spielraum in dem der Bot ist
+     */
     public void auswaehlen(SpielRaum raum) {
         Random r = new Random();
         Spieler victim = raum.getSpieler().get(r.nextInt(raum.anzahlSpieler));
         raum.setAusgewaehler(victim);
     }
 
-    public void entschaerfen(SpielRaum raum,Karte kitten) {
+    /**
+     * Methode zum entschärfen eines Exploding Kittens
+     * Wenn der Bot eine Entschärfung in der Hand hat spielt er diese, wenn nicht explodiert er
+     * Wen er entschäft legt er das Exploding Kitten an eine zufällige Positin im Spielstapel zurück
+     * @param raum Raum in dem der Bot ist
+     */
+    public void entschaerfen(SpielRaum raum) {
         for(Karte k : handkarte) {
             if(k.getEffekt().equals("Entschaerfung")) {
                 try {
@@ -102,10 +123,19 @@ public class Spieler implements Serializable {
     }
 
 
+    /**
+     * Methode um die nächste Karte im Spielstapel zu speichern
+     * @param effekt Effekt der nächsten Karte
+     */
     public void naechsteKarte(String effekt) {
         naechsteKarte = effekt;
     }
 
+    /**
+     * Überschriebene equals Methode zum einfacheren Vergleichen
+     * @param o Objekt zum vergleichen
+     * @return Wenn name und bot-Status gleich sind true, sonst false
+     */
     @Override
     public boolean equals(Object o) {
         if(!(o instanceof Spieler)) {
