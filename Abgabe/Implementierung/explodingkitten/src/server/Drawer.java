@@ -35,7 +35,7 @@ public class Drawer implements Runnable{
             room.setExpolding(true);
             room.explKitten = k;
             if(room.current.isBot) {
-                room.current.entschaerfen(room,k);
+                room.current.entschaerfen(room);
             } else {
                 room.notify(username, "Exploding", k);
             }

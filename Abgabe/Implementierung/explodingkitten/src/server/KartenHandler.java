@@ -18,6 +18,7 @@ public class KartenHandler implements Runnable{
      *
      * @param k Karte die auszuführen ist
      * @param raum  Spielraum in dem die Karte gespielt wurde
+     * @param user Name des ausführenden Spielers
      */
     public KartenHandler(Karte k,SpielRaum raum, String user) {
 
