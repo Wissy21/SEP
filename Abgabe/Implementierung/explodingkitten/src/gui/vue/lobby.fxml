@@ -37,7 +37,7 @@
                             <content>
                                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="390.0" style="-fx-background-color: white;">
                                     <children>
-                                        <ScrollPane layoutX="10.0" layoutY="9.0" prefHeight="563.0" prefWidth="390.0" vvalue="1.0" AnchorPane.bottomAnchor="10.200000000000045" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.200000000000045" AnchorPane.topAnchor="9.0">
+                                        <ScrollPane fx:id="chatpane" layoutX="10.0" layoutY="9.0" prefHeight="563.0" prefWidth="390.0" vvalue="1.0" AnchorPane.bottomAnchor="10.200000000000045" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="9.200000000000045" AnchorPane.topAnchor="9.0">
                                             <content>
                                                 <VBox fx:id="messageList" prefWidth="363.0" spacing="13.0">
                                        <padding>

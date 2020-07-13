@@ -1,4 +1,4 @@
-package tests;
+package server.datenbankmanager;
 
 import exceptions.*;
 import org.junit.jupiter.api.Test;
@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class DatenbankTest {
+public class DBmanagerTest {
     DBmanager db = new DBmanager();
 
-    public DatenbankTest() throws RemoteException {
+    public DBmanagerTest() throws RemoteException {
+        assertDoesNotThrow(() -> db.kontoLoeschen("Tester"));
+        assertDoesNotThrow(() -> db.kontoLoeschen("Tester2"));
     }
 
 

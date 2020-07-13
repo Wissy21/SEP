@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -28,7 +29,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Anmelden");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Registrieren Bildschirm wird angezeigt
@@ -44,7 +44,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Registrieren");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Menü Bildschirm wird angezeigt
@@ -64,7 +63,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Spiel Menü");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Daten ändern Bildschirm wird angezeigt
@@ -84,7 +82,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Daten Bearbeiten");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Bestenliste Bildschirm wird angezeigt
@@ -104,7 +101,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - BestenListe");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Spielraum Bildschirm wird angezeigt
@@ -125,7 +121,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Spielraum");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Start Bildschirm wird angezeigt
@@ -141,7 +136,6 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Start Fenster");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Der Lobby Bildschirm wird angezeigt
@@ -161,7 +155,20 @@ public class VueManager {
         stage.setTitle("Exploding Kittens - Lobby");
         stage.setScene(scene);
         stage.show();
-        stage.centerOnScreen();
+    }
+
+    public static void goToLobby(AnchorPane ap, String n) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/lobby.fxml"));
+        Parent root = loader.load();
+
+        LobbyController lc = loader.getController();
+        lc.setName(n);
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ap.getScene().getWindow();
+        stage.setTitle("Exploding Kittens - Lobby");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**

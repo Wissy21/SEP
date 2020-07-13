@@ -16,7 +16,7 @@
                             <content>
                                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="500.0" style="-fx-background-color: white;">
                            <children>
-                              <ScrollPane layoutY="11.0" prefHeight="576.0" prefWidth="500.0" vvalue="1.0">
+                              <ScrollPane fx:id="chatpane" layoutY="11.0" prefHeight="576.0" prefWidth="500.0" vvalue="1.0">
                                  <content>
                                     <VBox fx:id="messageList" prefHeight="563.0" prefWidth="500.0" spacing="13.0">
                                        <padding>

@@ -5,4 +5,3 @@ gui.controller.Spiel
 server
 server.datenbankmanager
 server.karten
-tests

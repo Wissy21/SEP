@@ -2,7 +2,7 @@ package server;
 
 import java.util.ArrayList;
 
-public class SpielChat {
+class SpielChat {
     public ArrayList<Nachricht> nachrichten;
 
     /**

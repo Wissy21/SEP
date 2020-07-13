@@ -43,5 +43,13 @@ public class Karte implements Serializable {
 
         return k.getEffekt().equals(effekt)&&k.getName().equals(name);
     }
+
+    /**
+     * @return Gibt den Effekt zurück
+     */
+    @Override
+    public String toString() {
+        return effekt;
+    }
 }
 

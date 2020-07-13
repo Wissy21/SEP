@@ -103,7 +103,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             throw new NichtGenugSpielerException();
         }
 
-        running= true;
+        running = true;
 
         /*Vorbereiten des Spielstapels und der Hände der Spieler*/
 
@@ -411,15 +411,19 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      * Lässt einen neuen Spieler den Raum betreten
      * Erstellt dafür ein neues Spieler Objekt
      *
-     * @param name Name des Neuen Spielers
+     * @param spielername Name des Neuen Spielers
+     * @throws SpielraumVollException Wenn bereits 5 spieler im Raum sind
+     * @throws SpielLauftBereitsException Wenn das SPiel bereits am laufen ist
      */
     @Override
-    public void betreten(String name) throws SpielLauftBereitsException {
+    public void betreten(String spielername) throws SpielLauftBereitsException, SpielraumVollException {
         if(isRunning()) {
             throw new SpielLauftBereitsException();
-        } else {
+        } else  if (anzahlSpieler>4) {
+            throw new SpielraumVollException();
+        }else {
             Spieler sp = new Spieler(false);
-            sp.nickname = name;
+            sp.nickname = spielername;
             spieler.add(sp);
             anzahlSpieler++;
         }
@@ -479,6 +483,10 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         return spielstapel.size();
     }
 
+    public Spieler[] getReihenfolge() {
+        return reihenfolge;
+    }
+
     /**
      * Methode die nach dem explodieren eines Spielers oder Bots aufgerufen wird und diesen aus dem laufenden Spiel entfernt
      * Alle Karten werden abgelegt und die Reihenfolge angepasst
@@ -491,6 +499,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
         boolean leer = spielraumVerlassen(spielername);
         reihenfolge = spieler.toArray(new Spieler[0]);
+        ablagestapel.push(karte);
 
         notifyEverybody("Raus", new Karte("", spielername));
         notifyEverybody("Abgelegt",karte);
@@ -501,29 +510,19 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             notify(spielername,"AbgelegtDu",k);
             notifyEverybody("Abgelegt",k);
         }
+        notify(spielername,"Verlassen",null);
+
         if(leer) {
             notifyEverybody("BotWin",null);
             return;
         }
         if(anzahlSpieler == 1) {
             notify(spieler.get(0).getNickname(),"Gewonnen",null);
-
-        }
-    }
-
-    /**
-     * Methode die den Clients sagt, dass Sie den Spielraum verlassen sollen
-     */
-    public void exit() {
-        try{
             notifyEverybody("Verlassen",null);
-            kartenExecutor.shutdownNow();
-            Thread.sleep(5000);
-            Naming.unbind("spielraum_"+name);
-
-            UnicastRemoteObject.unexportObject(this,true);
-        } catch (RemoteException | NotBoundException | MalformedURLException | InterruptedException e) {
-            e.printStackTrace();
+            return;
+        }
+        if(iter>0) {
+            iter--;
         }
     }
 }

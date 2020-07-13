@@ -313,7 +313,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         boolean empty = true;
         while (rst2.next()) {
             int anz = rst2.getInt("anz");
-            if(anz>1) {
+            if(anz>=1) {
                 empty = false;
                 break;
             }

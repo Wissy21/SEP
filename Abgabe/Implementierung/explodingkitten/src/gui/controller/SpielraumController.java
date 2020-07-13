@@ -61,6 +61,10 @@ public class SpielraumController implements IRaumObserver{
     public VBox messageList;
     @FXML
     public  ImageView ablage;
+    @FXML
+    ScrollPane chatpane;
+    @FXML
+    AnchorPane spielraum;
 
     public String name;
     public String raumname;
@@ -76,6 +80,7 @@ public class SpielraumController implements IRaumObserver{
     public void setName(String name, String raumname){
         this.name = name;
         this.raumname = raumname;
+        chatpane.vvalueProperty().bind(messageList.heightProperty());
         cardbox.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
 
         try {
@@ -189,6 +194,7 @@ public class SpielraumController implements IRaumObserver{
                 for(Spieler sp : sb.getSpieler()) {
                     if(sp.getNickname().equals(name)) {
                         sb.explodiert(name,new Karte("0","Katze1"));
+                        VueManager.goToLobby(new Event(feld,feld, EventType.ROOT),name);
                     }
                 }
                 try {
@@ -196,7 +202,6 @@ public class SpielraumController implements IRaumObserver{
                 } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
                 }
-                VueManager.goToLobby(actionEvent, name);
             }
         } else {
             sb.spielraumVerlassen(name);
@@ -481,7 +486,6 @@ public class SpielraumController implements IRaumObserver{
                         sb.sendMessage("Spielraum geschlossen.\n Bitte verlassen Sie den Spielraum.",tm.toString(),"Serveradmin");
                         sb.spielraumVerlassen(name);
                         db.raumVerlassen(name,raumname);
-                        sb.exit();
                     } catch (SQLException | ClassNotFoundException | IOException e) {
                         e.printStackTrace();
                     }
@@ -490,7 +494,7 @@ public class SpielraumController implements IRaumObserver{
                 case "Verlassen":
                     Platform.runLater(()-> {
                         try {
-                            VueManager.goToLobby(new Event(feld,feld, EventType.ROOT),name);
+                            VueManager.goToLobby(spielraum,name);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -16,7 +16,7 @@ public interface SpielRaumInterface extends Remote {
 
     void registerObserver(String userName, IRaumObserver io) throws RemoteException;
 
-    void betreten(String name) throws RemoteException, SpielLauftBereitsException;
+    void betreten(String name) throws RemoteException, SpielLauftBereitsException, SpielraumVollException;
 
     boolean spielraumVerlassen(String spielername) throws RemoteException;
 
@@ -48,5 +48,4 @@ public interface SpielRaumInterface extends Remote {
 
     void explodiert(String spielername,Karte kitten) throws RemoteException;
 
-    void exit() throws RemoteException;
 }
