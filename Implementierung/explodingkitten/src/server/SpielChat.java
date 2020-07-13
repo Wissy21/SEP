@@ -9,7 +9,7 @@ public class SpielChat {
      * Konstruktor von Objekten
      */
     public SpielChat() {
-        nachrichten = new ArrayList<Nachricht>();
+        nachrichten = new ArrayList<>();
     }
 
     /**

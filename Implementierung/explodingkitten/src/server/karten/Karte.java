@@ -1,6 +1,8 @@
 package server.karten;
 
-public class Karte {
+import java.io.Serializable;
+
+public class Karte implements Serializable {
     String name;
     String effekt;
 
@@ -24,5 +26,15 @@ public class Karte {
     public void setEffekt(String effekt) {
         this.effekt = effekt;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Karte)) {
+            return false;
+        }
+        Karte k = (Karte) o;
+
+        return k.getEffekt().equals(effekt)&&k.getName().equals(name);
     }
+}
 

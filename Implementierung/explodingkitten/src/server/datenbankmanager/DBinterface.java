@@ -1,22 +1,33 @@
 package server.datenbankmanager;
 
-import exceptions.UserNameAlreadyExistsException;
-import exceptions.UserNotExistException;
-import exceptions.WrongPasswordException;
+import exceptions.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public interface DBinterface extends Remote {
 
-    public Connection verbindung() throws RemoteException, SQLException, ClassNotFoundException;
+    Connection verbindung() throws RemoteException, SQLException, ClassNotFoundException;
 
-    public boolean spielerRegistrieren(String nickname, String pass, String bestpass) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException;
+    boolean spielerRegistrieren(String nickname, String pass, String bestpass) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, WrongPasswordException, NotEqualPassWordException;
 
-    public boolean spielerAnmelden(String nickname, String pass) throws RemoteException, UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException;
+    boolean spielerAnmelden(String nickname, String pass) throws RemoteException, UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException, AccountOnlineException;
 
-    public boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
+    boolean spielerAbmelden(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
 
-    public boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException;
+    boolean kontoLoeschen(String nickname) throws RemoteException, SQLException, ClassNotFoundException;
+
+    boolean datenAendern(String altnickname, String neunickname, String neupass, String passbest) throws RemoteException, UserNameAlreadyExistsException, SQLException, ClassNotFoundException, NotEqualPassWordException;
+
+    void raumErstellen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumnameVergebenException;
+
+    void raumBeitreten(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException;
+
+    boolean raumVerlassen(String username, String raumname) throws RemoteException, SQLException, ClassNotFoundException;
+
+    void siegEintragen(String spielername) throws RemoteException,SQLException,ClassNotFoundException;
+
+    ArrayList<Row> getBestenliste() throws RemoteException,SQLException,ClassNotFoundException;
 }
