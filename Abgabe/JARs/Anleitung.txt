@@ -1,3 +1,7 @@
+Stellen Sie sicher das Sie eine aktuelle Version von Java auf ihrem Rechner installiert haben. (Java 11 oder neuer).
+Stellen Sie sicher das Die eine aktuelle Version von PostgeSQL auf ihrem Rechner installiert haben (Version 11.3 oder neuer), um den Server zu nutzen.
+Nutzername postgres, Passwort postgres
+
 Der Server wird mit einem Doppelklick auf die Server.bat Datei gestartet.
 
 Um den Client zu starten muss vorher noch die Client.bat Datei so bearbeitet werden, 

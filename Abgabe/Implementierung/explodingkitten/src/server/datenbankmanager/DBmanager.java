@@ -14,10 +14,27 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
     /**
      * Konstruktor für den Datenbankmanager
+     * Erstellt die Tabellen wenn Sie bisher noch nicht existieren
      * @throws RemoteException Fehler bei RMI
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
      */
-    public DBmanager() throws RemoteException {
-        super();
+    public DBmanager() throws RemoteException, SQLException, ClassNotFoundException {
+        Connection conn = verbindung();
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS benutzer"
+                + "  (benutzername           text,"
+                + "   pass            text,"
+                + "   punkte          INTEGER,"
+                + "   online           boolean)";
+        Statement stmt = conn.createStatement();
+        stmt.execute(sqlCreate);
+        sqlCreate = "CREATE TABLE IF NOT EXISTS inraum"
+                + "  (spieler           text,"
+                + "   raum            text)";
+        stmt.execute(sqlCreate);
+        sqlCreate = "CREATE TABLE IF NOT EXISTS räume"
+                + "  (name            text)";
+        stmt.execute(sqlCreate);
     }
 
     /**

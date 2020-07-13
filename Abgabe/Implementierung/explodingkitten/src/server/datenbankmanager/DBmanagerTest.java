@@ -2,13 +2,13 @@ package server.datenbankmanager;
 
 import exceptions.*;
 import org.junit.jupiter.api.Test;
-import server.datenbankmanager.DBmanager;
-import server.datenbankmanager.Row;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class DBmanagerTest {
     DBmanager db = new DBmanager();
 
-    public DBmanagerTest() throws RemoteException {
+    public DBmanagerTest() throws RemoteException, SQLException, ClassNotFoundException {
         assertDoesNotThrow(() -> db.kontoLoeschen("Tester"));
         assertDoesNotThrow(() -> db.kontoLoeschen("Tester2"));
     }

@@ -21,7 +21,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToLogIn(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/anmelden.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("anmelden.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -36,7 +36,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToRegister(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/registrieren.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("registrieren.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -52,7 +52,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToMenue(Event event, String name) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/spielmenue.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("spielmenue.fxml"));
         Parent root = loader.load();
 
         SpielMenueController c = loader.getController();
@@ -71,7 +71,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void datenAendern(Event event, String name) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/dateiAendern.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("dateiAendern.fxml"));
         Parent root = loader.load();
 
         DateiAendernController da = loader.getController();
@@ -90,7 +90,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToBestenliste(Event event, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/bestenListe.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("bestenListe.fxml"));
         Parent root = loader.load();
 
         BestenListeController so = loader.getController();
@@ -110,7 +110,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToSpielraum(Event event, String n, String raumname) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/spielraum.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("spielraum.fxml"));
         Parent root = loader.load();
 
         SpielraumController src = loader.getController();
@@ -128,7 +128,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToStartFenster(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/startfenster.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("startfenster.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
@@ -144,7 +144,7 @@ public class VueManager {
      * @throws IOException Fehler bei Anzeige
      */
     public static void goToLobby(Event event, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/lobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("lobby.fxml"));
         Parent root = loader.load();
 
         LobbyController lc = loader.getController();
@@ -158,7 +158,7 @@ public class VueManager {
     }
 
     public static void goToLobby(AnchorPane ap, String n) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("../vue/lobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(VueManager.class.getResource("lobby.fxml"));
         Parent root = loader.load();
 
         LobbyController lc = loader.getController();

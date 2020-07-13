@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.sql.SQLException;
 
 public class SpielenServer {
 
@@ -29,7 +30,7 @@ public class SpielenServer {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-        } catch (RemoteException e) {
+        } catch (RemoteException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

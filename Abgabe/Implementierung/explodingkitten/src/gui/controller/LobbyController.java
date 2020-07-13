@@ -116,7 +116,7 @@ public class LobbyController implements ILobbyObserver {
         if(result.isPresent()) {
             String temp = result.get();
             String raumname= temp.replace(' ','_');
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("lobbyRoom.fxml"));
 
             try {
 
@@ -162,13 +162,13 @@ public class LobbyController implements ILobbyObserver {
                 FXMLLoader fxmlLoader;
                 Parent root;
                 if(n.sender.equals(name)) {
-                    fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/rightMessage.fxml"));
+                    fxmlLoader = new FXMLLoader(this.getClass().getResource("rightMessage.fxml"));
                     root = fxmlLoader.load();
                     RightMessageController rc = fxmlLoader.getController();
 
                     rc.set(n.message, n.sender, n.time);
                 } else {
-                    fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/leftMessage.fxml"));
+                    fxmlLoader = new FXMLLoader(this.getClass().getResource("leftMessage.fxml"));
                     root = fxmlLoader.load();
                     LeftMessageController lc = fxmlLoader.getController();
 
@@ -193,7 +193,7 @@ public class LobbyController implements ILobbyObserver {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
             ArrayList<String> roomlist = lb.getRooms();
             for(int i = lastroom;i<roomlist.size();i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("lobbyRoom.fxml"));
                 Parent root = fxmlLoader.load();
                 LobbyRoom lr = fxmlLoader.getController();
                 lr.setName(name,roomlist.get(i));
