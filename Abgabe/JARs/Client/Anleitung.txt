@@ -1,7 +1,0 @@
-Der Server wird mit einem Doppelklick auf die Server.bat Datei gestartet.
-
-Um den Client zu starten muss vorher noch die Client.bat Datei so bearbeitet werden, 
-dass BITTE_WARTEN durch den Pfad ersetzt wird, in dem sich der Client befindet.
-Zum Besipiel duch: C:\Users\Name\Desktop\Client
-Dann läuft auch der Client durch einen Doppelklick auf die Client.bat Datei.
-
