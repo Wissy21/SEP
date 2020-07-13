@@ -1,10 +1,7 @@
 package gui.controller;
 
 import exceptions.UserNameAlreadyExistsException;
-import exceptions.UserNotExistException;
-import exceptions.WrongPasswordException;
 import server.datenbankmanager.DBinterface;
-import server.datenbankmanager.NotEqualPassWordException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

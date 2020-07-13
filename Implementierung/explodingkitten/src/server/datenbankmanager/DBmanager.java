@@ -1,10 +1,10 @@
-package main.server.datenbankmanager;
+package server.datenbankmanager;
 
-import main.exceptions.NotEqualPassWordException;
-import main.exceptions.UserNameAlreadyExistsException;
-import main.exceptions.UserNotExistException;
-import main.exceptions.WrongPassWordException;
-import main.server.Benutzer;
+import exceptions.NotEqualPassWordException;
+import exceptions.UserNameAlreadyExistsException;
+import exceptions.UserNotExistException;
+import exceptions.WrongPasswordException;
+import server.Benutzer;
 
 import java.sql.*;
 import java.util.List;
@@ -27,11 +27,8 @@ public class DBmanager {
         String url = "jdbc:postgresql://localhost:5432/ExplodingKittens";
         String user = "postgres";
         String password = "postgres";
-
         Class.forName("org.postgresql.Driver");
-
         Connection conn = DriverManager.getConnection(url, user, password);
-
         return conn;
 
     }
@@ -86,12 +83,12 @@ public class DBmanager {
      * @param pass das Benutzerpasswort
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist.
      * @throws UserNotExistException die Exception wird zurückgegeben, wenn der gegebene Name nicht in der Datenbank existiert
-     * @throws WrongPassWordException die Exception wird zurückgegeben, wenn das Passwort nicht mit dem Benutzername stimmt
+     * @throws WrongPasswordException die Exception wird zurückgegeben, wenn das Passwort nicht mit dem Benutzername stimmt
      * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
 
-    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, WrongPassWordException, SQLException, ClassNotFoundException {
+    public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, WrongPasswordException, SQLException, ClassNotFoundException {
 
         String anfrage1 = "select pass from benutzer b where benutzername = ? ";
         String anfrage2 = "select pass from benutzer b where benutzername = ? and pass = ? ";
@@ -113,7 +110,7 @@ public class DBmanager {
                 return true;
             }
 
-            throw new WrongPassWordException();
+            throw new WrongPasswordException();
         } else
             throw new UserNotExistException();
     }
