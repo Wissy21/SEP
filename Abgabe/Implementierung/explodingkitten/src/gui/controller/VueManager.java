@@ -174,6 +174,7 @@ public class VueManager {
             case "registrieren":
             case "anmelden":
                 Platform.exit();
+                System.exit(0);
                 break;
             case "spielraum":
                 GuiHelper.showErrorOrWarningAlert(Alert.AlertType.ERROR,"Verlassen","Bitte verlassen Sie den Raum durch den vorgesehenen Knopf.","Bitte verlassen Sie den Raum durch den vorgesehenen Knopf.");

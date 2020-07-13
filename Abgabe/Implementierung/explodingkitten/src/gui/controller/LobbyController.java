@@ -34,7 +34,6 @@ import java.util.Optional;
 public class LobbyController implements ILobbyObserver {
     public String name;
     public int lastMessage = 0;
-    public int lastRoom = 0;
 
     @FXML
     public TextField messageField;
@@ -62,6 +61,7 @@ public class LobbyController implements ILobbyObserver {
             e.printStackTrace();
         }
         updateMessageList();
+        updateRaumList();
     }
 
     /**
@@ -122,6 +122,8 @@ public class LobbyController implements ILobbyObserver {
                 Platform.runLater(() -> this.roomList.getChildren().add(root));
                 SpielRaumInterface sb = new SpielRaum();
                 Naming.rebind("rmi://localhost:1900/spielraum_"+raumname,sb);
+                LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
+                lb.addroom(raumname);
                 sb.betreten(name);
                 VueManager.goToSpielraum(actionEvent,name,raumname);
 
@@ -181,13 +183,12 @@ public class LobbyController implements ILobbyObserver {
         try {
             LobbyInterface lb = (LobbyInterface) Naming.lookup("rmi://localhost:1900/lobby");
             ArrayList<String> roomlist = lb.getRooms();
-            for(int i = lastRoom;i<roomlist.size();i++) {
+            for(int i = 0;i<roomlist.size();i++) {
                 FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/LobbyRoom.fxml"));
                 Parent root = fxmlLoader.load();
                 LobbyRoom lr = fxmlLoader.getController();
                 lr.setName(name,roomlist.get(i));
-                Platform.runLater(() -> this.messageList.getChildren().add(root));
-                lastMessage++;
+                Platform.runLater(() -> this.roomList.getChildren().add(root));
             }
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();

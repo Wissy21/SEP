@@ -15,6 +15,10 @@ public class Spieler implements Serializable {
     boolean isBot;
     String naechsteKarte="";
 
+    /**
+     * Erstellt einen neuen Spieler und gibt an, ob es sich um einen Bot handelt
+     * @param isBot Bot oder nicht
+     */
     public Spieler(boolean isBot) {
         this.isBot = isBot;
     }
@@ -27,6 +31,10 @@ public class Spieler implements Serializable {
         return handkarte;
     }
 
+    /**
+     * Zur Vereinfachung der Anzeige
+     * @return Gibt den Namen zurück
+     */
     @Override
     public String toString() {
         return nickname;
@@ -80,7 +88,11 @@ public class Spieler implements Serializable {
                     raum.karteLegen(nickname,k);
                     raum.notifyEverybody("Abgelegt",k);
                     Random r = new Random();
-                    raum.setPosition(r.nextInt(raum.spielstapel.size()));
+                    if(raum.spielstapel.size()==0) {
+                        raum.setPosition(0);
+                    } else {
+                        raum.setPosition(r.nextInt(raum.spielstapel.size()));
+                    }
                     break;
                 } catch (NotYourRundeException | NoExplodingKittenException e) {
                     e.printStackTrace();

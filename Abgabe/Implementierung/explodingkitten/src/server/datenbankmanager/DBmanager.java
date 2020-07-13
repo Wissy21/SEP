@@ -12,6 +12,10 @@ import java.util.ArrayList;
  */
 public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
+    /**
+     * Konstruktor für den Datenbankmanager
+     * @throws RemoteException Fehler bei RMI
+     */
     public DBmanager() throws RemoteException {
         super();
     }
@@ -40,9 +44,9 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
      * @param pass das gewählte Passwort des Users
      * @param bestpass das gewählte Passwort nochmal, um das Passwort zu bestätigen
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist
-     * @throws UserNameAlreadyExistsException die Exception wird zurückgegeben, wenn ein anderer Benutzer schon derselbe Nickname hat
+     * @throws UserNameAlreadyExistsException die Exception wird zurückgegeben, wenn ein anderer Benutzer schon den selben Nickname hat
      * @throws NotEqualPassWordException die Exception wird zurückgegeben, wenn das Passwort und das das Passwort zu bestätigen nicht gleich sind
-     * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
+     * @throws SQLException die Exception wird zurückgegeben, wenn es einen Fehler im sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
     public boolean spielerRegistrieren(String nickname, String pass, String bestpass) throws UserNameAlreadyExistsException, NotEqualPassWordException, SQLException, ClassNotFoundException {
@@ -82,15 +86,15 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
 
     /**
      * Die Methode loggt einen Benutzer mit seinen Daten ein
-     * @param nickname das Betnutzername
+     * @param nickname das Benutzername
      * @param pass das Benutzerpasswort
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist.
      * @throws UserNotExistException die Exception wird zurückgegeben, wenn der gegebene Name nicht in der Datenbank existiert
      * @throws WrongPasswordException die Exception wird zurückgegeben, wenn das Passwort nicht mit dem Benutzername stimmt
      * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
+     * @throws AccountOnlineException wird geworfen wenn schon ein anderer Nutzer auf diesem Account online ist
      */
-
     public boolean spielerAnmelden(String nickname, String pass) throws UserNotExistException, SQLException, ClassNotFoundException, WrongPasswordException, AccountOnlineException {
 
         String anfrage1 = "select pass, online from benutzer b where benutzername = ? ";
@@ -128,14 +132,20 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
     }
 
 
-    public boolean spielerAbmelden(String name) throws SQLException, ClassNotFoundException {
+    /**
+     * Methode loggt den SPieler aus dem Account aus
+     * @param name Name des Accounts
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     */
+    public void spielerAbmelden(String name) throws SQLException, ClassNotFoundException {
 
         String anfrage1 = "update benutzer set online = false where benutzername = ?";
 
         Connection conn = verbindung();
         PreparedStatement pstmt1 = conn.prepareStatement(anfrage1);
         pstmt1.setString(1, name);
-        return pstmt1.execute();
+        pstmt1.execute();
 
 
     }
@@ -166,7 +176,7 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
      * @param passbest das neue Passwort nochmal zum bestätigen
      * @return gibt true zurück, wenn das Prozess gut gelaufen ist.
      * @throws NotEqualPassWordException die Exception wird zurückgegeben, wenn das Passwort und das das Passwort zu bestätigen nicht gleich sind
-     * @throws UserNameAlreadyExistsException die Exception wird zurückgegeben, wenn ein anderer Benutzer schon derselbe Nickname hat
+     * @throws UserNameAlreadyExistsException die Exception wird zurückgegeben, wenn ein anderer Benutzer schon den selben Nickname hat
      * @throws SQLException die Exception wird zurückgegeben, wenn es ein Fehler in sql code gibt
      * @throws ClassNotFoundException die Exception wird zurückgegeben, wenn die Klasse nicht gefunden ist
      */
@@ -213,6 +223,14 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         }
     }
 
+    /**
+     * Erstellt einen Raum in der Datenbank
+     * @param username Name des erstellenden Spielers
+     * @param raumname Name des Raums der erstellt werden soll
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     * @throws RaumnameVergebenException wird geworfen, wenn der Raumname bereits vergeben ist
+     */
     public void raumErstellen(String username, String raumname) throws SQLException, ClassNotFoundException, RaumnameVergebenException {
         String anfrage1 = "select name from räume where name = ? ";
         String anfrage2 = "insert into räume values(?) ";
@@ -235,6 +253,15 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         }
     }
 
+    /**
+     * Fügt einen Spieler in den Raum ein, der in der Datenbank gespeichert ist
+     * @param username Name des Spielers
+     * @param raumname Name des Raums
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     * @throws RaumNotExistException Raum existiert nicht mehr
+     * @throws SpielraumVollException Raum ist bereits voll
+     */
     public void raumBeitreten(String username, String raumname) throws SQLException, ClassNotFoundException, RaumNotExistException, SpielraumVollException {
         String anfrage1 = "select name from räume where name = ? ";
         String anfrage2 = "select count(*) as anz from inRaum where raum = ? ";
@@ -262,6 +289,14 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         }
     }
 
+    /**
+     * Trägt einen Spieler aus einem Raum in der Datenbank aus, wenn der Raum danach leer ist wird er geschlossen
+     * @param username Name des Spielers
+     * @param raumname Name des Raums
+     * @return true wenn der Raum danach noch weiter existiert, false wenn er geschlossen wurde
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     */
     public boolean raumVerlassen(String username, String raumname) throws SQLException, ClassNotFoundException {
 
         Connection conn = verbindung();
@@ -297,6 +332,12 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         }
     }
 
+    /**
+     * Trägt einem Spieler einen Sieg in die Bestenliste ein
+     * @param username Name des Spielers
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     */
     public void siegEintragen(String username) throws SQLException, ClassNotFoundException {
         Connection conn = verbindung();
         String anfrage = "update benutzer set punkte = punkte + 1 where benutzername = ? ";
@@ -305,6 +346,12 @@ public class DBmanager extends UnicastRemoteObject implements DBinterface {
         pstmt.execute();
     }
 
+    /**
+     * Gibt die Bestenliste aus
+     * @return Liste alle Zeilen der Bestenliste
+     * @throws SQLException Fehler im SQL code
+     * @throws ClassNotFoundException Klasse nicht gefunden
+     */
     public ArrayList<Row> getBestenliste() throws SQLException, ClassNotFoundException {
         Connection conn = verbindung();
         String anfrage = "select benutzername,punkte,dense_rank() over(order by punkte desc) as platz from benutzer order by platz ";

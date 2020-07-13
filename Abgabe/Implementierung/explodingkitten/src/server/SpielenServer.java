@@ -10,12 +10,16 @@ import java.rmi.registry.LocateRegistry;
 
 public class SpielenServer {
 
+    /**
+     * Startet den Server und hinterlegt die Datenbank und die Lobby für RMI
+     * @param args Eingabeparameter
+     */
     public static void main(String[] args) {
 
         try {
             LocateRegistry.createRegistry(1900);
-            DBinterface db = (DBinterface) new DBmanager();
-            LobbyInterface lb = (LobbyInterface) new Lobby();
+            DBinterface db =  new DBmanager();
+            LobbyInterface lb =  new Lobby();
 
             try {
                 Naming.rebind("rmi://localhost:1900/db", db);

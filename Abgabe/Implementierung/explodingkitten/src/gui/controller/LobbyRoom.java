@@ -29,7 +29,6 @@ public class LobbyRoom {
      */
     public void setName(String username, String raumname) {
         rname.setText(raumname);
-        System.out.println(rname.getText());
         name = username;
     }
 
