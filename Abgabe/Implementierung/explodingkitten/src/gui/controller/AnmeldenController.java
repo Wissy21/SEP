@@ -52,7 +52,7 @@ public class AnmeldenController {
             showErrorOrWarningAlert(Alert.AlertType.WARNING, "Passwort Fehler", "Passwort ungleich", "Bitte geben Sie das korrekte Passwort ein.");
             clearFields();
         } catch (AccountOnlineException e) {
-            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Account Fehler", "Bereits verwendet", "Mit diesem Account ist bereits jemad anderes eingeloggt.");
+            showErrorOrWarningAlert(Alert.AlertType.WARNING, "Account Fehler", "Bereits verwendet", "Mit diesem Account ist bereits jemand anderes eingeloggt.");
         }
     }
 

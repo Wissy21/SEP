@@ -61,6 +61,10 @@ public class SpielraumController implements IRaumObserver{
     public VBox messageList;
     @FXML
     public  ImageView ablage;
+    @FXML
+    ScrollPane chatpane;
+    @FXML
+    AnchorPane spielraum;
 
     public String name;
     public String raumname;
@@ -76,6 +80,7 @@ public class SpielraumController implements IRaumObserver{
     public void setName(String name, String raumname){
         this.name = name;
         this.raumname = raumname;
+        chatpane.vvalueProperty().bind(messageList.heightProperty());
         cardbox.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
 
         try {
@@ -116,7 +121,7 @@ public class SpielraumController implements IRaumObserver{
             int i = 1;
             for (Spieler s : sb.getSpieler()) {
                 if (!s.getNickname().equals(name)) {
-                    FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Opponent.fxml"));
+                    FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Spiel/Opponent.fxml"));
                     Parent root = loader.load();
                     OpponentController oc = loader.getController();
                     oc.set(i, s.getNickname(), 8);
@@ -124,7 +129,7 @@ public class SpielraumController implements IRaumObserver{
                     i++;
                 } else {
                     for (Karte k : s.getHandkarte()) {
-                        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Karte.fxml"));
+                        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Spiel/Karte.fxml"));
                         Parent neuekarte = loader.load();
                         KarteController kc = loader.getController();
                         kc.setKarte(k, name, raumname);
@@ -142,7 +147,7 @@ public class SpielraumController implements IRaumObserver{
      * Zeigt die Regeln in einem externen Fenster
      */
     public void zeigeRegeln() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Regeln.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Spiel/Regeln.fxml"));
         Parent root = null;
         try {
             root = loader.load();
@@ -189,6 +194,7 @@ public class SpielraumController implements IRaumObserver{
                 for(Spieler sp : sb.getSpieler()) {
                     if(sp.getNickname().equals(name)) {
                         sb.explodiert(name,new Karte("0","Katze1"));
+                        VueManager.goToLobby(new Event(feld,feld, EventType.ROOT),name);
                     }
                 }
                 try {
@@ -196,7 +202,6 @@ public class SpielraumController implements IRaumObserver{
                 } catch (SQLException | ClassNotFoundException throwables) {
                     throwables.printStackTrace();
                 }
-                VueManager.goToLobby(actionEvent, name);
             }
         } else {
             sb.spielraumVerlassen(name);
@@ -266,19 +271,19 @@ public class SpielraumController implements IRaumObserver{
                 FXMLLoader fxmlLoader;
                 Parent root;
                 if(n.sender.equals("Serveradmin")) {
-                    fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/leftMessage.fxml"));
+                    fxmlLoader = new FXMLLoader(this.getClass().getResource("leftMessage.fxml"));
                     root = fxmlLoader.load();
                     LeftMessageController smc = fxmlLoader.getController();
 
                     smc.set(n.message,n.sender,n.time);
                 } else if(n.sender.equals(name)) {
-                    fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/rightMessage.fxml"));
+                    fxmlLoader = new FXMLLoader(this.getClass().getResource("rightMessage.fxml"));
                     root = fxmlLoader.load();
                     RightMessageController rc = fxmlLoader.getController();
 
                     rc.set(n.message, n.sender, n.time);
                 } else {
-                    fxmlLoader = new FXMLLoader(this.getClass().getResource("../vue/leftMessage.fxml"));
+                    fxmlLoader = new FXMLLoader(this.getClass().getResource("leftMessage.fxml"));
                     root = fxmlLoader.load();
                     LeftMessageController lc = fxmlLoader.getController();
 
@@ -405,7 +410,7 @@ public class SpielraumController implements IRaumObserver{
 
                 case "Bekommen":
                     try {
-                        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../vue/Spiel/Karte.fxml"));
+                        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("Spiel/Karte.fxml"));
                         Parent neuekarte = loader.load();
                         KarteController kc = loader.getController();
                         kc.setKarte(k, name, raumname);
@@ -481,7 +486,6 @@ public class SpielraumController implements IRaumObserver{
                         sb.sendMessage("Spielraum geschlossen.\n Bitte verlassen Sie den Spielraum.",tm.toString(),"Serveradmin");
                         sb.spielraumVerlassen(name);
                         db.raumVerlassen(name,raumname);
-                        sb.exit();
                     } catch (SQLException | ClassNotFoundException | IOException e) {
                         e.printStackTrace();
                     }
@@ -490,7 +494,7 @@ public class SpielraumController implements IRaumObserver{
                 case "Verlassen":
                     Platform.runLater(()-> {
                         try {
-                            VueManager.goToLobby(new Event(feld,feld, EventType.ROOT),name);
+                            VueManager.goToLobby(spielraum,name);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

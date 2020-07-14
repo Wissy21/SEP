@@ -4,7 +4,7 @@ import server.karten.Karte;
 
 import java.util.Collections;
 
-public class KartenHandler implements Runnable{
+class KartenHandler implements Runnable{
 
     String ausgabe;
     String effekt;

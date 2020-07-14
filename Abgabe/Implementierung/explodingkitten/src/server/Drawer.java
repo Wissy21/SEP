@@ -2,7 +2,7 @@ package server;
 
 import server.karten.Karte;
 
-public class Drawer implements Runnable{
+class Drawer implements Runnable{
     String username;
     SpielRaum room;
 
@@ -43,7 +43,7 @@ public class Drawer implements Runnable{
             try {
                 Thread.sleep(7000);
             } catch (InterruptedException e) {
-                System.out.println("Drawer closed.");
+                e.printStackTrace();
             }
             if(room.isExpolding()) {
                 if(room.current.isBot) {
@@ -53,6 +53,11 @@ public class Drawer implements Runnable{
                 }
             } else {
                 room.notify(username,"Position",null);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 room.spielstapel.insertElementAt(k,room.getPosition());
             }
             room.explKitten = null;

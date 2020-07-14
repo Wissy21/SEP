@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="spielraum" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.SpielraumController">
+    <children>
+        <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0">
+            <items>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0">
+                    <children>
+                        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="500.0" text="Lobby">
+                            <content>
+                                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="500.0" style="-fx-background-color: white;">
+                           <children>
+                              <ScrollPane fx:id="chatpane" layoutY="11.0" prefHeight="576.0" prefWidth="500.0" vvalue="1.0">
+                                 <content>
+                                    <VBox fx:id="messageList" prefHeight="563.0" prefWidth="500.0" spacing="13.0">
+                                       <padding>
+                                          <Insets left="15.0" right="15.0" top="15.0" />
+                                       </padding></VBox>
+                                 </content>
+                              </ScrollPane>
+                           </children></AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <Pane layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="500.0" style="-fx-background-color: white;">
+                            <children>
+                                <TextField fx:id="messageField" layoutX="5.0" layoutY="10.0" onAction="#sendmessage" prefHeight="36.0" prefWidth="400.0" promptText="type in a text" />
+                                <ImageView fx:id="send" fitHeight="36.0" fitWidth="43.0" layoutX="430.0" layoutY="11.0" onMouseClicked="#sendmessage" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/sendicon2.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </Pane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0">
+                    <children>
+                        <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" text="Spielraum">
+                            <content>
+                                <AnchorPane fx:id="feld" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="600.0" style="-fx-background-color: white;">
+                                    <children>
+                              <ImageView fitHeight="623.0" fitWidth="591.0" layoutX="5.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../images/background2.jpg" />
+                                 </image>
+                              </ImageView>
+                                        <ImageView fx:id="stapel" fitHeight="150.0" fitWidth="107.0" layoutX="150.0" layoutY="250.0" onMouseClicked="#ziehen" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/main_deck_1.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fx:id="ablage" fitHeight="150.0" fitWidth="107.0" layoutX="350.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../images/EmptyDiscardDeck.png" />
+                                            </image>
+                                        </ImageView>
+                              <HBox fx:id="opponents" layoutX="13.0" layoutY="14.0" prefHeight="100.0" prefWidth="567.0" />
+                              <ScrollPane fx:id="spane" layoutY="470.0" onScroll="#scrollh" prefHeight="160.0" prefWidth="600.0">
+                                 <content>
+                                    <HBox fx:id="cardbox" prefHeight="150.0" prefWidth="600.0" />
+                                 </content></ScrollPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1020.0" layoutY="660.0" mnemonicParsing="false" onAction="#zurueckSpielraum" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="zurück" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Button>
+        <Button fx:id="regeln" alignment="CENTER" contentDisplay="CENTER" layoutX="820.0" layoutY="660.0" mnemonicParsing="false" onAction="#zeigeRegeln" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="Regeln" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Button>
+        <Text layoutX="5.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ExplodingKittens" />
+      <Button fx:id="start" alignment="CENTER" contentDisplay="CENTER" layoutX="620.0" layoutY="660.0" mnemonicParsing="false" onAction="#set" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: orangered;" text="Starten" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="bot" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="660.0" mnemonicParsing="false" onAction="#bot" prefHeight="30.0" prefWidth="113.0" style="-fx-background-color: orangered;" text="Bot hinzufügen" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>

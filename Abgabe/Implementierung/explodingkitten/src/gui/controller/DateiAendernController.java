@@ -62,6 +62,7 @@ public class DateiAendernController {
 
             if (check) {
                 showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account bearbeitet", "Account bearbeitet", "Ihre Daten wurde aktualisiert!");
+                name = benutzername.getText();
             }
 
         } catch (NotBoundException | SQLException | ClassNotFoundException | RemoteException | MalformedURLException e) {

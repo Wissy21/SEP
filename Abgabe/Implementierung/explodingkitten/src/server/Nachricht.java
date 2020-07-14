@@ -19,4 +19,18 @@ public class Nachricht implements Serializable {
         sender = s;
         time= t;
     }
+
+    /**
+     * Überschriebene equals Methode zum Verlgeichen
+     * @param obj Vergleichsobjekt
+     * @return true wenn gleiche message sender und time, sonst false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Nachricht)) {
+            return false;
+        }
+        Nachricht n = (Nachricht) obj;
+        return n.message.equals(message)&&n.sender.equals(sender)&&n.time.equals(time);
+    }
 }

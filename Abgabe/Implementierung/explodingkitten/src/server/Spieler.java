@@ -50,7 +50,6 @@ public class Spieler implements Serializable {
     public void zugDurchfuehren(SpielRaum raum){
         try{
 
-            Thread.sleep(4000);
             for(Karte k : handkarte) {
                 if(k.getEffekt().equals("BlickInDieZukunft")) {
                     raum.karteLegen(nickname,k);

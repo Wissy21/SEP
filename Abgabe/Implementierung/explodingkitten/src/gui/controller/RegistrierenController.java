@@ -3,6 +3,7 @@ package gui.controller;
 import exceptions.NotEqualPassWordException;
 import exceptions.UserNameAlreadyExistsException;
 import exceptions.WrongPasswordException;
+import gui.GuiHelper;
 import server.datenbankmanager.DBinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +46,7 @@ public class RegistrierenController {
 
             boolean check = db.spielerRegistrieren(benutzername.getText(), passwort.getText(), passwortBestaetigen.getText());
             if(check){
+                GuiHelper.showErrorOrWarningAlert(Alert.AlertType.INFORMATION,"Registriert","Sie haben sich registriert","Der Account: "+benutzername.getText()+" ist jetzt registriert.");
                 VueManager.goToLogIn(actionEvent);
             }
         } catch (NotBoundException | SQLException | ClassNotFoundException | IOException e) {
