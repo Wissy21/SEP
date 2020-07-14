@@ -10,6 +10,7 @@ public class RaumObserver extends UnicastRemoteObject implements IRaumObserver {
 
     /**
      * Erstellt einen neuen Raumobserver für den angegebenen Spielraum
+     *
      * @param sc Spielraum der observiert wird
      * @throws RemoteException Fehler bei RMI
      */
@@ -19,6 +20,7 @@ public class RaumObserver extends UnicastRemoteObject implements IRaumObserver {
 
     /**
      * Frischt die Nachrichten auf, sodass alle angezeigt werden
+     *
      * @throws RemoteException Fehler bei RMI
      */
     @Override
@@ -28,9 +30,10 @@ public class RaumObserver extends UnicastRemoteObject implements IRaumObserver {
 
     /**
      * Kommunikation zwischen Server und Client
+     *
      * @param spielername Name des angesprochenen Spielers
-     * @param message Nachricht an den Spieler
-     * @param k optionale Karte die gesendet werden soll
+     * @param message     Nachricht an den Spieler
+     * @param k           optionale Karte die gesendet werden soll
      * @throws RemoteException Fehler bei RMI
      */
     @Override

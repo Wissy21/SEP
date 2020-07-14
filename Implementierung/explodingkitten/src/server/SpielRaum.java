@@ -1,17 +1,19 @@
 package server;
 
-import exceptions.NichtGenugSpielerException;
-import exceptions.NoExplodingKittenException;
-import exceptions.NotYourRundeException;
-import exceptions.SpielraumVollException;
+import common.User;
+import exceptions.*;
 import gui.controller.IRaumObserver;
 import server.karten.*;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface{
 
@@ -19,23 +21,23 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     public HashMap<String, IRaumObserver> userRaumServerMap;
 
     public String name;
-    public int anzahlSpieler;
+    public int anzahlSpieler=0;
     public ArrayList<Spieler> spieler = new ArrayList<>();
-    public Stack<Karte> spielstapel = new Stack<Karte>();
-    public Stack<Karte> ablagestapel = new Stack<Karte>();
+    public Stack<Karte> spielstapel = new Stack<>();
+    public Stack<Karte> ablagestapel = new Stack<>();
     public Spieler current;
-    public ListIterator<Spieler> reihenfolge;
+    Spieler[] reihenfolge;
+    int iter = 0;
     boolean running = false;
     int botcounter = 1;
 
-    Executor kartenExecutor = Executors.newSingleThreadExecutor();
+    ExecutorService kartenExecutor = newSingleThreadExecutor();
 
 
     public boolean angriff = false;
     public Spieler ausgewahlter;
-    public Karte abgegeben;
     public boolean expolding = false;
-    public int position;
+    public int position = 0;
     public Karte explKitten;
     public boolean noe = false;
 
@@ -47,9 +49,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      */
     public SpielRaum() throws RemoteException{
         this.chat = new SpielChat();
-        userRaumServerMap = new HashMap<String, IRaumObserver>();
+        userRaumServerMap = new HashMap<>();
     }
+    
 
+    
     /**
      * Fügt einen Bot in den Spielraum ein, wenn noch Platz ist
      *
@@ -70,18 +74,29 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     /**
      * Der angegebene Spieler verlässt den Spielraum
      * @param spielername   Name des Spielers der den Raum verlässt
+     * @return gibt true zurück wenn der Spielraum leer ist, oder nur noch bots enthält
      */
-    public void spielraumVerlassen(String spielername) {
+    public boolean spielraumVerlassen(String spielername) {
         spieler.removeIf(n -> (n.getNickname().equals(spielername)));
         anzahlSpieler--;
+        if(spieler.isEmpty()) {
+            return true;
+        } else {
+            for(Spieler s : spieler) {
+                if(!s.isBot) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
     /**
      * Startet das Spiel indem wie im Regelwerk vorgeschrieben die Karten verteilt werden
-     * Bestimmt außerden die Spielreihenfolge und gibt diese als Iterator an
+     * Bestimmt außerden die Spielreihenfolge und gibt diese als Array an
      *
-     * @throws NichtGenugSpielerException Falls nur ein Spiler im Raum ist
+     * @throws NichtGenugSpielerException Falls nur ein Spieler im Raum ist
      */
     public void spielStarten() throws NichtGenugSpielerException {
 
@@ -146,7 +161,7 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
             spielstapel.push(new Karte(Integer.toString(count+1),"Entschaerfung"));
             count+=2;
         } else {
-            for (int i =6-anzahlSpieler; i>0;i--) {
+            for (int i =anzahlSpieler; i<6;i++) {
                 spielstapel.push(new Karte(Integer.toString(count),"Entschaerfung"));
                 count++;
             }
@@ -159,38 +174,66 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         System.out.println("Spiel vorbereitet.");
 
 
+        notifyEverybody("startGUI",null);
+
         /*Spielreihenfolge festlegen*/
         Collections.shuffle(spieler);
-        reihenfolge = spieler.listIterator();
-        current = reihenfolge.next();
-        notify(current,"DuBistDran");
+        reihenfolge = spieler.toArray(new Spieler[0]);
+        current = reihenfolge[iter];
+        if(current.isBot) {
+            current.zugDurchfuehren(this);
+        } else {
+            notify(current.getNickname(), "DuBistDran", null);
+        }
     }
 
     /**
      * Ausführen des Regelwerks, wenn ein Spieler eine bestimmte Karte ablegt
-     * Lässt immer nur eine Karte nacheinander ausspielen
+     * Lässt immer nur eine Karte nacheinander ausspielen, außer
+     *  Nö! kann immer gespielt werden, hat aber nur einen Effekt wenn davor eine andere Karte gespielt wurde
+     *  Entschärfen kann nur gespielt werden, wenn ein Exploding Kitten gezogen wurde
      *
      *
-     * @param username  Benutzer der die Karte legen will
+     * @param user  Benutzer der die Karte legen will
      * @param k Karte die gelegt werden soll
-     * @throws NotYourRundeException    Verhindert das jemad außerhalb seiner Runde ein Karte legt, außer Nö!
+     * @throws NotYourRundeException    Verhindert das jemand außerhalb seiner Runde ein Karte legt, außer Nö!
      * @throws NoExplodingKittenException   Verhindert das ablegen einer Entschärfung ohne Exploding Kitten.
      */
-    public void karteLegen(String username, Karte k) throws NotYourRundeException, NoExplodingKittenException {
-        if(!username.equals(amZug())) {
-            if (!k.getEffekt().equals("Noe")){
-                throw new NotYourRundeException();
+    public void karteLegen(String user, Karte k) throws NotYourRundeException, NoExplodingKittenException {
+
+        if(k.getEffekt().equals("Noe")) {
+            notify(user,"AbgelegtDu",k);
+            notifyEverybody("Abgelegt",k);
+            for(Spieler s: spieler) {
+                if(s.getNickname().equals(user)) {
+                    s.handkarte.remove(k);
+
+                }
+            }
+            ablagestapel.push(k);
+            changeNoe();
+            sendMessage(user + " hat Nö! gespielt!.","","Serveradmin");
+
+        } else if (!user.equals(amZug())) {
+            throw new NotYourRundeException();
+        } else if (k.getEffekt().equals("Entschaerfung")) {
+            if (!isExpolding()) {
+                throw new NoExplodingKittenException();
             } else {
-                kartenExecutor.execute(new KartenHandler(k,this));
+                setExpolding(false);
+                for(Spieler s: spieler) {
+                    if(s.getNickname().equals(user)) {
+                        s.handkarte.remove(k);
+
+                    }
+                }
+                ablagestapel.push(k);
+                notify(user,"AbgelegtDu",k);
+                notifyEverybody("Abgelegt",k);
+                sendMessage(user + " hat ein Exploding Kitten entschärft!.","","Serveradmin");
             }
         } else {
-            if(k.getEffekt().equals("Entschaerfung")){
-                if(!isExpolding()) {
-                    throw new NoExplodingKittenException();
-                }
-            } else{
-                kartenExecutor.execute(new KartenHandler(k,this));
-            }
+                kartenExecutor.execute(new KartenHandler(k, this,user));
         }
     }
 
@@ -204,30 +247,33 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         if (!username.equals(amZug())) {
             throw new NotYourRundeException();
         } else {
-            Thread draw = new Thread(new Drawer(username,this));
-            draw.start();
+            kartenExecutor.execute(new Drawer(username,this));
         }
     }
 
     /**
-     * Lässt den Iterator einen Schritt weiter laufen, außer es wurde vorher eine Angriff-Karte gespielt
+     * Lässt die Reihenfolge einen Schritt weiter laufen, außer es wurde vorher eine Angriff-Karte gespielt
      */
     public void naechsterSpieler() {
         if(!angriff) {
-            if (reihenfolge.hasNext()) {
-                current = reihenfolge.next();
+            if (iter>=spieler.size()-1) {
+                iter = 0;
             } else {
-                while (reihenfolge.hasPrevious()) {
-                    current = reihenfolge.previous();
-                }
+                iter++;
             }
-            notify(current,"DuBistDran");
+            current = reihenfolge[iter];
+        } else {
+            angriff = false;
         }
-        angriff = false;
+        if(current.isBot) {
+            current.zugDurchfuehren(this);
+        } else {
+            notify(current.getNickname(), "DuBistDran", null);
+        }
     }
 
+
     /**
-     *
      * @return Gibt den Namen des Spielers zurück, der am Zug ist
      */
     public String amZug() {
@@ -237,7 +283,6 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     //Methode für Angriff
 
     /**
-     *
      * @return gibt an ob eine Angriff-Karte aktiv ist
      */
     public boolean isAngriff() {
@@ -255,26 +300,43 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     //Methoden für Wunsch
 
 
-    public void selectSpieler(Spieler s) {
-        notify(s,"Auswahl");
-    }
-
-    @Override
-    public void setAusgewaehler(Spieler s) throws RemoteException {
-        ausgewahlter = s;
-        notify(ausgewahlter,"Abgeben");
+    /**
+     * Lässt den Spieler oder Bot ein Ziel für den Wunsch bestimmen
+     */
+    public void selectSpieler() {
+        if(current.isBot) {
+            current.auswaehlen(this);
+        } else {
+            notify(current.getNickname(), "Auswahl", null);
+        }
     }
 
     /**
-     * TODO mit Client
-     * @param name
-     * @param k
-     * @throws NotYourRundeException
+     * Benachrichtigt einen Spieler oder Bot eine Karte abzugeben
+     * @param s Spieler der ausgewählt wurde
+     */
+    @Override
+    public void setAusgewaehler(Spieler s) {
+        ausgewahlter = s;
+        if(ausgewahlter.isBot) {
+            ausgewahlter.abgeben(this);
+        } else {
+            notify(ausgewahlter.getNickname(), "Abgeben", null);
+        }
+    }
+
+
+    /**
+     * Methode die den Kartentausch implementiert
+     * @param name Name des Spielers der die Karte abgibt
+     * @param k Karte die abgegeben wurde
      */
     public void abgeben (String name,Karte k) {
-        abgegeben = k;
         ausgewahlter.handkarte.remove(k);
         current.handkarte.add(k);
+        notify(current.getNickname(), "Bekommen", k);
+        notify(name, "Abgegeben", k);
+
     }
 
     //Methoden für Entschärfung
@@ -311,6 +373,12 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
 
     //Chat-Methoden
 
+    /**
+     * Schreint eine Nachricht in den Raum - Chat
+     * @param msg Inhalt
+     * @param time Zeitstempel
+     * @param benutzername Sender
+     */
     @Override
     public void sendMessage(String msg , String time ,String benutzername){
         chat.nachrichSchreiben(msg , time ,benutzername);
@@ -332,8 +400,11 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
-
-
+    /**
+     * Registriert einen Spieler im Raum, sodass er alle Veränderunmgen mitbekommt
+     * @param userName Name des zu registrierenden Spielers
+     * @param io Observer der den Spieler benachrichtigt
+     */
     @Override
     public void registerObserver(String userName, IRaumObserver io){
         userRaumServerMap.put(userName, io);
@@ -346,11 +417,15 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
      * @param name Name des Neuen Spielers
      */
     @Override
-    public void betreten(String name) {
-        Spieler sp = new Spieler(false);
-        sp.nickname = name;
-        spieler.add(sp);
-        anzahlSpieler++;
+    public void betreten(String name) throws SpielLauftBereitsException {
+        if(isRunning()) {
+            throw new SpielLauftBereitsException();
+        } else {
+            Spieler sp = new Spieler(false);
+            sp.nickname = name;
+            spieler.add(sp);
+            anzahlSpieler++;
+        }
     }
 
 
@@ -358,20 +433,6 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
         return spieler;
     }
 
-    /**
-     *
-     * @return Test ob die Verbindung funktioniert
-     */
-    public String ping() {
-        String s="";
-        betreten("Test");
-        for(Spieler sp: spieler ) {
-            s+=sp.getNickname();
-        }
-        s+=anzahlSpieler;
-        s+="\tHallelujah";
-        return s;
-    }
 
     @Override
     public boolean isRunning(){
@@ -384,27 +445,89 @@ public class SpielRaum extends UnicastRemoteObject implements SpielRaumInterface
     }
 
 
-    public void notify(Spieler s, String message) {
-        //TODO einen Spieler benachrichtigen
+    /**
+     * Benachrichtigt den Client eines Spielers, damit er eine Aktion ausführt
+     * @param s Name des Spielers, dessen Client benachrichtigt werden soll
+     * @param message Nachricht an den Client
+     * @param k optionale Karte zur Nachricht hinzu
+     */
+    public void notify(String s, String message,Karte k) {
         for(String nom : userRaumServerMap.keySet()){
             IRaumObserver observer = userRaumServerMap.get(nom);
             try {
-                observer.notify(s.getNickname(),message);
+                observer.notify(s,message,k);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void notifyEverybody(String message) {
-        //TODO alle Spieler benachrichtigen
+    /**
+     * Benachrichtigt den Client jedes Spielers, damit er eine Aktion ausführt
+     * @param message Nachricht an den Client
+     * @param k optionale Karte zur Nachricht hinzu
+     */
+    public void notifyEverybody(String message,Karte k) {
         for(String nom : userRaumServerMap.keySet()){
             IRaumObserver observer = userRaumServerMap.get(nom);
             try {
-                observer.notify(nom,message);
+                observer.notify(nom,message,k);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    public int getStapelSize() {
+        return spielstapel.size();
+    }
+
+    /**
+     * Methode die nach dem explodieren eines Spielers oder Bots aufgerufen wird und diesen aus dem laufenden Spiel entfernt
+     * Alle Karten werden abgelegt und die Reihenfolge angepasst
+     * Wenn nur noch ein Spieler übrig ist wird geprüft wer gewonnen hat, der Gewinner wird dann benachrichtigt
+     * @param spielername Name des explodierten Spielers
+     * @param karte Exploding Kitten das für das explodieren verantwortlich war
+     */
+    @Override
+    public void explodiert(String spielername,Karte karte) {
+
+        boolean leer = spielraumVerlassen(spielername);
+        reihenfolge = spieler.toArray(new Spieler[0]);
+
+        notifyEverybody("Raus", new Karte("", spielername));
+        notifyEverybody("Abgelegt",karte);
+
+
+        for(Karte k : current.handkarte) {
+            ablagestapel.push(k);
+            notify(spielername,"AbgelegtDu",k);
+            notifyEverybody("Abgelegt",k);
+        }
+        if(leer) {
+            notifyEverybody("BotWin",null);
+            return;
+        }
+        if(anzahlSpieler == 1) {
+            notify(spieler.get(0).getNickname(),"Gewonnen",null);
+
+        }
+    }
+
+    /**
+     * Methode die den Clients sagt, dass Sie den Spielraum verlassen sollen
+     */
+    public void exit() {
+        try{
+            notifyEverybody("Verlassen",null);
+            kartenExecutor.shutdownNow();
+            Thread.sleep(5000);
+            Naming.unbind("spielraum_"+name);
+
+            UnicastRemoteObject.unexportObject(this,true);
+        } catch (RemoteException | NotBoundException | MalformedURLException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -6,17 +6,17 @@ public class SpielChat {
     public ArrayList<Nachricht> nachrichten;
 
     /**
-     * Konstruktor von Objekten
+     * Erstellt einen neuen Chat
      */
     public SpielChat() {
         nachrichten = new ArrayList<>();
     }
 
     /**
-     * die Methode erstellt eine neue Nachricht
-     * @param msg Nachricht
-     * @param time Uhrzeit
-     * @param benutzername Name des Senders
+     * Fügt dem Chat eine neue Nachricht hinzu
+     * @param msg Inhalt
+     * @param time Zeitstempel
+     * @param benutzername Sender
      */
     public void nachrichSchreiben(String msg , String time ,String benutzername) {
         Nachricht n = new Nachricht(msg, benutzername, time);

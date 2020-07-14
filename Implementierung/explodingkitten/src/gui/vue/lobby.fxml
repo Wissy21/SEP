@@ -69,7 +69,6 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Button>
-        <FlowPane prefHeight="200.0" prefWidth="200.0" />
         <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="660.0" mnemonicParsing="false" onAction="#createRoom" prefHeight="30.0" prefWidth="143.0" style="-fx-background-color: orangered;" text="Spielraum erzeugen" textFill="WHITE" AnchorPane.leftAnchor="14.0">
             <font>
                 <Font name="System Bold" size="12.0" />

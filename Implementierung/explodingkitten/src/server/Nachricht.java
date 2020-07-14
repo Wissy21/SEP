@@ -9,10 +9,10 @@ public class Nachricht implements Serializable {
     public String time;
 
     /**
-     * Konstruktor von Objekten der Klasse
-     * @param m Nachricht
-     * @param s Name des Senders
-     * @param t Uhrzeit
+     * Erstellt eine neue Nachricht
+     * @param m Inhalt
+     * @param s Sender
+     * @param t Zeitstempel
      */
     public Nachricht(String m, String s, String t) {
         message = m;

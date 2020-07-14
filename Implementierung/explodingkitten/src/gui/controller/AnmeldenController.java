@@ -24,6 +24,8 @@ public class AnmeldenController {
     @FXML
     public PasswordField passwort;
 
+    public String serverIp;
+
 
     /**
      * Nimmt die eingegebenen Daten und überprüft in der Datenbank, ob der Account vorhanden ist
@@ -33,14 +35,14 @@ public class AnmeldenController {
      */
     public void anmelden(ActionEvent actionEvent) {
         try {
-            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            DBinterface db = (DBinterface) Naming.lookup("rmi://" + serverIp + ":1900/db");
 
             if (benutzername.getText().isEmpty() || passwort.getText().isEmpty()) {
                 showErrorOrWarningAlert(Alert.AlertType.WARNING, "Eingabefehler", "Eingabefehler", "Bitte füllen Sie alle Felder aus.");
             }
 
             db.spielerAnmelden(benutzername.getText(), passwort.getText());
-            VueManager.goToMenue(actionEvent, benutzername.getText());
+            VueManager.goToMenue(actionEvent, benutzername.getText(), serverIp);
 
 
         } catch (NotBoundException | ClassNotFoundException | SQLException | IOException e) {
@@ -70,9 +72,13 @@ public class AnmeldenController {
      */
     public void gotoRegister(ActionEvent actionEvent) {
         try {
-            VueManager.goToRegister(actionEvent);
+            VueManager.goToRegister(actionEvent, serverIp);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void set(String ip) {
+        this.serverIp = ip;
     }
 }

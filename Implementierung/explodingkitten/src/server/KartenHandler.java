@@ -17,7 +17,8 @@ public class KartenHandler implements Runnable{
      * Thread der für die Ausführung der Karte zuständig ist
      *
      * @param k Karte die auszuführen ist
-     * @param raum  Spiewlraum in dem die karte gespielt wurde
+     * @param raum  Spielraum in dem die Karte gespielt wurde
+     * @param user Name des ausführenden Spielers
      */
     public KartenHandler(Karte k,SpielRaum raum, String user) {
 
@@ -30,20 +31,22 @@ public class KartenHandler implements Runnable{
     /**
      * Methode die den Karteneffekt ausführt:
      * Anfangs wird die karte immer aus der Hand auf den Ablagestapel gelegt
-     * Prüfen ob die Karte Nö! ist. Wenn ja wird die Nö-Situation geändert
-     * Prüfen ob die karte Entschärfung ist. Wenn ja wird das Exploding Kitten entschärft und zurückgelegt.
-     * Anderfalls Wird 5 Sekunden gewartet, on jemand anderes eine Nö-Karte spielen will.
+     * Die anderen Spieler werden dann informiert das die Karte gelegt wurde, um eventuell mit Nö! zu antworten
+     * Danach wird 5 Sekunden gewartet
      * Je nach der Nö-Situation wird der Effekt der gespielten Karte dann ausgeführt oder nicht.
-     * Zum Schluss wird die karte immer aus der Hand auf den Ablagestapel gelegt
-     *
+     *  Angriff: Der nächste Spieler muss zweimal ziehen. Beendet den Zug
+     *  Hops: Überspringt das ziehen einer Karte. Beendet den Zug
+     *  Wunsch: Wählt einen SPieler aus, der dir eine Karte geben soll
+     *  Mischen: Mischt den Spielstapel
+     *  BlickInDieZukunft: Zeigt dir die drei obersten Karten des Spielstapels
+     *  Katzen-Karten: Kein Effekt
+     * Wenn der Effekt geblockt wurde wird das danach noch signalisiert
      */
     @Override
     public void run() {
 
         room.current.handkarte.remove(gespielt);
         room.ablagestapel.push(gespielt);
-
-
 
         try {
             room.notify(user, "AbgelegtDu", gespielt);

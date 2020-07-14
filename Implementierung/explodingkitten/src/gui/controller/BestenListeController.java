@@ -1,6 +1,5 @@
 package gui.controller;
 
-
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +28,7 @@ public class BestenListeController {
     @FXML
     TableView<Row> table;
     String username;
+    String serverIp;
 
     /**
      * Nutzer wird zurück ins Menü geleitet
@@ -36,7 +36,8 @@ public class BestenListeController {
      */
     public void zurueckBestenListe(ActionEvent actionEvent) {
         try {
-            VueManager.goToMenue(actionEvent, username);
+
+            VueManager.goToMenue(actionEvent, username,serverIp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,10 +47,11 @@ public class BestenListeController {
      * Methode die die Bestenliste von der Datenbank abfragt und darstellt
      * @param n Name des anfragenden Benutzers
      */
-    public void setName(String n) {
+    public void setName(String n,String ip) {
         username = n;
+        this.serverIp = ip;
         try {
-            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            DBinterface db = (DBinterface) Naming.lookup("rmi://" + serverIp + ":1900/db");
             ObservableList<Row> rs = FXCollections.observableArrayList(db.getBestenliste());
             name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Row, String>, ObservableValue<String>>() {
                 @Override

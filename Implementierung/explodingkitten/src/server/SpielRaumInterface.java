@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface SpielRaumInterface extends Remote {
 
-    void sendMessage(String msg , String time ,String benutzername) throws RemoteException;
+    void sendMessage(String msg, String time, String benutzername) throws RemoteException;
 
     ArrayList<Nachricht> getMessage() throws RemoteException;
 
@@ -24,7 +24,7 @@ public interface SpielRaumInterface extends Remote {
 
     void spielStarten() throws RemoteException, NichtGenugSpielerException;
 
-    void karteLegen(String username, Karte k) throws RemoteException, NotYourRundeException, NoExplodingKittenException;
+    void karteLegen(String user, Karte k) throws RemoteException, NotYourRundeException, NoExplodingKittenException;
 
     void naechsterSpieler() throws RemoteException;
 
@@ -46,6 +46,7 @@ public interface SpielRaumInterface extends Remote {
 
     void setPosition(int pos) throws RemoteException;
 
-    void explodiert(String spielername) throws RemoteException;
-}
+    void explodiert(String spielername, Karte kitten) throws RemoteException;
 
+    void exit() throws RemoteException;
+}

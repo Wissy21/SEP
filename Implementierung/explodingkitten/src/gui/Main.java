@@ -1,11 +1,14 @@
 package gui;
 
+import gui.controller.ServerVerbindungController;
 import gui.controller.VueManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -14,16 +17,18 @@ public class Main extends Application {
 
     /**
      * Erstellt die GUI
+     *
      * @param primaryStage Stage auf der die unterschiedlichen Bildschirme angezeigt werden
      * @throws Exception Mogliche Fehler
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("vue/startFenster.fxml"));
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("vue/serverVerbindung.fxml"));
+
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Exploding Kittens - Anmelden");
-        primaryStage.getIcons().add( new Image(getClass().getResourceAsStream("images/explode.png")) );
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/explode.png")));
 
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
@@ -40,9 +45,11 @@ public class Main extends Application {
 
     /**
      * Startet den Client
+     *
      * @param args Eingaben
      */
     public static void main(String[] args) {
         launch(args);
     }
+
 }

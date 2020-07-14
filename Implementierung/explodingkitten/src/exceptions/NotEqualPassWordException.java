@@ -1,10 +1,8 @@
 package exceptions;
 
 public class NotEqualPassWordException extends Exception {
-
-    public NotEqualPassWordException(){super();};
-
-    public NotEqualPassWordException(String message) {
-        super(message);
-    }
+    /**
+     * Wird geworfen wenn das angegebene Passwort nicht mit dem in der Datenbank gespeicherten Passwort übereinstimmt
+     */
+    public NotEqualPassWordException(){super();}
 }

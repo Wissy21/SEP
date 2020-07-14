@@ -1,6 +1,5 @@
 package server;
 
-import exceptions.NotYourRundeException;
 import server.karten.Karte;
 
 public class Drawer implements Runnable{
@@ -20,10 +19,12 @@ public class Drawer implements Runnable{
 
     /**
      * Thread zieht eine Karte.
-     * Wenn es ein Exploding Kitten ist wartet er 15 Sekunden auf den Spieler, welcher Zeit hat zu entschärfen
-     * Wenn die Zeit vorbei ist wird geprüft ob der Spieler erfogreich war.
-     * Wenn nein wird er aus der Reihenfolge entfernt und uns aus dem Raum geworfen
-     * In allen anderen fällenm geht es mit dem nächsten Spieler weiter
+     * Wenn es ein Exploding Kitten ist wartet er 7 Sekunden auf den Spieler, welcher Zeit hat zu entschärfen
+     *      Wenn die Zeit vorbei ist wird geprüft ob der Spieler erfogreich war.
+     *          Wenn nein wird er aus der Reihenfolge entfernt und uns aus dem Raum geworfen
+     *          Wenn er erfolgreich war kann er sich eine Position für das Exploding Kitten im Stapel aussuchen
+     * Wenn es kein Exploding Kitten ist wird die Karte den Handkarten des Spielers hinzugefügt
+     * In allen anderen Fällen geht es mit dem nächsten Spieler weiter
      */
     @Override
     public void run() {
@@ -34,7 +35,7 @@ public class Drawer implements Runnable{
             room.setExpolding(true);
             room.explKitten = k;
             if(room.current.isBot) {
-                room.current.entschaerfen(room,k);
+                room.current.entschaerfen(room);
             } else {
                 room.notify(username, "Exploding", k);
             }
