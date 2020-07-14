@@ -1,6 +1,6 @@
 package main.client;
 
-import main.gui.controller.VueManager;
+import main.client.gui.controller.VueManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +20,12 @@ public class SpielenClient extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../gui/vue/serverVerbindung.fxml"));
+        Parent root = FXMLLoader.load(SpielenClient.class.getResource("gui/vue/serverVerbindung.fxml"));
 
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Exploding Kittens - Anmelden");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../gui/images/explode.png")));
+        primaryStage.getIcons().add(new Image(SpielenClient.class.getResourceAsStream("gui/images/explode.png")));
 
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);

@@ -1,7 +1,7 @@
 package main.server;
 
 import main.exceptions.*;
-import main.gui.controller.IRaumObserver;
+import main.client.gui.controller.IRaumObserver;
 import main.server.karten.Karte;
 
 import java.rmi.RemoteException;

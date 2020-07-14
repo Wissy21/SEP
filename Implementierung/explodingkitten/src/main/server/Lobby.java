@@ -1,6 +1,6 @@
 package main.server;
 
-import main.gui.controller.ILobbyObserver;
+import main.client.gui.controller.ILobbyObserver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
