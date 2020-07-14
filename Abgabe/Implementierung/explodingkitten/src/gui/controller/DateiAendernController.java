@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -28,13 +29,16 @@ public class DateiAendernController {
     public TextField benutzername;
 
     public String name;
+    public String serverIp;
+
 
     /**
      * Initilaisiert den Daten-Ändern Bildschirm
      * @param n Name des anfragenden Nutzers
      */
-    public void set(String n) {
+    public void set(String n,String ip) {
         name = n;
+        this.serverIp = ip;
     }
 
 
@@ -44,7 +48,7 @@ public class DateiAendernController {
      */
     public void zurueck(ActionEvent actionEvent) {
         try {
-            VueManager.goToMenue(actionEvent, name);
+            VueManager.goToMenue(actionEvent, name,serverIp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,12 +61,11 @@ public class DateiAendernController {
      */
     public void datenAendern(ActionEvent actionEvent) {
         try {
-            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            DBinterface db = (DBinterface) Naming.lookup("rmi://" + serverIp + ":1900/db");
             boolean check = db.datenAendern(name, benutzername.getText(), passwort.getText(), passwortBestaetigen.getText());
 
             if (check) {
                 showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account bearbeitet", "Account bearbeitet", "Ihre Daten wurde aktualisiert!");
-                name = benutzername.getText();
             }
 
         } catch (NotBoundException | SQLException | ClassNotFoundException | RemoteException | MalformedURLException e) {
@@ -81,12 +84,12 @@ public class DateiAendernController {
      */
     public void accountLoeschen(ActionEvent actionEvent) {
         try {
-            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
+            DBinterface db = (DBinterface) Naming.lookup("rmi://" + serverIp + ":1900/db");
             boolean check = db.kontoLoeschen(name);
 
             if (check) {
                 showErrorOrWarningAlert(Alert.AlertType.INFORMATION, "Account gelöscht", "Account gelöscht", "Ihr Konto wurde gelöscht.");
-                VueManager.goToStartFenster(actionEvent);
+                VueManager.goToStartFenster(actionEvent,serverIp);
 
             }
         } catch (NotBoundException | SQLException | ClassNotFoundException | IOException e) {

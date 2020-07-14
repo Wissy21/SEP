@@ -21,6 +21,7 @@ public class LobbyRoom {
     @FXML
     Text rname;
     String name;
+    String serverIp;
 
     /**
      * Initialisiert den Raum in der Raumliste der GUI
@@ -40,11 +41,11 @@ public class LobbyRoom {
      */
     public void raum1Beitreten(ActionEvent actionEvent) {
         try {
-            DBinterface db = (DBinterface) Naming.lookup("rmi://localhost:1900/db");
-            SpielRaumInterface si = (SpielRaumInterface) Naming.lookup("rmi://localhost:1900/spielraum_"+rname.getText());
+            DBinterface db = (DBinterface) Naming.lookup("rmi://" + serverIp + ":1900/db");
+            SpielRaumInterface si = (SpielRaumInterface) Naming.lookup("rmi://" + serverIp + ":1900/spielraum_"+rname.getText());
             db.raumBeitreten(name,rname.getText());
             si.betreten(name);
-            VueManager.goToSpielraum(actionEvent,name,rname.getText());
+            VueManager.goToSpielraum(actionEvent,name,rname.getText(),serverIp);
         } catch (NotBoundException | SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
         } catch (SpielraumVollException e) {

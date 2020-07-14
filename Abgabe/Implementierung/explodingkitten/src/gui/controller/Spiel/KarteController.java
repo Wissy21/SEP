@@ -34,14 +34,14 @@ public class KarteController {
      * @param name Name des Spielers, dem die Karte gehört
      * @param raumname Name des Raums, in dem sich die Karte befindet
      */
-    public void setKarte(Karte k,String name,String raumname) {
+    public void setKarte(Karte k,String name,String raumname,String serverIp) {
         this.k = k;
         this.name = name;
         this.raumname = raumname;
         karte.setImage(new Image(getClass().getResource("../../images/Karten/"+k.getEffekt()+".png").toString(),0,150,true,false));
         karte.setId(k.getName());
         try {
-            sb = (SpielRaumInterface) Naming.lookup("rmi://localhost:1900/spielraum_"+raumname);
+            sb = (SpielRaumInterface) Naming.lookup("rmi://" + serverIp + ":1900/spielraum_"+raumname);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             e.printStackTrace();
         }
