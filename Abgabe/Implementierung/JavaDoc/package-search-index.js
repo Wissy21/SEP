@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"exceptions"},{"l":"gui"},{"l":"gui.controller"},{"l":"gui.controller.Spiel"},{"l":"server"},{"l":"server.datenbankmanager"},{"l":"server.karten"}]

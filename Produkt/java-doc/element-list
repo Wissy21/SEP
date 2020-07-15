@@ -1,0 +1,10 @@
+main.client
+main.common
+main.exceptions
+main.gui
+main.gui.controller
+main.gui.controller.Spiel
+main.server
+main.server.datenbankmanager
+main.server.karten
+test
